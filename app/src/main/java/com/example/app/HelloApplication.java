@@ -1,5 +1,6 @@
 package com.example.app;
 
+import com.example.app.database.ManageDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +19,12 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        System.out.println("hi");
+        //System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
+        ManageDB db = new ManageDB();
+
+        System.exit(0);
+        //launch();
+
     }
 }
