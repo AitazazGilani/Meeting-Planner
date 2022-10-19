@@ -4,24 +4,42 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ManageDB {
     private static final String PATH = "res/database.db";
     private static final String URL = "jdbc:sqlite:res/database.db";
+//    Connection dbConnection;
     public ManageDB() {
         File f = new File(PATH);
         if (!f.exists()) {
             System.out.println(".db file does not exist");
             try {
                 createNewDB();
-                createNewUser();
+                createNewUser("username", "password");
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
     }
 
-    private void createNewUser() {
+    private void createNewUser(String name, String pass) {
+        String sql = "CREATE TABLE USER (\n"
+                +    "username TEXT NOT NULL,\n"
+                +    "password TEXT NOT NULL\n"
+                +    ");";
+        String sql1 = "INSERT INTO USER ('username','password')\n"
+                +     "VALUES(" + name +","+ pass + "\n"
+                +     ");";
+        try (Connection conn = DriverManager.getConnection(URL)) {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+            System.out.println("Created table in db");
+            stmt.executeUpdate(sql1);
+            System.out.println("Created new user");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     private void createNewDB() {
