@@ -13,7 +13,7 @@ public class ManageDB {
             System.out.println(".db file does not exist");
             try {
                 createNewDB();
-                createNewUser("Shrek", "something");
+                //createNewUser("Shrek", "something");
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -21,20 +21,7 @@ public class ManageDB {
     }
 
     private void createNewUser(String name, String pass) {
-        String sql = "CREATE TABLE LoginTable(\n" +
-                "    Username varchar(255),\n" +
-                "    Password varchar(255)\n" +
-                ");\n";
 
-
-        //for creating table, using sql string
-        try (Connection conn = DriverManager.getConnection(URL)) {
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
-            System.out.println("Created table in db");
-        } catch (Exception e) {
-            System.out.println(e);
-        }
 
         String sql1 = "INSERT INTO LoginTable (UserName, Password) VALUES (?,?)";
         //for inserting a user, using sql1 string
@@ -67,6 +54,42 @@ public class ManageDB {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        String createLoginTable = "CREATE TABLE LoginTable(\n" +
+                "    Username varchar(255),\n" +
+                "    Password varchar(255)\n" +
+                ");\n";
+
+        String createContactsTable = "CREATE TABLE ContactsTable(\n" +
+                "    Name varchar(255),\n" +
+                "    Email varchar(255),\n" +
+                "    Category varchar(255),\n" +
+                "    TimeSpent float(64)\n" +
+                ");";
+
+        String createTaskTable = "CREATE TABLE TaskTable(\n" +
+                "    User varchar(255),\n" +
+                "    TaskName varchar(255),\n" +
+                "    Date varchar(255),\n" +
+                "    Category varchar(255),\n" +
+                "    TaskDuration float(64),\n" +
+                "    TimeSpent float(64)\n" +
+                ");\n";
+
+
+        //for creating a user/login table, using sql string
+        try (Connection conn = DriverManager.getConnection(URL)) {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(createLoginTable);
+            stmt.executeUpdate(createContactsTable);
+            stmt.executeUpdate(createTaskTable);
+            System.out.println("Created login table in db");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
+
     }
 
     //testing
