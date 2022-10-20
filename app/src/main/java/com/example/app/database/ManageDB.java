@@ -16,7 +16,7 @@ public class ManageDB {
             System.out.println(".db file does not exist");
             try {
                 createNewDB();
-                //createNewUser("username", "password");
+                createNewUser("Shrek", "something");
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -24,13 +24,11 @@ public class ManageDB {
     }
 
     private void createNewUser(String name, String pass) {
-        String sql = "CREATE TABLE USER (\n"
-                +    "username TEXT NOT NULL,\n"
-                +    "password TEXT NOT NULL\n"
-                +    ");";
-        String sql1 = "INSERT INTO USER (username,password)\n"
-                +     "VALUES(" + name +","+ pass + "\n"
-                +     ");";
+        String sql = "CREATE TABLE LoginTable(\n" +
+                "    Username varchar(255),\n" +
+                "    Password varchar(255)\n" +
+                ");\n";
+        String sql1 = "INSERT INTO LoginTable (UserName, Password) VALUES (name, pass)";
         try (Connection conn = DriverManager.getConnection(URL)) {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
