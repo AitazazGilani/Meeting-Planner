@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ManageDB {
-    private static final String PATH = "C:/Monke-Business-DB/database.db";
-    private static final String URL = "jdbc:sqlite:C:/Monke-Business-DB/database.db/database.db";
+    private static final String PATH = "res/database.db";
+    private static final String URL = "jdbc:sqlite:res/database.db";
     //    Connection dbConnection;
     public ManageDB() {
         File f = new File(PATH);

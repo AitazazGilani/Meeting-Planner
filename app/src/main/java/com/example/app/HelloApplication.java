@@ -21,7 +21,7 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         System.out.println(System.getProperty("user.dir"));
-        //ManageDB db = new ManageDB();
+        ManageDB db = new ManageDB();
         System.exit(0);
         //launch();
     }
