@@ -1,6 +1,13 @@
 public class AppController{
+    public ManageDB;
 
-    public Task createNewTask(){
+    /**
+     * Creates a new to-do task and adds it to the DB?
+     *
+     * @param title: String representation of the tasks name
+     * @return The new task created
+     */
+    public Task createNewTask(String title){
 
     }
 
@@ -8,7 +15,7 @@ public class AppController{
 
     }
 
-    public User createNewUser(){
+    public User createNewUser(String user, String password){
 
     }
 
@@ -25,7 +32,7 @@ public class AppController{
     }
 
     public void deleteContact(){
-        
+
     }
 
     }
