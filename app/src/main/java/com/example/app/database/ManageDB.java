@@ -16,7 +16,7 @@ public class ManageDB {
             System.out.println(".db file does not exist");
             try {
                 createNewDB();
-                createNewUser("username", "password");
+                //createNewUser("username", "password");
             } catch (Exception e) {
                 System.out.println(e);
             }
