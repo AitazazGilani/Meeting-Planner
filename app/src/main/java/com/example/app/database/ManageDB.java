@@ -1,10 +1,7 @@
 package com.example.app.database;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class ManageDB {
     private static final String PATH = "res/database.db";
@@ -28,16 +25,29 @@ public class ManageDB {
                 "    Username varchar(255),\n" +
                 "    Password varchar(255)\n" +
                 ");\n";
-        String sql1 = "INSERT INTO LoginTable (UserName, Password) VALUES (name, pass)";
+
+
+        //for creating table, using sql string
         try (Connection conn = DriverManager.getConnection(URL)) {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
             System.out.println("Created table in db");
-            stmt.executeUpdate(sql1);
-            System.out.println("Created new user");
         } catch (Exception e) {
             System.out.println(e);
         }
+
+        String sql1 = "INSERT INTO LoginTable (UserName, Password) VALUES (?,?)";
+        //for inserting a user, using sql1 string
+        try(Connection conn = DriverManager.getConnection(URL)){
+            PreparedStatement pstmt = conn.prepareStatement(sql1); //Prepared statements are used for parametized statements
+            pstmt.setString(1,name);
+            pstmt.setString(2,pass);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
     }
 
     private void createNewDB() {
@@ -57,5 +67,12 @@ public class ManageDB {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    //testing
+    public static void main(String[] args){
+        System.out.println(System.getProperty("user.dir"));
+        ManageDB db = new ManageDB();
+        System.exit(0);
     }
 }
