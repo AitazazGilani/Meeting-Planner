@@ -21,8 +21,6 @@ public class ManageDB {
     }
 
     private void createNewUser(String name, String pass) {
-
-
         String sql1 = "INSERT INTO LoginTable (UserName, Password) VALUES (?,?)";
         //for inserting a user, using sql1 string
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -34,6 +32,41 @@ public class ManageDB {
             System.out.println(e);
         }
 
+    }
+
+    private void createNewContact(Contact p){
+        String sql1 = "INSERT INTO ContactsTable (Name, Email, Category, TimeSpent) VALUES (?,?,?,?)";
+        //for inserting a contact, using sql1 string
+        try(Connection conn = DriverManager.getConnection(URL)){
+            PreparedStatement pstmt = conn.prepareStatement(sql1); //Prepared statements are used for parametized statements
+            pstmt.setString(1,p.getName());
+            pstmt.setString(2,p.getEmail());
+            pstmt.setString(3,p.getCategory());
+            pstmt.setString(4,p.getTimeSpent());
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    private void createNewTask(Task t){
+        String sql1 = "INSERT INTO TaskTable(TaskName, Date, Time, Category, TaskDuration, TimeSpent, ContactName) VALUES (?,?,?,?,?,?,?)";
+        //for inserting a contact, using sql1 string
+        try(Connection conn = DriverManager.getConnection(URL)){
+            PreparedStatement pstmt = conn.prepareStatement(sql1); //Prepared statements are used for parametized statements
+            pstmt.setString(1,t.getName());
+            pstmt.setString(2,t.getDate());
+            pstmt.setString(3,t.getTime());
+            pstmt.setString(4,t.getCategory());
+            pstmt.setString(5,t.getDuration());
+            pstmt.setString(6,t.getTimespent());
+            pstmt.setString(7,t.getContactName());
+
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
     }
 
@@ -68,12 +101,13 @@ public class ManageDB {
                 ");";
 
         String createTaskTable = "CREATE TABLE TaskTable(\n" +
-                "    User varchar(255),\n" +
                 "    TaskName varchar(255),\n" +
                 "    Date varchar(255),\n" +
+                "    Time float(64),\n" +
                 "    Category varchar(255),\n" +
                 "    TaskDuration float(64),\n" +
-                "    TimeSpent float(64)\n" +
+                "    TimeSpent float(64), \n" +
+                "    ContactName varchar(64)\n" +
                 ");\n";
 
 
@@ -83,7 +117,6 @@ public class ManageDB {
             stmt.executeUpdate(createLoginTable);
             stmt.executeUpdate(createContactsTable);
             stmt.executeUpdate(createTaskTable);
-            System.out.println("Created login table in db");
         } catch (Exception e) {
             System.out.println(e);
         }
