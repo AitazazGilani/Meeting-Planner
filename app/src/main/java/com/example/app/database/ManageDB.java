@@ -50,6 +50,12 @@ public class ManageDB {
 
     }
 
+    /**
+     * Create a new task, Task object must have date in the format YYYY-MM-DD
+     * Time format must be in: HH:mm:ss
+     * Time must be in 24hr format
+     * @param t
+     */
     private void createNewTask(Task t){
         String sql1 = "INSERT INTO TaskTable(TaskName, Date, Time, Category, TaskDuration, TimeSpent, ContactName) VALUES (?,?,?,?,?,?,?)";
         //for inserting a contact, using sql1 string
@@ -97,16 +103,16 @@ public class ManageDB {
                 "    Name varchar(255),\n" +
                 "    Email varchar(255),\n" +
                 "    Category varchar(255),\n" +
-                "    TimeSpent float(64)\n" +
+                "    TimeSpent varchar(255)\n" +
                 ");";
 
         String createTaskTable = "CREATE TABLE TaskTable(\n" +
                 "    TaskName varchar(255),\n" +
                 "    Date varchar(255),\n" +
-                "    Time float(64),\n" +
+                "    Time varchar(255),\n" +
                 "    Category varchar(255),\n" +
-                "    TaskDuration float(64),\n" +
-                "    TimeSpent float(64), \n" +
+                "    TaskDuration varchar(255),\n" +
+                "    TimeSpent varchar(255), \n" +
                 "    ContactName varchar(64)\n" +
                 ");\n";
 
@@ -128,7 +134,13 @@ public class ManageDB {
     //testing
     public static void main(String[] args){
         System.out.println(System.getProperty("user.dir"));
+        Task T = new Task("Work on 370", "2022-10-21","12:00:00","School","01:00:00","","Aitazaz");
+        Contact C = new Contact("Aitazaz","shg374@usask.ca","00:00:00","USER");
+
         ManageDB db = new ManageDB();
+        db.createNewTask(T);
+        db.createNewContact(C);
+        db.createNewUser("Aitazaz","xf1214");
         System.exit(0);
     }
 }

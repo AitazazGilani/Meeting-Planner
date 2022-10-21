@@ -3,6 +3,10 @@ package com.example.app.database;
 public class Task {
     String name, date, time, category, duration, timespent ,contactName;
 
+    /**
+     *Time, duration, timespent must be in 24hour format
+     *
+     */
     public Task(String name, String date, String time, String category, String duration, String timespent, String contactName) {
         this.name = name;
         this.date = date;
