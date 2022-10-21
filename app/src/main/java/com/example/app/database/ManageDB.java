@@ -75,6 +75,17 @@ public class ManageDB {
         }
 
     }
+    //todo: function to delete a task
+
+    //todo: OPTIONAL function to delete a contact
+
+    //todo: function to update tasks timespent
+
+    //todo: function to query tasks by date, time, category, contacts
+
+    //todo: function to query contacts by time spent with them
+
+    //todo: function to get a contact by name, email
 
     private void createNewDB() {
         System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
@@ -134,13 +145,7 @@ public class ManageDB {
     //testing
     public static void main(String[] args){
         System.out.println(System.getProperty("user.dir"));
-        Task T = new Task("Work on 370", "2022-10-21","12:00:00","School","01:00:00","","Aitazaz");
-        Contact C = new Contact("Aitazaz","shg374@usask.ca","00:00:00","USER");
-
         ManageDB db = new ManageDB();
-        db.createNewTask(T);
-        db.createNewContact(C);
-        db.createNewUser("Aitazaz","xf1214");
         System.exit(0);
     }
 }

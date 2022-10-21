@@ -5,7 +5,8 @@ public class Task {
 
     /**
      *Time, duration, timespent must be in 24hour format
-     *
+     * format: HH:MM:SS
+     * Date must be in YYYY-MM-DD format
      */
     public Task(String name, String date, String time, String category, String duration, String timespent, String contactName) {
         this.name = name;
