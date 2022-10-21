@@ -1,6 +1,6 @@
 package com.example.app.database;
 
-public class Task {
+public class Task implements TableObject<Task> {
     String name, date, time, category, duration, contactName;
 
     public Task(String name, String date, String time, String category, String duration, String contactName) {
@@ -34,5 +34,15 @@ public class Task {
 
     public String getContactName() {
         return this.contactName;
+    }
+
+    @Override
+    public Task getObject() {
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "";
     }
 }

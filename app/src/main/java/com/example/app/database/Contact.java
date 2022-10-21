@@ -1,6 +1,6 @@
 package com.example.app.database;
 
-public class Contact {
+public class Contact implements TableObject<Contact> {
     String name, email, timeSpent, category;
 
     public Contact(String name, String email, String timeSpent, String category) {
@@ -24,5 +24,15 @@ public class Contact {
 
     public String getCategory() {
         return this.category;
+    }
+
+    @Override
+    public Contact getObject() {
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "";
     }
 }
