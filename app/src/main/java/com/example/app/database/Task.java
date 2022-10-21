@@ -1,6 +1,6 @@
 package com.example.app.database;
 
-public class Task {
+public class Task implements TableObject<Task> {
     String name, date, time, category, duration, timespent ,contactName;
 
     /**
@@ -42,6 +42,11 @@ public class Task {
 
     public String getContactName() {
         return this.contactName;
+    }
+
+    @Override
+    public Task getObject() {
+        return this;
     }
 
     @Override
