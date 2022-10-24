@@ -1,10 +1,7 @@
 package com.example.app.database;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class ManageDB {
     private static final String PATH = "res/database.db";
@@ -16,7 +13,7 @@ public class ManageDB {
             System.out.println(".db file does not exist");
             try {
                 createNewDB();
-                //createNewUser("username", "password");
+                //createNewUser("Shrek", "something");
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -24,22 +21,20 @@ public class ManageDB {
     }
 
     private void createNewUser(String name, String pass) {
-        String sql = "CREATE TABLE USER (\n"
-                +    "username TEXT NOT NULL,\n"
-                +    "password TEXT NOT NULL\n"
-                +    ");";
-        String sql1 = "INSERT INTO USER (username,password)\n"
-                +     "VALUES(" + name +","+ pass + "\n"
-                +     ");";
-        try (Connection conn = DriverManager.getConnection(URL)) {
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
-            System.out.println("Created table in db");
-            stmt.executeUpdate(sql1);
-            System.out.println("Created new user");
+
+
+        String sql1 = "INSERT INTO LoginTable (UserName, Password) VALUES (?,?)";
+        //for inserting a user, using sql1 string
+        try(Connection conn = DriverManager.getConnection(URL)){
+            PreparedStatement pstmt = conn.prepareStatement(sql1); //Prepared statements are used for parametized statements
+            pstmt.setString(1,name);
+            pstmt.setString(2,pass);
+            pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }
+
+
     }
 
     private void createNewDB() {
@@ -59,5 +54,48 @@ public class ManageDB {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        String createLoginTable = "CREATE TABLE LoginTable(\n" +
+                "    Username varchar(255),\n" +
+                "    Password varchar(255)\n" +
+                ");\n";
+
+        String createContactsTable = "CREATE TABLE ContactsTable(\n" +
+                "    Name varchar(255),\n" +
+                "    Email varchar(255),\n" +
+                "    Category varchar(255),\n" +
+                "    TimeSpent float(64)\n" +
+                ");";
+
+        String createTaskTable = "CREATE TABLE TaskTable(\n" +
+                "    User varchar(255),\n" +
+                "    TaskName varchar(255),\n" +
+                "    Date varchar(255),\n" +
+                "    Category varchar(255),\n" +
+                "    TaskDuration float(64),\n" +
+                "    TimeSpent float(64)\n" +
+                ");\n";
+
+
+        //for creating a user/login table, using sql string
+        try (Connection conn = DriverManager.getConnection(URL)) {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(createLoginTable);
+            stmt.executeUpdate(createContactsTable);
+            stmt.executeUpdate(createTaskTable);
+            System.out.println("Created login table in db");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
+
+    }
+
+    //testing
+    public static void main(String[] args){
+        System.out.println(System.getProperty("user.dir"));
+        ManageDB db = new ManageDB();
+        System.exit(0);
     }
 }
