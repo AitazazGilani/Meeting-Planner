@@ -28,6 +28,14 @@ public class TasksController {
     protected ChoiceBox sortByChoiceBox;
 
     /**
+     * This initializes the Tasks Tab with the appropriate information on startup.
+     */
+    @FXML
+    private void initialize(){
+
+    }
+
+    /**
      * Move to Calendar Tab on click
      */
     @FXML

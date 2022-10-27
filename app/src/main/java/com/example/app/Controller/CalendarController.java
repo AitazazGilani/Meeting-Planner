@@ -30,8 +30,6 @@ public class CalendarController {
 
     /**
      * This initializes the CalendarView with information on startup.
-     *
-     * return: Nothing
      */
     @FXML
     private void initialize(){

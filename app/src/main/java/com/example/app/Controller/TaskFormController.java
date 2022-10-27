@@ -25,6 +25,14 @@ public class TaskFormController {
     protected ChoiceBox categoryChoice;
 
     /**
+     * This initializes the Task Form with the appropriate information on startup.
+     */
+    @FXML
+    private void initialize(){
+
+    }
+
+    /**
      * Save the current Task to the database
      */
     @FXML

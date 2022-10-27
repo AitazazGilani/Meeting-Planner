@@ -20,6 +20,14 @@ public class ContactFormController {
     protected ChoiceBox<Contact> categoryChoice;
 
     /**
+     * This initializes the ContactForm with the appropriate information on startup.
+     */
+    @FXML
+    private void initialize(){
+
+    }
+
+    /**
      * Closes the Contact Form and discards and entered information
      */
     @FXML

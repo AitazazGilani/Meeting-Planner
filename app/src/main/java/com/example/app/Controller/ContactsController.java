@@ -40,6 +40,14 @@ public class ContactsController {
     protected ChoiceBox sortByChoiceBox;
 
     /**
+     * This initializes the Contacts Tab with the appropriate information on startup.
+     */
+    @FXML
+    private void initialize(){
+
+    }
+
+    /**
      * Move to Calendar Tab on click
      */
     @FXML
