@@ -38,21 +38,21 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="550.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="550.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.TasksController">
    <left>
   <AnchorPane prefHeight="550.0" prefWidth="222.0" style="-fx-background-color: #DDDDDD;" BorderPane.alignment="CENTER">
     <children>
-            <Button fx:id="calendarTabBtn" mnemonicParsing="false" prefHeight="80.0" prefWidth="222.0" style="-fx-background-color: #DDDDDD; -fx-background-radius: 0;" text="Calendar" textAlignment="CENTER">
+            <Button fx:id="calendarTabBtn" mnemonicParsing="false" onAction="#onCalendarTabClick" prefHeight="80.0" prefWidth="222.0" style="-fx-background-color: #DDDDDD; -fx-background-radius: 0;" text="Calendar" textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="tasksTabBtn" layoutY="80.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="222.0" style="-fx-background-color: #8CA8FC; -fx-background-radius: 0;" text="Tasks" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="tasksTabBtn" layoutY="80.0" mnemonicParsing="false" onAction="#onTasksTabClick" prefHeight="80.0" prefWidth="222.0" style="-fx-background-color: #8CA8FC; -fx-background-radius: 0;" text="Tasks" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="contactsTabBtn" layoutY="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="222.0" style="-fx-background-color: DDDDDD; -fx-background-radius: 0;" text="Contacts" textAlignment="CENTER">
+            <Button fx:id="contactsTabBtn" layoutY="160.0" mnemonicParsing="false" onAction="#onContactsTabClick" prefHeight="80.0" prefWidth="222.0" style="-fx-background-color: DDDDDD; -fx-background-radius: 0;" text="Contacts" textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
@@ -97,12 +97,12 @@
                   </Label>
                   <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <Button fx:id="editBtn" mnemonicParsing="false" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="edit" textAlignment="CENTER">
+                        <Button fx:id="editBtn" mnemonicParsing="false" onAction="#onEditClick" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="edit" textAlignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="deleteBtn" mnemonicParsing="false" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="delete" textAlignment="CENTER">
+                        <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="delete" textAlignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -112,7 +112,7 @@
                </children>
             </VBox>
             <Label layoutX="10.0" layoutY="373.0" prefHeight="17.0" prefWidth="203.0" text="________________________________________" textAlignment="CENTER" AnchorPane.topAnchor="373.0" />
-            <Button fx:id="newTaskBtn" alignment="CENTER" layoutX="39.0" layoutY="418.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="144.0" style="-fx-background-color: #5A83FC;" text="+ new task" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="29.5">
+            <Button fx:id="newTaskBtn" alignment="CENTER" layoutX="39.0" layoutY="418.0" mnemonicParsing="false" onAction="#onNewTaskClick" prefHeight="54.0" prefWidth="144.0" style="-fx-background-color: #5A83FC;" text="+ new task" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="29.5">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -144,7 +144,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="newCategoryBtn" alignment="CENTER" layoutX="427.0" layoutY="43.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="146.0" style="-fx-background-color: #5A83FC;" text="+ new category" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="43.0">
+            <Button fx:id="newCategoryBtn" alignment="CENTER" layoutX="427.0" layoutY="43.0" mnemonicParsing="false" onAction="#onNewCategoryClick" prefHeight="36.0" prefWidth="146.0" style="-fx-background-color: #5A83FC;" text="+ new category" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="43.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

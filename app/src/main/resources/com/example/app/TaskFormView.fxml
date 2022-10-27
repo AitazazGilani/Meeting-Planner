@@ -36,7 +36,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550.0" prefWidth="297.0" style="-fx-background-color: #DDDDDD;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="550.0" prefWidth="297.0" style="-fx-background-color: #DDDDDD;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.TaskFormController">
 <children>
       <VBox layoutX="2.0" layoutY="61.0" prefHeight="283.0" prefWidth="111.0" style="-fx-spacing: 25; -fx-padding: 15;" AnchorPane.topAnchor="61.0">
          <children>
@@ -73,7 +73,7 @@
          </children>
       </VBox>
       <Label layoutX="10.0" layoutY="376.0" prefHeight="17.0" prefWidth="277.0" text="_______________________________________________________" textAlignment="CENTER" AnchorPane.topAnchor="376.0" />
-      <Button fx:id="saveTaskBtn" alignment="CENTER" layoutX="77.0" layoutY="436.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="144.0" style="-fx-background-color: #5A83FC;" text="save task" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="60.0">
+      <Button fx:id="saveTaskBtn" alignment="CENTER" layoutX="77.0" layoutY="436.0" mnemonicParsing="false" onAction="#onSaveTaskClick" prefHeight="54.0" prefWidth="144.0" style="-fx-background-color: #5A83FC;" text="save task" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="60.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -94,12 +94,12 @@
             <ChoiceBox fx:id="categoryChoice" prefWidth="150.0" />
          </children>
       </VBox>
-      <Button fx:id="deleteBtn" layoutX="169.0" layoutY="346.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="delete" textAlignment="CENTER">
+      <Button fx:id="deleteBtn" layoutX="169.0" layoutY="346.0" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="delete" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="cancelBtn" layoutX="69.0" layoutY="346.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="cancel" textAlignment="CENTER" AnchorPane.topAnchor="346.0">
+      <Button fx:id="cancelBtn" layoutX="69.0" layoutY="346.0" mnemonicParsing="false" onAction="#onCancelClick" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="cancel" textAlignment="CENTER" AnchorPane.topAnchor="346.0">
          <font>
             <Font size="14.0" />
          </font>
