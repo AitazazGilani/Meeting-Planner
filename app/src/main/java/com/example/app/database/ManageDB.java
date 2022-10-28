@@ -6,15 +6,15 @@ import java.util.ArrayList;
 
 public class ManageDB {
     private static final String PATH = "res/database.db";
+
     private static final String URL = "jdbc:sqlite:res/database.db";
-    //    Connection dbConnection;
+
     public ManageDB() {
         File f = new File(PATH);
         if (!f.exists()) {
             System.out.println(".db file does not exist");
             try {
                 createNewDB();
-                //createNewUser("Shrek", "something");
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -76,7 +76,6 @@ public class ManageDB {
         }
 
     }
-    //todo: function to delete a task
 
     /**
      * Delete a task by a given task object, the object must originate from the Databse
@@ -87,8 +86,16 @@ public class ManageDB {
         if(t.getUID() == 0){
             throw new Exception("The given task does not contain an ID, Please fetch the task from the database");
         }
+        int id = t.getUID();
 
-
+        String sql = "DELETE FROM TaskTable WHERE UID=?";
+        try(Connection conn = DriverManager.getConnection(URL)){
+            PreparedStatement pstmt = conn.prepareStatement(sql); //Prepared statements are used for parametized statements
+            pstmt.setInt(1,id);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Failed to delete the given task, reason:\n" + e);
+        }
 
     }
 
@@ -112,7 +119,10 @@ public class ManageDB {
 
     }
 
-    //todo: function to get all tasks
+    /**
+     * Get all the tasks present in the database
+     * @return An ArrayList<Task> objects
+     */
     private ArrayList<Task> getAllTasks(){
         ArrayList<Task> tasks = new ArrayList<Task>();
         String sql = "SELECT * FROM TaskTable";
@@ -140,8 +150,32 @@ public class ManageDB {
     }
 
     //todo: function to get all contacts
+
+    /**NOT TESTED
+     * Get all present contacts from the database
+     * @return an ArrayList<Contact> objects
+     */
     private ArrayList<Contact> getAllContacts(){
-        return new ArrayList<Contact>();
+        ArrayList<Contact> contacts = new ArrayList<Contact>();
+        String sql = "SELECT * FROM ContactsTable";
+        try(Connection conn = DriverManager.getConnection(URL)){
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Contact c = new Contact(
+                        rs.getString("Name"),
+                        rs.getString("Email"),
+                        rs.getString("Category"),
+                        rs.getString("TimeSpent")
+                );
+
+                contacts.add(c);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return contacts;
     }
 
     private void createNewDB() {
@@ -231,6 +265,18 @@ public class ManageDB {
             System.out.println("Failed to query all tasks, reason:\n"+e);
         }
 
+        //Test case 3: delete a task
+        try{
+            ArrayList<Task> arr = db.getAllTasks();
+            for(Task t: arr){
+                if(!t.getDate().equals("2022-10-27")) throw new Exception("Tasks were not inserted or queried correctly");
+            }
+            //delete the first task
+            db.deleteTask(arr.get(0));
+        }
+        catch (Exception e){
+            System.out.println("Failed to delete the given task, reason:\n"+e);
+        }
 
         System.exit(0);
     }
