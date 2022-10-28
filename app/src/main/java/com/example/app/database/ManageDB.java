@@ -21,7 +21,7 @@ public class ManageDB {
         }
     }
 
-    private void createNewUser(String name, String pass) {
+    public static void createNewUser(String name, String pass) {
         String sql1 = "INSERT INTO LoginTable (UserName, Password) VALUES (?,?)";
         //for inserting a user, using sql1 string
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -35,7 +35,7 @@ public class ManageDB {
 
     }
 
-    private void createNewContact(Contact p){
+    public static void createNewContact(Contact p){
         String sql1 = "INSERT INTO ContactsTable (Name, Email, Category, TimeSpent) VALUES (?,?,?,?)";
         //for inserting a contact, using sql1 string
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -57,7 +57,7 @@ public class ManageDB {
      * Time must be in 24hr format
      * @param t
      */
-    private void createNewTask(Task t){
+    public static void createNewTask(Task t){
         String sql1 = "INSERT INTO TaskTable(TaskName, Date, Time, Category, TaskDuration, TimeSpent, ContactName) VALUES (?,?,?,?,?,?,?)";
         //for inserting a contact, using sql1 string
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -82,7 +82,7 @@ public class ManageDB {
      * Or else it wont contain a unique ID
      * @param t: Task to be deleted, originates from the database
      */
-    private void deleteTask(Task t) throws Exception {
+    public static void deleteTask(Task t) throws Exception {
         if(t.getUID() == 0){
             throw new Exception("The given task does not contain an ID, Please fetch the task from the database");
         }
@@ -100,22 +100,22 @@ public class ManageDB {
     }
 
     //todo: OPTIONAL function to delete a contact
-    private void updateContact(Contact c){
+    public static void updateContact(Contact c){
 
     }
 
     //todo: function to update tasks, must perserve table ordering
-    private void updateTask(Task t){
+    public static void updateTask(Task t){
 
     }
 
     //todo: function to query tasks by date, time, category, contacts
-    private void queryTask(Task t){
+    public static void queryTask(Task t){
 
     }
 
     //todo: function to query contacts by time spent with them
-    private void queryContact(Contact c){
+    public static void queryContact(Contact c){
 
     }
 
@@ -123,7 +123,7 @@ public class ManageDB {
      * Get all the tasks present in the database
      * @return An ArrayList<Task> objects
      */
-    private ArrayList<Task> getAllTasks(){
+    public static ArrayList<Task> getAllTasks(){
         ArrayList<Task> tasks = new ArrayList<Task>();
         String sql = "SELECT * FROM TaskTable";
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -155,7 +155,7 @@ public class ManageDB {
      * Get all present contacts from the database
      * @return an ArrayList<Contact> objects
      */
-    private ArrayList<Contact> getAllContacts(){
+    public static ArrayList<Contact> getAllContacts(){
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         String sql = "SELECT * FROM ContactsTable";
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -178,7 +178,7 @@ public class ManageDB {
         return contacts;
     }
 
-    private void createNewDB() {
+    public static void createNewDB() {
         System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
         // create appropriate tables in current direcory?
         File dbDir = new File("./res");
@@ -235,7 +235,7 @@ public class ManageDB {
     }
 
     //testing
-    public static void main(String[] args){
+    public static void main(){
         System.out.println(System.getProperty("user.dir"));
         ManageDB db = new ManageDB();
 
