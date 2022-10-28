@@ -1,6 +1,6 @@
 package com.example.app.Controller;
 
-import com.example.*;
+import com.example.app.*;
 
 import java.io.IOException;
 
