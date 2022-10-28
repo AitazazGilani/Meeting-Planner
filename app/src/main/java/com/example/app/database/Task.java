@@ -4,6 +4,12 @@ public class Task implements TableObject<Task> {
     String name, date, time, category, duration, timespent ,contactName;
 
     /**
+     * ID for the task, must be null if the views/controller are creating a task
+     * handled by ManageDB
+     */
+    int UID;
+
+    /**
      *Time, duration, timespent must be in 24hour format
      * format: HH:MM:SS
      * Date must be in YYYY-MM-DD format
@@ -43,6 +49,20 @@ public class Task implements TableObject<Task> {
     public String getContactName() {
         return this.contactName;
     }
+
+    /**
+     * DO NOT USE IN VIEWS OR CONTROLLER, Set the UID for a task
+     * Handled by ManageDB
+     * @param x: id to be added
+     */
+    public void setUID(int x){this.UID = x;}
+
+    /**
+     *get UID for that task, not needed by controller or views
+     * Handled by ManageDB
+     * @return
+     */
+    public int getUID(){return this.UID;}
 
     @Override
     public Task getObject() {
