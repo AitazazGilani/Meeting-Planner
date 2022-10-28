@@ -1,6 +1,7 @@
 package com.example.app;
 
 import com.example.app.Controller.*;
+import com.example.app.database.ManageDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        new ManageDB();
+
         FXMLLoader fxml = new FXMLLoader(App.class.getResource("CalendarView.fxml"));
 
         Scene scene = new Scene(fxml.load());
