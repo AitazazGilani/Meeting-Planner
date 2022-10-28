@@ -72,12 +72,23 @@ public class ManageDB {
 
             pstmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Failed to insert the given task, Reason:\n" + e);
         }
 
     }
     //todo: function to delete a task
-    private void deleteTask(Task t){
+
+    /**
+     * Delete a task by a given task object, the object must originate from the Databse
+     * Or else it wont contain a unique ID
+     * @param t: Task to be deleted, originates from the database
+     */
+    private void deleteTask(Task t) throws Exception {
+        if(t.getUID() == 0){
+            throw new Exception("The given task does not contain an ID, Please fetch the task from the database");
+        }
+
+
 
     }
 
@@ -103,7 +114,29 @@ public class ManageDB {
 
     //todo: function to get all tasks
     private ArrayList<Task> getAllTasks(){
-        return new ArrayList<Task>();
+        ArrayList<Task> tasks = new ArrayList<Task>();
+        String sql = "SELECT * FROM TaskTable";
+        try(Connection conn = DriverManager.getConnection(URL)){
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Task t = new Task(
+                        rs.getString("TaskName"),
+                        rs.getString("Date"),
+                        rs.getString("Time"),
+                        rs.getString("Category"),
+                        rs.getString("TaskDuration"),
+                        rs.getString("TimeSpent"),
+                        rs.getString("ContactName")
+                );
+                t.setUID(rs.getInt("UID"));
+                tasks.add(t);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return tasks;
     }
 
     //todo: function to get all contacts
@@ -142,6 +175,7 @@ public class ManageDB {
                 ");";
 
         String createTaskTable = "CREATE TABLE TaskTable(\n" +
+                "    UID integer primary key autoincrement,\n"+
                 "    TaskName varchar(255),\n" +
                 "    Date varchar(255),\n" +
                 "    Time varchar(255),\n" +
@@ -171,13 +205,32 @@ public class ManageDB {
         System.out.println(System.getProperty("user.dir"));
         ManageDB db = new ManageDB();
 
-        //add several tasks
+        //regression tests, must be done on a new db
+
+        //test case 1: add several tasks
         Task a = new Task("Study for 370","2022-10-27","12:00:00","Uni","02:00:00","","Self");
         Task b = new Task("Study for 381","2022-10-27","12:00:00","Uni","02:00:00","","Self");
         Task c = new Task("Study for 360","2022-10-27","12:00:00","Uni","02:00:00","","Self");
-        db.createNewTask(a);
-        db.createNewTask(b);
-        db.createNewTask(c);
+        try{
+            db.createNewTask(a);
+            db.createNewTask(b);
+            db.createNewTask(c);
+        }
+        catch(Exception e){
+            System.out.println("Failed to insert tasks to table, reason:\n"+e);
+        }
+
+        //Test case 2: Check if the tasks exist and test getAllTasks()
+        try{
+            ArrayList<Task> arr = db.getAllTasks();
+            for(Task t: arr){
+                if(!t.getDate().equals("2022-10-27")) throw new Exception("Tasks were not inserted or queryed correctly");
+            }
+        }
+        catch (Exception e){
+            System.out.println("Failed to query all tasks, reason:\n"+e);
+        }
+
 
         System.exit(0);
     }
