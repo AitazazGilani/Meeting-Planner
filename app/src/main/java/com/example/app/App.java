@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Launches the Application on the Calendar UI, this will likely change in the future to account for the login page.
+ */
 public class App extends Application {
 
     @Override
