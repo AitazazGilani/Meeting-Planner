@@ -42,7 +42,9 @@ public class TasksController {
      */
     @FXML
     private void initialize(){
+        //TODO TaskTab Initializer
 
+        //init and display all tasks in order by date (earliest date to latest date)
     }
 
     /**
@@ -50,6 +52,8 @@ public class TasksController {
      */
     @FXML
     private void onTasksTabClick() {
+        //TODO TaskTab Refresher
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
@@ -94,13 +98,13 @@ public class TasksController {
         stage.getScene().setRoot(fxmlLoader);
     }
 
-    //TODO Duplicate the NewTaskView and create an EditTaskView, for the edit button. delete will just delete the currently selected item.
-
     /**
      * Open a Task Form initialized with the currently selected Task
      */
     @FXML
     private void onEditClick() {
+        //TODO TaskTab Edit Button
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
@@ -110,6 +114,8 @@ public class TasksController {
      */
     @FXML
     private void onDeleteClick() {
+        //TODO TaskTab Delete Button
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
@@ -139,6 +145,8 @@ public class TasksController {
      */
     @FXML
     private void onNewCategoryClick() {
+        //TODO TaskTab NewCategory Button
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }

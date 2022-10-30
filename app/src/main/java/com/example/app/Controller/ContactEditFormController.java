@@ -1,14 +1,13 @@
 package com.example.app.Controller;
 
 import com.example.app.database.Contact;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class ContactFormController {
+public class ContactEditFormController {
     @FXML
     protected Button cancelBtn, deleteBtn, saveContactBtn;
     @FXML
@@ -24,10 +23,9 @@ public class ContactFormController {
      */
     @FXML
     private void initialize(){
-        //TODO ContactForm Initializer
+        //TODO ContactEditForm Initializer
 
-        //don't really need much here, as it would be mostly blanked, mainly init and dropdown boxes with their information
-        // with their information.
+        //initialize with the data of the selected contact when edit it clicked.
     }
 
     /**
@@ -35,10 +33,11 @@ public class ContactFormController {
      */
     @FXML
     private void onCancelClick() {
-        //TODO ContactForm Cancel Button
-
+        //TODO ContactEditForm Cancel Button
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+
+        //Close the Edit Form
     }
 
     /**
@@ -46,10 +45,11 @@ public class ContactFormController {
      */
     @FXML
     private void onDeleteClick() {
-        //TODO ContactForm Delete Button
-
+        //TODO ContactEditForm Delete Button
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+
+        //there is already a delete button in the previous page...?
     }
 
     /**
@@ -57,9 +57,10 @@ public class ContactFormController {
      */
     @FXML
     private void onSaveContactClick() {
-        //TODO ContactForm Save Button
-
+        //TODO ContactEditForm Save Button
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+
+        //update the current task and save/overwrite it to the database
     }
 }

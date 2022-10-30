@@ -40,7 +40,15 @@ public class CalendarController {
      */
     @FXML
     private void initialize(){
+        //TODO CalendarTab Initializer
 
+
+        //init with the information that would be displayed in the calendar, however, currently we do not
+        // have any calendar to work with.
+
+        //basis: 1. Pull every task stored into the database
+        //       2. one by one (hopefully if they are sorted) update the box in the calendar that corresponds with the
+        //          date and display the required information.
     }
 
     /**
@@ -48,6 +56,8 @@ public class CalendarController {
      */
     @FXML
     private void clickCalendarTab() {
+        //TODO CalendarTab Button refresh
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 

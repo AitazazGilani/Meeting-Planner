@@ -54,7 +54,10 @@ public class ContactsController {
      */
     @FXML
     private void initialize(){
+        //TODO ContactTab Initializer
 
+        //Init the contact tab with every contact based on their information, would have to figure out the whole timer
+        // thing, but it should be fairly straight forward.
     }
 
     /**
@@ -62,6 +65,8 @@ public class ContactsController {
      */
     @FXML
     private void onContactsTabClick() {
+        //TODO ContactTab refresh
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
@@ -112,6 +117,8 @@ public class ContactsController {
      */
     @FXML
     private void onEditContactClick() {
+        //TODO ContactTab Edit Button
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
@@ -121,6 +128,8 @@ public class ContactsController {
      */
     @FXML
     private void onDeleteContactClick() {
+        //TODO ContactTab Delete Button
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
@@ -151,6 +160,8 @@ public class ContactsController {
      */
     @FXML
     private void onTimerSummaryClick() {
+        //TODO ContactTab Timer Button
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
@@ -160,7 +171,11 @@ public class ContactsController {
      */
     @FXML
     private void onNewCategoryClick() {
+        //TODO ContactTab New Category Button
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+
+        //Currently, there isn't a form for the button to connect to, Lexi is doing that
     }
 }

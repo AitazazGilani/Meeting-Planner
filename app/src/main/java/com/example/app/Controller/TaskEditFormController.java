@@ -1,10 +1,9 @@
 package com.example.app.Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class TaskFormController {
+public class TaskEditFormController {
     @FXML
     protected Button saveTaskBtn, deleteBtn, cancelBtn;
 
@@ -29,9 +28,9 @@ public class TaskFormController {
      */
     @FXML
     private void initialize(){
-        //TODO TaskForm Initializer
+        //TODO TaskEditForm Initializer
 
-        //init the task forms information, text boxes should be blank, and dropdown boxes need information
+        //initialize with the data of the selected task when edit it clicked.
     }
 
     /**
@@ -39,7 +38,7 @@ public class TaskFormController {
      */
     @FXML
     private void onSaveTaskClick() {
-        //TODO TaskForm Save Button
+        //TODO TaskEditForm Save Button
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
@@ -50,7 +49,7 @@ public class TaskFormController {
      */
     @FXML
     private void onDeleteClick() {
-        //TODO TaskForm Delete Button
+        //TODO TaskEditForm Delete Button
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
@@ -61,7 +60,7 @@ public class TaskFormController {
      */
     @FXML
     private void onCancelClick() {
-        //TODO TaskForm Cancel Button
+        //TODO TaskEditForm Cancel Button
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
