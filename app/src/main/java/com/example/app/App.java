@@ -17,8 +17,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        //creates the db file if there isnt one, and runs regression tests.
-        ManageDB.main();
+        //creates the db file if there isnt one.
+        new ManageDB();
 
         FXMLLoader fxml = new FXMLLoader(App.class.getResource("CalendarView.fxml"));
 

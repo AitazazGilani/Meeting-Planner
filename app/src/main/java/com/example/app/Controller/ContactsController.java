@@ -105,7 +105,7 @@ public class ContactsController {
         stage.getScene().setRoot(fxmlLoader);
     }
 
-
+    //TODO Duplicate the NewContactView and create an EditContactView, for the edit button. delete will just delete the currently selected item.
 
     /**
      * Open ContactForm on click with current contacts information and id etc
@@ -132,6 +132,8 @@ public class ContactsController {
     private void onNewContactClick() throws IOException {
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+
+        //TODO Check if the window is already open, as to not create 300 tabs.
 
         //Load the Task form view into the loader
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ContactFormView.fxml")));

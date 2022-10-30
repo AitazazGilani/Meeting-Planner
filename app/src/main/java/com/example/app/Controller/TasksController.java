@@ -94,6 +94,8 @@ public class TasksController {
         stage.getScene().setRoot(fxmlLoader);
     }
 
+    //TODO Duplicate the NewTaskView and create an EditTaskView, for the edit button. delete will just delete the currently selected item.
+
     /**
      * Open a Task Form initialized with the currently selected Task
      */
@@ -119,6 +121,8 @@ public class TasksController {
     private void onNewTaskClick() throws IOException {
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+
+        //TODO Check if the window is already open, as to not create 300 tabs.
 
         //Load the Task form view into the loader
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("TaskFormView.fxml")));
