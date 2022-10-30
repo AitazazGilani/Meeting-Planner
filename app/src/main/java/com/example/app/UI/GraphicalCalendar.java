@@ -25,16 +25,14 @@ class GraphicalCalendar extends VBox {
     public GraphicalCalendar() {
         currentMonth = new GregorianCalendar();
         currentMonth.set(Calendar.DAY_OF_MONTH, 1);
-
-        //setSpacing(0);
-
+        
         drawCalendar(); /* from www.java2s.com */
     }
 
     private void drawCalendar() {
         drawHeader();
         drawBody();
-        // drawFooter();    Removed Footer
+        // drawFooter();    Removed Footer.
     }
 
     /* Modified header from original source */
