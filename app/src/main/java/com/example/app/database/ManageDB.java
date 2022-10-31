@@ -102,6 +102,9 @@ public class ManageDB {
      * @postcond new category row is created in CategoryTable in the db
      */
     public void createNewCategory(String c) {
+        // make sure to not add the same category twice
+        if (this.getAllCategories().contains(c))
+            return;
         String sql1 = "INSERT INTO ContactsTable (Category) VALUES (?)";
         try(Connection conn = DriverManager.getConnection(URL)){
             PreparedStatement pstmt = conn.prepareStatement(sql1);
@@ -120,9 +123,9 @@ public class ManageDB {
      * @precond Task t exists in db
      * @postcond Task t is removed from TaskTable in db
      */
-    public void deleteTask(Task t) throws Exception {
+    public void deleteTask(Task t) throws RowDoesNotExistException {
         if(t.getUID() == 0){
-            throw new Exception("The given task does not contain an ID, Please fetch the task from the database");
+            throw new RowDoesNotExistException("The given task does not contain an ID, Please fetch the task from the database");
         }
         int id = t.getUID();
 
@@ -143,8 +146,21 @@ public class ManageDB {
      * @precond Contact c exists in db
      * @postcond Contact c is removed from ContactsTable in db
      */
-    public void deleteContact(Contact c) {
+    public void deleteContact(Contact c) throws RowDoesNotExistException {
         //todo: method to delete a contact
+        if(c.getUID() == 0){
+            throw new RowDoesNotExistException("The given task does not contain an ID, Please fetch the contact from the database");
+        }
+        int id = c.getUID();
+
+        String sql = "DELETE FROM ContactsTable WHERE UID=?";
+        try(Connection conn = DriverManager.getConnection(URL)){
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,id);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Failed to delete the given contact, reason:\n" + e);
+        }
     }
 
     /**
@@ -154,26 +170,85 @@ public class ManageDB {
      * @precond Category c exists in db
      * @postcond Category c is removed from CategoryTable in db
      */
-    public void deleteCategory(String c) {
+    public void deleteCategory(String c) throws RowDoesNotExistException {
         //todo: method to delete a category
+        if(!this.getAllCategories().contains(c)){
+            throw new RowDoesNotExistException("The given category does not exist in the database. Please fetch the category from the database");
+        }
+
+        String sql = "DELETE FROM CategoryTable WHERE Category=?";
+        try(Connection conn = DriverManager.getConnection(URL)){
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,c);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Failed to delete the given category, reason:\n" + e);
+        }
     }
 
-    /**
+    /**NOT TESTED
      * Updates a contact, using uid to find the contact to update in the db
      * @param c Updated contact to query and update in the db
      * @postcond the information in a row of ContactsTable is updated
      */
-    public void updateContact(Contact c){
-        //todo: method to update/edit a contact
+    public void updateContact(Contact c) throws RowDoesNotExistException{
+        if(c.getUID() == 0){
+            throw new RowDoesNotExistException("The given task does not contain an ID, Please fetch the contact from the database");
+        }
+        int id = c.getUID();
+
+        String sql = "UPDATE ContactsTable SET Name = ? , "
+                + "Email = ? , "
+                + "Category = ? , "
+                + "TimeSpent = ? "
+                + "WHERE UID = ?";
+
+        try(Connection conn = DriverManager.getConnection(URL)){
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,c.getName());
+            pstmt.setString(2,c.getEmail());
+            pstmt.setString(3,c.getTimeSpent());
+            pstmt.setInt(4,id);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Failed to update the given contact, reason:\n" + e);
+        }
     }
 
-    /**
+    /**NOT TESTED
      * Updates a task, using uid to find the task to update in the db
      * @param t Updated task to query and update in the db
      * @postcond the information in a row of TaskTable is updated
      */
-    public void updateTask(Task t){
-        //todo: function to update tasks, must preserve table ordering
+    public void updateTask(Task t) throws RowDoesNotExistException {
+        if(t.getUID() == 0){
+            throw new RowDoesNotExistException("The given task does not contain an ID, Please fetch the contact from the database");
+        }
+        int id = t.getUID();
+
+        String sql = "UPDATE TaskTable SET TaskName = ? , "
+                + "Date = ? , "
+                + "Time = ? , "
+                + "Category = ? , "
+                + "TaskDuration = ? , "
+                + "TimeSpent = ? , "
+                + "ContactName = ? "
+                + "WHERE UID = ?";
+
+        try(Connection conn = DriverManager.getConnection(URL)){
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,t.getName());
+            pstmt.setString(2,t.getDate());
+            pstmt.setString(3,t.getTime());
+            pstmt.setString(4,t.getCategory());
+            pstmt.setString(5,t.getDuration());
+            pstmt.setString(6,t.getTimespent());
+            pstmt.setString(7,t.getContactName());
+            pstmt.setInt(8,id);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Failed to update the given task, reason:\n" + e);
+        }
     }
 
     /**
@@ -181,7 +256,7 @@ public class ManageDB {
      * @param t Task to query
      * @postcond
      */
-    private void queryTask(Task t){
+    private void queryTasks(Task t){
         //todo: function to query tasks by date, time, category, contacts
     }
 
@@ -322,7 +397,6 @@ public class ManageDB {
                 ");\n";
 
         String createCategoryTable = "CREATE TABLE CategoryTable(\n" +
-                "    UID integer primary key autoincrement,\n"+
                 "    Category varchar(255)\n" +
                 ");\n";
 
