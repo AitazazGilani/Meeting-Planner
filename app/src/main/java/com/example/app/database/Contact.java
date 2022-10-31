@@ -36,6 +36,22 @@ public class Contact implements TableObject<Contact> {
         return this.category;
     }
 
+    public void setName(String s) {
+        this.name = s;
+    }
+
+    public void setEmail(String s) {
+        this.email = s;
+    }
+
+    public void setTimeSpent(String s) {
+        this.timeSpent = s;
+    }
+
+    public void setCategory(String s) {
+        this.category = s;
+    }
+
     /**
      * DO NOT USE IN VIEWS OR CONTROLLER, Set the UID for a task.
      * Handled by ManageDB

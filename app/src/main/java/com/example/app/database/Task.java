@@ -48,10 +48,40 @@ public class Task implements TableObject<Task> {
         return this.duration;
     }
 
-    public String getTimespent() {return this.timespent;}
+    public String getTimespent() {
+        return this.timespent;
+    }
 
     public String getContactName() {
         return this.contactName;
+    }
+
+    public void setName(String s) {
+        this.name = s;
+    }
+
+    public void setDate(String s) {
+        this.date = s;
+    }
+
+    public void setTime(String s) {
+        this.time = s;
+    }
+
+    public void setCategory(String s) {
+        this.category = s;
+    }
+
+    public void setDuration(String s) {
+        this.duration = s;
+    }
+
+    public void setTimespent(String s) {
+        this.timespent = s;
+    }
+
+    public void getContactName(String s) {
+        this.contactName = s;
     }
 
     /**
