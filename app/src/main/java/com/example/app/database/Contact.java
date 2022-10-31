@@ -13,9 +13,11 @@ public class Contact implements TableObject<Contact> {
      */
     int UID;
 
+
     public Contact(String name, String email, String timeSpent, String category) {
         this.name = name;
         this.email = email;
+        // TODO: are we even gonna use timeSpent in Contacts?
         this.timeSpent = timeSpent;
         this.category = category;
     }
@@ -67,21 +69,11 @@ public class Contact implements TableObject<Contact> {
      */
     public int getUID(){return this.UID;}
 
-    /**
-     * Overriden toString method that formats the correct string for a Contact
-     * @return the formatted string for a Contact
-     */
-    @Override
     public String toString() {
+        // TODO: implement method
         return "";
     }
 
-    /**
-     * Overriden equals method for Contact object to check equality between this object and another Contact
-     * Does not check if id's are equal
-     * @param contact the contact to compare to
-     * @return whether the input contact is equal to this contact
-     */
     public boolean equals(Contact contact) {
         return contact.getName().equals(this.getName()) &&
                 contact.getEmail().equals(this.getEmail()) &&

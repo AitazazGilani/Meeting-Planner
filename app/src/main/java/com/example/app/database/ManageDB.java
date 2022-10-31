@@ -14,6 +14,16 @@ public class ManageDB {
     //private static final String URL = "jdbc:sqlite:res/database.db";
     private static final String URL = "jdbc:sqlite:" + PATH + "/database.db";
 
+    // Available task query options
+    public enum TaskQuery {
+        DATE, TIME, CATEGORY, CONTACT
+    }
+
+    // Available contact query options
+    public enum ContactQuery {
+        CATEGORY, TIMESPENT
+    }
+
     /**
      * Constructor which checks if database file exists, if not, calls helper method to create a new database
      */
@@ -87,7 +97,7 @@ public class ManageDB {
             pstmt.setString(3,t.getTime());
             pstmt.setString(4,t.getCategory());
             pstmt.setString(5,t.getDuration());
-            pstmt.setString(6,t.getTimespent());
+            pstmt.setString(6,t.getTimeSpent());
             pstmt.setString(7,t.getContactName());
 
             pstmt.executeUpdate();
@@ -147,7 +157,6 @@ public class ManageDB {
      * @postcond Contact c is removed from ContactsTable in db
      */
     public void deleteContact(Contact c) throws RowDoesNotExistException {
-        //todo: method to delete a contact
         if(c.getUID() == 0){
             throw new RowDoesNotExistException("The given task does not contain an ID, Please fetch the contact from the database");
         }
@@ -161,6 +170,7 @@ public class ManageDB {
         } catch (Exception e) {
             System.out.println("Failed to delete the given contact, reason:\n" + e);
         }
+        // TODO: remove all references to this contact from TaskTable
     }
 
     /**
@@ -171,7 +181,6 @@ public class ManageDB {
      * @postcond Category c is removed from CategoryTable in db
      */
     public void deleteCategory(String c) throws RowDoesNotExistException {
-        //todo: method to delete a category
         if(!this.getAllCategories().contains(c)){
             throw new RowDoesNotExistException("The given category does not exist in the database. Please fetch the category from the database");
         }
@@ -184,9 +193,11 @@ public class ManageDB {
         } catch (Exception e) {
             System.out.println("Failed to delete the given category, reason:\n" + e);
         }
+
+        //TODO: remove all references to deleted category in tasks and contact
     }
 
-    /**NOT TESTED
+    /**
      * Updates a contact, using uid to find the contact to update in the db
      * @param c Updated contact to query and update in the db
      * @postcond the information in a row of ContactsTable is updated
@@ -215,7 +226,7 @@ public class ManageDB {
         }
     }
 
-    /**NOT TESTED
+    /**
      * Updates a task, using uid to find the task to update in the db
      * @param t Updated task to query and update in the db
      * @postcond the information in a row of TaskTable is updated
@@ -242,7 +253,7 @@ public class ManageDB {
             pstmt.setString(3,t.getTime());
             pstmt.setString(4,t.getCategory());
             pstmt.setString(5,t.getDuration());
-            pstmt.setString(6,t.getTimespent());
+            pstmt.setString(6,t.getTimeSpent());
             pstmt.setString(7,t.getContactName());
             pstmt.setInt(8,id);
             pstmt.executeUpdate();
@@ -253,20 +264,55 @@ public class ManageDB {
 
     /**
      * Query tasks by date, time, category, contacts
-     * @param t Task to query
+     * @param queryType Task to query
      * @postcond
      */
-    private void queryTasks(Task t){
-        //todo: function to query tasks by date, time, category, contacts
+    public ArrayList<Task> queryTasks(TaskQuery queryType){
+        // TODO: WORK IN PROGRESS
+        ArrayList<Task> ret = new ArrayList<>();
+
+        switch (queryType) {
+            case DATE -> {
+                break;
+            }
+            case TIME -> {
+                break;
+            }
+            case CATEGORY -> {
+                break;
+            }
+            case CONTACT -> {
+                break;
+            }
+            default -> {
+                break;
+            }
+        }
+
+        return ret;
     }
 
     /**
      * Queries contacts by time spent with them
-     * @param c Contact to query
+     * @param queryType Contact to query
      * @postcond
      */
-    private void queryContact(Contact c){
-        //todo: function to query contacts by time spent with them
+    public ArrayList<Contact> queryContacts(ContactQuery queryType, String query){
+        // TODO: WORK IN PROGRESS
+        ArrayList<Contact> ret = new ArrayList<>();
+
+        switch (queryType) {
+            case CATEGORY -> {
+                break;
+            }
+            case TIMESPENT -> {
+                break;
+            }
+            default -> {
+                break;
+            }
+        }
+        return ret;
     }
 
     /**

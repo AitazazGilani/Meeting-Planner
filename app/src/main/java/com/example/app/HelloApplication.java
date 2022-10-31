@@ -1,5 +1,6 @@
 package com.example.app;
 
+import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 import com.example.app.database.RowDoesNotExistException;
 import com.example.app.database.Task;
@@ -43,6 +44,8 @@ public class HelloApplication extends Application {
         } catch (RowDoesNotExistException e) {
             System.out.println(e);
         }
+
+        ArrayList<Contact> c = db.queryContacts(ManageDB.ContactQuery.CATEGORY, "School");
 
         System.exit(0);
         //launch();
