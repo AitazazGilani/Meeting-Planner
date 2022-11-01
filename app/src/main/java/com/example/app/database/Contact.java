@@ -70,7 +70,7 @@ public class Contact implements TableObject<Contact> {
     public int getUID(){return this.UID;}
 
     public String toString() {
-        // TODO: implement method
+        // TODO: implement toString method
         return "";
     }
 

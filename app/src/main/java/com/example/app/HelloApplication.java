@@ -45,7 +45,7 @@ public class HelloApplication extends Application {
             System.out.println(e);
         }
 
-        ArrayList<Contact> c = db.queryContacts(ManageDB.ContactQuery.CATEGORY, "School");
+
 
         System.exit(0);
         //launch();

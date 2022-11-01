@@ -80,7 +80,7 @@ public class Task implements TableObject<Task> {
         this.timeSpent = s;
     }
 
-    public void getContactName(String s) {
+    public void setContactName(String s) {
         this.contactName = s;
     }
 
@@ -100,8 +100,8 @@ public class Task implements TableObject<Task> {
     public int getUID(){return this.UID;}
 
     public String toString() {
-        // TODO: implement method
-        return "";
+        // TODO: implement toString method
+        return this.getName();
     }
 
     public boolean equals(Task task) {

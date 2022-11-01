@@ -2,7 +2,12 @@ package com.example.app.database;
 
 import java.io.File;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 
 /**
  * Serves as the model to provide interactions with the database.
@@ -158,7 +163,7 @@ public class ManageDB {
      */
     public void deleteContact(Contact c) throws RowDoesNotExistException {
         if(c.getUID() == 0){
-            throw new RowDoesNotExistException("The given task does not contain an ID, Please fetch the contact from the database");
+            throw new RowDoesNotExistException("The given contact does not contain an ID, Please fetch the contact from the database");
         }
         int id = c.getUID();
 
@@ -170,7 +175,18 @@ public class ManageDB {
         } catch (Exception e) {
             System.out.println("Failed to delete the given contact, reason:\n" + e);
         }
-        // TODO: remove all references to this contact from TaskTable
+
+        // remove all associations to the deleted contact from TaskTable
+        // get the list of all tasks
+        ArrayList<Task> tasks = this.getAllTasks();
+        // for each task in list, check to see if the task includes this contact in it
+        for (Task task : tasks) {
+            if (task.getContactName().equals(c.getName())) {
+                // if contact name exists in task, update task to set an empty string as the contact name
+                task.setContactName("");
+                this.updateTask(task);
+            }
+        }
     }
 
     /**
@@ -194,7 +210,28 @@ public class ManageDB {
             System.out.println("Failed to delete the given category, reason:\n" + e);
         }
 
-        //TODO: remove all references to deleted category in tasks and contact
+        // remove all associations to the deleted category from TaskTable
+        // get the list of all tasks
+        ArrayList<Task> tasks = this.getAllTasks();
+        // for each task in list, check to see if the task includes this category in it
+        for (Task task : tasks) {
+            if (task.getCategory().equals(c)) {
+                // if category exists in task, update task to set an empty string as the category
+                task.setCategory("");
+                this.updateTask(task);
+            }
+        }
+        // remove all associations to the deleted category from ContactsTable
+        // get the list of all contacts
+        ArrayList<Contact> contacts = this.getAllContacts();
+        // for each contact in list, check to see if the contact includes this category in it
+        for (Contact contact : contacts) {
+            if (contact.getCategory().equals(c)) {
+                // if category exists in contact, update contact to set an empty string as the category
+                contact.setCategory("");
+                this.updateContact(contact);
+            }
+        }
     }
 
     /**
@@ -262,15 +299,47 @@ public class ManageDB {
         }
     }
 
-    /**
-     * Query tasks by date, time, category, contacts
-     * @param queryType Task to query
-     * @postcond
-     */
-    public ArrayList<Task> queryTasks(TaskQuery queryType){
-        // TODO: WORK IN PROGRESS
-        ArrayList<Task> ret = new ArrayList<>();
 
+    /**
+     * Query all the tasks in a given date, and sort by time before returning
+     * @param date date string in the format YYYY-MM-DD to query tasks by
+     * @return array list of sorted tasks by time in a given date
+     */
+    public ArrayList<Task> queryTasksByDate(String date) {
+        ArrayList<Task> allTasks = this.getAllTasks();
+        ArrayList<Task> queriedTasks = new ArrayList<>();
+        // for each of the tasks, if the date matches the parameter date, add it to queriedTasks
+        for (Task task : allTasks) {
+            if (task.getDate().equals(date)) {
+                queriedTasks.add(task);
+            }
+        }
+        // custom comparator used to sort the queriedTasks arraylist by time
+        queriedTasks.sort(new Comparator<Task>() {
+            final DateFormat df = new SimpleDateFormat("HH:mm:ss");
+            @Override
+            public int compare(Task t1, Task t2) {
+                try {
+                    Date d1 = df.parse(t1.getTime());
+                    Date d2 = df.parse(t2.getTime());
+                    return d1.compareTo(d2);
+                } catch (ParseException e) {
+                    System.out.println("Parse failed: " + e);
+                    return 0;
+                }
+            }
+        });
+        return queriedTasks;
+    }
+
+    /**
+     * Query tasks by date, time, category, or contact
+     * @param queryType Task to query
+     * @return an arraylist of tasks which match the query
+     */
+    private ArrayList<Task> queryTasks(TaskQuery queryType) {
+        // TODO: Implement queryTasks Method
+        ArrayList<Task> ret = new ArrayList<>();
         switch (queryType) {
             case DATE -> {
                 break;
@@ -288,19 +357,17 @@ public class ManageDB {
                 break;
             }
         }
-
         return ret;
     }
 
     /**
-     * Queries contacts by time spent with them
+     * Query contacts by category or time spent with them
      * @param queryType Contact to query
-     * @postcond
+     * @return an arraylist of tasks which match the query
      */
-    public ArrayList<Contact> queryContacts(ContactQuery queryType, String query){
-        // TODO: WORK IN PROGRESS
+    private ArrayList<Contact> queryContacts(ContactQuery queryType, String query){
+        // TODO: Implement queryContacts Method
         ArrayList<Contact> ret = new ArrayList<>();
-
         switch (queryType) {
             case CATEGORY -> {
                 break;
@@ -463,6 +530,7 @@ public class ManageDB {
      * main method used for testing
      */
     public static void main(String[] args){
+        // TODO: Create more tests
         System.out.println(System.getProperty("user.dir"));
         ManageDB db = new ManageDB();
 
@@ -504,6 +572,31 @@ public class ManageDB {
         catch (Exception e){
             System.out.println("Failed to delete the given task, reason:\n"+e);
         }
+
+        // reset TaskTable in db by removing all tasks
+        ArrayList<Task> allTasks = db.getAllTasks();
+        for (Task task: allTasks) {
+            try {
+                db.deleteTask(task);
+            } catch (RowDoesNotExistException e) {
+                System.out.println(e);
+            }
+        }
+        // tests queryTasksByDate method
+        db.createNewTask(new Task("t0", "2022-10-31", "13:11:11", "", "", "", ""));
+        db.createNewTask(new Task("t1", "2022-11-01", "13:11:11", "", "", "", ""));
+        db.createNewTask(new Task("t2", "2022-11-01", "13:11:11", "", "", "", ""));
+        db.createNewTask(new Task("t3", "2022-11-01", "13:11:05", "", "", "", ""));
+        db.createNewTask(new Task("t4", "2022-11-01", "13:05:11", "", "", "", ""));
+        db.createNewTask(new Task("t5", "2022-11-01", "20:00:01", "", "", "", ""));
+        db.createNewTask(new Task("t6", "2022-11-01", "00:00:00", "", "", "", ""));
+        db.createNewTask(new Task("t7", "2022-11-02", "00:01:01", "", "", "", ""));
+
+        ArrayList<Task> query = db.queryTasksByDate("2022-11-01");
+        System.out.println(query);
+
+        File f = new File(PATH + "/database.db");
+        f.delete();
 
         System.exit(0);
     }
