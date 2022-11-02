@@ -1,5 +1,7 @@
 package com.example.app.Controller;
 
+import com.example.app.database.ManageDB;
+import com.example.app.database.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -41,6 +43,20 @@ public class TaskFormController {
     @FXML
     private void onSaveTaskClick() {
         //TODO TaskForm Save Button
+
+        //Grab all info from text fields/dropdowns/options and create a new task with that info
+
+
+
+        Task t = new Task(titleTextField.getText(), taskDatePicker.getValue().toString(), timeTextField.getText(), "", "", "", "self");
+
+        //Add new task to the db
+        ManageDB.createNewTask(t);
+
+        //Gets current stage (new task window)
+        Stage cur = (Stage) saveTaskBtn.getScene().getWindow();
+        //Close the window after saving the task
+        cur.close();
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
