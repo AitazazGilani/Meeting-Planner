@@ -3,6 +3,7 @@ package com.example.app.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 public class TaskFormController {
     @FXML
@@ -62,6 +63,11 @@ public class TaskFormController {
     @FXML
     private void onCancelClick() {
         //TODO TaskForm Cancel Button
+
+        //Gets current stage (new task window)
+        Stage cur = (Stage) cancelBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
