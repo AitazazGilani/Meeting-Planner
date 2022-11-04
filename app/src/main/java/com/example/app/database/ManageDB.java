@@ -299,7 +299,7 @@ public class ManageDB {
         }
     }
 
-
+    //TODO: Test out the method
     /**
      * Query all the tasks in a given date, and sort by time before returning
      * @param date date string in the format YYYY-MM-DD to query tasks by
@@ -314,6 +314,9 @@ public class ManageDB {
                 queriedTasks.add(task);
             }
         }
+
+        //todo check if the time sorting is done correctly, time sorted is in increasing order or ?
+
         // custom comparator used to sort the queriedTasks arraylist by time
         queriedTasks.sort(new Comparator<Task>() {
             final DateFormat df = new SimpleDateFormat("HH:mm:ss");
@@ -337,20 +340,37 @@ public class ManageDB {
      * @param queryType Task to query
      * @return an arraylist of tasks which match the query
      */
-    private ArrayList<Task> queryTasks(TaskQuery queryType) {
+    private ArrayList<Task> queryTasks(TaskQuery queryType, String query) {
         // TODO: Implement queryTasks Method
+        ArrayList<Task> allTasks = this.getAllTasks();
         ArrayList<Task> ret = new ArrayList<>();
         switch (queryType) {
             case DATE -> {
+                ret = queryTasksByDate(query);
                 break;
             }
-            case TIME -> {
+            case TIME -> { //note this is just getting the tasks by that same exact time
+                for (Task task : allTasks) {
+                    if (task.getTime().equals(query)) {
+                        ret.add(task);
+                    }
+                }
                 break;
             }
             case CATEGORY -> {
+                for (Task task : allTasks) {
+                    if (task.getCategory().equals(query)) {
+                        ret.add(task);
+                    }
+                }
                 break;
             }
             case CONTACT -> {
+                for (Task task : allTasks) {
+                    if (task.getContactName().equals(query)) {
+                        ret.add(task);
+                    }
+                }
                 break;
             }
             default -> {
@@ -367,12 +387,33 @@ public class ManageDB {
      */
     private ArrayList<Contact> queryContacts(ContactQuery queryType, String query){
         // TODO: Implement queryContacts Method
+        ArrayList<Contact> allContacts = getAllContacts();
         ArrayList<Contact> ret = new ArrayList<>();
         switch (queryType) {
             case CATEGORY -> {
+                for (Contact contact : allContacts) {
+                    if (contact.getCategory().equals(query)) {
+                        ret.add(contact);
+                    }
+                }
                 break;
             }
-            case TIMESPENT -> {
+            case TIMESPENT -> { //todo: check if the time spent sorting is done correctly
+                ret = allContacts;
+                ret.sort(new Comparator<Contact>() {
+                    final DateFormat df = new SimpleDateFormat("HH:mm:ss");
+                    @Override
+                    public int compare(Contact c1, Contact c2) {
+                        try {
+                            Date d1 = df.parse(c1.getTimeSpent());
+                            Date d2 = df.parse(c2.getTimeSpent());
+                            return d1.compareTo(d2);
+                        } catch (ParseException e) {
+                            System.out.println("Parse failed: " + e);
+                            return 0;
+                        }
+                    }
+                });
                 break;
             }
             default -> {
