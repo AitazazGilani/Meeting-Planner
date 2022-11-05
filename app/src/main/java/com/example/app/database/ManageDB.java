@@ -51,7 +51,24 @@ public class ManageDB {
      * @precond db does not exist (first time opening the application)
      * @postcond only one user exists in the db. NO MORE USERS SHOULD BE CREATED
      */
-    public void createNewUser(String name, String pass) {
+    public void createNewUser(String name, String pass) throws UserAlreadyExistsException {
+        // initial check to make sure a user does not exist
+        int count = 0;
+        try(Connection conn = DriverManager.getConnection(URL)){
+            Statement s = conn.createStatement();
+            ResultSet r = s.executeQuery("SELECT COUNT(*) AS rowcount FROM LoginTable");
+            r.next();
+            count = r.getInt("rowcount");
+            r.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        if (count == 1)
+            throw new UserAlreadyExistsException("A user already exists");
+        else if (count > 1)
+            throw new UserAlreadyExistsException("Multiple users exist, there should only be one user");
+
         String sql1 = "INSERT INTO LoginTable (UserName, Password) VALUES (?,?)";
         //for inserting a user, using sql1 string
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -68,6 +85,7 @@ public class ManageDB {
     /**
      * Create a new Contact in the db
      * @param p Contact to add to the db
+     * @precond category name string exists in CategoryTable or is blank for no category
      * @postcond new contact row is created in ContactsTable in the db
      */
     public void createNewContact(Contact p){
@@ -90,6 +108,8 @@ public class ManageDB {
      * Time format must be in: HH:mm:ss
      * Time must be in 24hr format
      * @param t Task to add to the db
+     * @precond category name string exists in CategoryTable or is blank for no category
+     * @precond contact name string exists in ContactsTable or is blank for no contact
      * @postcond new task row is created in TaskTable in the db
      */
 
@@ -121,7 +141,7 @@ public class ManageDB {
         // make sure to not add the same category twice
         if (this.getAllCategories().contains(c))
             return;
-        String sql1 = "INSERT INTO ContactsTable (Category) VALUES (?)";
+        String sql1 = "INSERT INTO CategoryTable (Category) VALUES (?)";
         try(Connection conn = DriverManager.getConnection(URL)){
             PreparedStatement pstmt = conn.prepareStatement(sql1);
             pstmt.setString(1,c);
@@ -259,8 +279,9 @@ public class ManageDB {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,c.getName());
             pstmt.setString(2,c.getEmail());
-            pstmt.setString(3,c.getTimeSpent());
-            pstmt.setInt(4,id);
+            pstmt.setString(3,c.getCategory());
+            pstmt.setString(4,c.getTimeSpent());
+            pstmt.setInt(5,id);
             pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Failed to update the given contact, reason:\n" + e);
@@ -303,10 +324,6 @@ public class ManageDB {
         }
     }
 
-
-    //todo: function to query tasks by date, time, category, contacts
-
-    //TODO: Test out the method
     /**
      * Query all the tasks in a given date, and sort by time before returning
      * @param date date string in the format YYYY-MM-DD to query tasks by
@@ -321,8 +338,6 @@ public class ManageDB {
                 queriedTasks.add(task);
             }
         }
-
-        //todo check if the time sorting is done correctly, time sorted is in increasing order or ?
 
         // custom comparator used to sort the queriedTasks arraylist by time
         queriedTasks.sort(new Comparator<Task>() {
@@ -350,8 +365,8 @@ public class ManageDB {
      * @param queryType Task to query
      * @return an arraylist of tasks which match the query
      */
-    private ArrayList<Task> queryTasks(TaskQuery queryType, String query) {
-        // TODO: Implement queryTasks Method
+    public ArrayList<Task> queryTasks(TaskQuery queryType, String query) {
+        // TODO: CLARIFY WHICH QUERIES WE ACTUALLY NEED
         ArrayList<Task> allTasks = this.getAllTasks();
         ArrayList<Task> ret = new ArrayList<>();
         switch (queryType) {
@@ -365,6 +380,7 @@ public class ManageDB {
                         ret.add(task);
                     }
                 }
+                // TODO: Sort Time query?
                 break;
             }
             case CATEGORY -> {
@@ -373,6 +389,7 @@ public class ManageDB {
                         ret.add(task);
                     }
                 }
+                // TODO: Sort Category query?
                 break;
             }
             case CONTACT -> {
@@ -381,6 +398,7 @@ public class ManageDB {
                         ret.add(task);
                     }
                 }
+                // TODO: Sort Contact query?
                 break;
             }
             default -> {
@@ -395,8 +413,8 @@ public class ManageDB {
      * @param queryType Contact to query
      * @return an arraylist of tasks which match the query
      */
-    private ArrayList<Contact> queryContacts(ContactQuery queryType, String query){
-        // TODO: Implement queryContacts Method
+    public ArrayList<Contact> queryContacts(ContactQuery queryType, String query){
+        // TODO: CLARIFY WHICH QUERIES WE ACTUALLY NEED
         ArrayList<Contact> allContacts = getAllContacts();
         ArrayList<Contact> ret = new ArrayList<>();
         switch (queryType) {
@@ -406,6 +424,7 @@ public class ManageDB {
                         ret.add(contact);
                     }
                 }
+                // TODO: Sort Category query?
                 break;
             }
             case TIMESPENT -> { //todo: check if the time spent sorting is done correctly
@@ -424,6 +443,7 @@ public class ManageDB {
                         }
                     }
                 });
+                // TODO: Sort TimeSpent query?
                 break;
             }
             default -> {
@@ -479,10 +499,10 @@ public class ManageDB {
                 Contact c = new Contact(
                         rs.getString("Name"),
                         rs.getString("Email"),
-                        rs.getString("Category"),
-                        rs.getString("TimeSpent")
+                        rs.getString("TimeSpent"),
+                        rs.getString("Category")
                 );
-
+                c.setUID(rs.getInt("UID"));
                 contacts.add(c);
             }
         }
@@ -498,7 +518,7 @@ public class ManageDB {
      */
     public ArrayList<String> getAllCategories() {
         ArrayList<String> categories = new ArrayList<>();
-        String sql = "SELECT * FROM ContactsTable";
+        String sql = "SELECT * FROM CategoryTable";
         try(Connection conn = DriverManager.getConnection(URL)){
             Statement stmt  = conn.createStatement();
             ResultSet rs    = stmt.executeQuery(sql);
@@ -514,7 +534,7 @@ public class ManageDB {
     }
 
     /**
-     * Create a new SQLITE database file and creates all the necessary tables for the application
+     * Create a new SQLITE database file and create all the necessary tables for the application
      * @postcond new db file with the necessary tables
      */
     private void createNewDB() {
@@ -581,52 +601,219 @@ public class ManageDB {
 
     /**
      * main method used for testing
+     * WARNING: RESETS WHOLE DATABASE, REMOVING ALL DATA
      */
     public static void main(String[] args){
-        // TODO: Create more tests
-        System.out.println(System.getProperty("user.dir"));
+        // removes database if it already exists
+        File f = new File(PATH + "/database.db");
+        f.delete();
+
+        // create new db
         ManageDB db = new ManageDB();
 
-        //regression tests, must be done on a new db
+        // remove all data if any exists (fallback from f.delete() incase database file is active and cannot be deleted)
+        db.reset();
 
-        //test case 1: add several tasks
-        Task a = new Task("Study for 370","2022-10-27","12:00:00","Uni","02:00:00","","Self");
-        Task b = new Task("Study for 381","2022-10-27","12:00:00","Uni","02:00:00","","Self");
-        Task c = new Task("Study for 360","2022-10-27","12:00:00","Uni","02:00:00","","Self");
+        // REGRESSION TESTS
+        System.out.println("\nRUNNING REGRESSION TESTS");
+
+        // test case 1: create a new user (tests createNewUser())
+        try {
+            db.createNewUser("username", "password");
+        } catch (UserAlreadyExistsException e) {
+            System.out.println("ERROR: expected no users to exist in db after first time run");
+        } catch (Exception e) {
+            System.out.println("ERROR: no exception expected");
+        }
+
+        // test case 2: create a new user when a user already exists (tests createNewUser())
+        try {
+            db.createNewUser("username2", "password2");
+        } catch (UserAlreadyExistsException e) {
+            // Exception expected
+        } catch (Exception e) {
+            System.out.println("ERROR: UserAlreadyExistsException expected but got another exception");
+        }
+
+        // test case 3: add several contacts (tests createNewContact())
+        Contact c0 = new Contact("John Doe", "john.doe@gmail.com", "0", "Work");
+        Contact c1 = new Contact("Jane Doe", "jane.doe@usask.ca", "0", "Uni");
         try{
-            db.createNewTask(a);
-            db.createNewTask(b);
-            db.createNewTask(c);
+            db.createNewContact(c0);
+            db.createNewContact(c1);
         }
         catch(Exception e){
-            System.out.println("Failed to insert tasks to table, reason:\n"+e);
+            System.out.println("ERROR: Failed to insert contacts into table, reason: "+e);
+        }
+        if (db.getAllContacts().size() != 2) {
+            System.out.println("ERROR: expected 2 contacts to be created in ContactsTable, got: " + db.getAllContacts().size());
         }
 
-        //Test case 2: Check if the tasks exist and test getAllTasks()
+        // test case 4: add several tasks (tests createNewTask())
+        Task t0 = new Task("Study for 370","2022-10-27","12:00:00","Uni","02:00:00","","");
+        Task t1 = new Task("Study for 381","2022-10-27","12:00:00","Uni","02:00:00","","");
+        Task t2 = new Task("Study for 360","2022-10-27","12:00:00","Uni","02:00:00","","Jane Doe");
         try{
-            ArrayList<Task> arr = db.getAllTasks();
-            for(Task t: arr){
-                if(!t.getDate().equals("2022-10-27")) throw new Exception("Tasks were not inserted or queryed correctly");
+            db.createNewTask(t0);
+            db.createNewTask(t1);
+            db.createNewTask(t2);
+        }
+        catch(Exception e){
+            System.out.println("ERROR: Failed to insert tasks into table, reason: "+e);
+        }
+        if (db.getAllTasks().size() != 3) {
+            System.out.println("ERROR: expected 3 tasks to be created in TaskTable, got: " + db.getAllTasks().size());
+        }
+
+        // test case 5: add several categories (including a duplicate which should not be added) (tests createNewCategory() and getAllCategories())
+        ArrayList<String> categories = new ArrayList<>();
+        categories.add("Work");
+        categories.add("Uni");
+        categories.add("Personal");
+        categories.add("Uni");
+        try {
+            for (String c : categories) {
+                db.createNewCategory(c);
             }
+        } catch(Exception e){
+            System.out.println("ERROR: Failed to insert categories into table, reason: "+e);
         }
-        catch (Exception e){
-            System.out.println("Failed to query all tasks, reason:\n"+e);
+        if (db.getAllCategories().size() != 3) {
+            System.out.println("ERROR: expected 3 categories to be created in CategoryTable, got: " + db.getAllCategories().size());
+        }
+        if (!(categories.get(0).equals(db.getAllCategories().get(0)) &&
+                categories.get(1).equals(db.getAllCategories().get(1)) &&
+                categories.get(2).equals(db.getAllCategories().get(2)))) {
+            System.out.println("ERROR: expected 3 categories to be Work, Uni, and Personal. Got: " +
+                    db.getAllCategories().get(0) + ", " +
+                    db.getAllCategories().get(1) + ", and " +
+                    db.getAllCategories().get(2));
         }
 
-        //Test case 3: delete a task
-        try{
+        // test case 6: Check if the tasks exist (tests getAllTasks())
+        try {
             ArrayList<Task> arr = db.getAllTasks();
             for(Task t: arr){
                 if(!t.getDate().equals("2022-10-27")) throw new Exception("Tasks were not inserted or queried correctly");
             }
-            //delete the first task
-            db.deleteTask(arr.get(0));
-        }
-        catch (Exception e){
-            System.out.println("Failed to delete the given task, reason:\n"+e);
+        } catch (Exception e){
+            System.out.println("ERROR: Failed to query all tasks, reason: "+e);
         }
 
-        // reset TaskTable in db by removing all tasks
+        // test case 7: Check if the contacts exist (tests getAllContacts())
+        try {
+            ArrayList<Contact> arr = db.getAllContacts();
+            for(Contact c: arr){
+                if(!(c.getName().equals("John Doe") || c.getName().equals("Jane Doe")))
+                    throw new Exception("Contacts were not inserted or queried correctly");
+            }
+        } catch (Exception e){
+            System.out.println("ERROR: Failed to query all contacts, reason: "+e);
+        }
+
+        //Test case 8: delete a task (tests deleteTask())
+        try {
+            ArrayList<Task> arr = db.getAllTasks();
+            int numTasks = arr.size();
+            for(Task t: arr){
+                if(!t.getDate().equals("2022-10-27")) throw new Exception("Tasks were not inserted or queried correctly.");
+            }
+            // delete the first task
+            db.deleteTask(arr.get(0));
+            if (!(db.getAllTasks().size() == (numTasks - 1)))
+                throw new Exception("Expected size of tasksTable to be only one smaller after deleting one task.");
+        }
+        catch (Exception e){
+            System.out.println("ERROR: Failed to delete the given task, reason: "+e);
+        }
+
+        //Test case 9: delete a Category (tests deleteCategory())
+        try {
+            ArrayList<String> arr = db.getAllCategories();
+            int numCategories = arr.size();
+
+            // delete the "Uni" category
+            db.deleteCategory("Uni");
+            if (!(db.getAllCategories().size() == (numCategories - 1)))
+                throw new Exception("Expected size of CategoryTable to be only one smaller after deleting one category.");
+
+            // test to see if category association has be removed from tasks and contacts:
+            ArrayList<Task> tasks = db.getAllTasks();
+            for (Task task : tasks) {
+                if (task.getCategory().equals("Uni"))
+                    throw new Exception("Category association has not been removed from a task after deleting \"Uni\" category.");
+            }
+            ArrayList<Contact> contacts = db.getAllContacts();
+            for (Contact contact : contacts) {
+                if (contact.getCategory().equals("Uni"))
+                    throw new Exception("Category association has not been removed from a contact after deleting \"Uni\" category.");
+            }
+        }
+        catch (Exception e){
+            System.out.println("ERROR: Failed to delete the given category, reason: "+e);
+        }
+
+        //Test case 10: delete a Contact (tests deleteContact())
+        try {
+            ArrayList<Contact> arr = db.getAllContacts();
+            int numContacts = arr.size();
+
+            // delete the "Jane Doe" contact
+            for (Contact contact : arr) {
+                if (contact.getName().equals("Jane Doe"))
+                    db.deleteContact(contact);
+            }
+            if (!(db.getAllContacts().size() == (numContacts - 1)))
+                throw new Exception("Expected size of ContactsTable to be only one smaller after deleting one contact.");
+
+            // test to see if contact association has be removed from tasks:
+            ArrayList<Task> tasks = db.getAllTasks();
+            for (Task task : tasks) {
+                if (task.getContactName().equals("Jane Doe"))
+                    throw new Exception("Contact association has not been removed from a task after deleting \"Jane Doe\" contact.");
+            }
+        }
+        catch (Exception e){
+            System.out.println("ERROR: Failed to delete the given contact, reason: "+e);
+        }
+
+        // test case 11: update a contact (tests updateContact())
+        ArrayList<Contact> contacts = db.getAllContacts();
+        Contact c = contacts.get(0);
+        c.setEmail("JohnD@gmail.com");
+        c.setTimeSpent("01:20:00");
+        try {
+            db.updateContact(c);
+        } catch (Exception e) {
+            System.out.println("ERROR: failed to update contact, reason: "+e);
+        }
+        contacts = db.getAllContacts();
+        c = contacts.get(0);
+        if (!c.getTimeSpent().equals("01:20:00") && !c.getEmail().equals("JohnD@gmail.com")) {
+            System.out.println("ERROR: expected updated contact timeSpent to be \"01:20:00\" but got \"" +
+                    c.getTimeSpent() +
+                    "\" and contact Email to be \"JohnD@gmail.com\" but got: \"" +
+                    c.getEmail() +
+                    "\"");
+        }
+
+        // test case 12: update a task (tests updateTask())
+        ArrayList<Task> tasks = db.getAllTasks();
+        Task t = tasks.get(1);
+        t.setName("Study for 281");
+        try {
+            db.updateTask(t);
+        } catch (Exception e) {
+            System.out.println("ERROR: failed to update task, reason: "+e);
+        }
+        tasks = db.getAllTasks();
+        t = tasks.get(1);
+        if (!t.getName().equals("Study for 281")) {
+            System.out.println("ERROR: expected updated task name to be \"Study for 281\" but got \"" + t.getName() + "\"");
+        }
+
+        // test case 13: queries tasks by date and confirms query is correctly sorted (tests queryTasksByDate())
+        // but first clear tasks from taskTable
         ArrayList<Task> allTasks = db.getAllTasks();
         for (Task task: allTasks) {
             try {
@@ -635,22 +822,85 @@ public class ManageDB {
                 System.out.println(e);
             }
         }
-        // tests queryTasksByDate method
+        // query empty taskTable
+        ArrayList<Task> query = db.queryTasksByDate("2022-11-01");
+        if (!query.isEmpty())
+            System.out.println("ERROR: Querying an empty task table should return an empty query, but got query with the size: " + query.size());
+        // create new tasks
         db.createNewTask(new Task("t0", "2022-10-31", "13:11:11", "", "", "", ""));
         db.createNewTask(new Task("t1", "2022-11-01", "13:11:11", "", "", "", ""));
         db.createNewTask(new Task("t2", "2022-11-01", "13:11:11", "", "", "", ""));
         db.createNewTask(new Task("t3", "2022-11-01", "13:11:05", "", "", "", ""));
-        db.createNewTask(new Task("t4", "2022-11-01", "13:05:11", "", "", "", ""));
+        db.createNewTask(new Task("t4", "2022-11-30", "13:05:11", "", "", "", ""));
         db.createNewTask(new Task("t5", "2022-11-01", "20:00:01", "", "", "", ""));
         db.createNewTask(new Task("t6", "2022-11-01", "00:00:00", "", "", "", ""));
         db.createNewTask(new Task("t7", "2022-11-02", "00:01:01", "", "", "", ""));
+        // query tasks for the date of 2022-11-01
+        query = db.queryTasksByDate("2022-11-01");
+        if (query.size() != 5)
+            System.out.println("ERROR: Expected query by date to return 5 tasks with the date 2022-11-01, but got: " + query.size());
+        if (!(query.get(0).getName().equals("t6") &&
+                query.get(1).getName().equals("t3") &&
+                query.get(2).getName().equals("t1") &&
+                query.get(3).getName().equals("t2") &&
+                query.get(4).getName().equals("t5"))) {
+            System.out.println("ERROR: Query is not correctly sorted by time. Expected time sorted order of tasks to be [t6, t3, t1, t2, t5], but got :" + query);
+        }
 
-        ArrayList<Task> query = db.queryTasksByDate("2022-11-01");
-        System.out.println(query);
+        // test case 14: queries tasks again by date (tests queryTasks())
+        ArrayList<Task> newQuery = db.queryTasks(TaskQuery.DATE, "2022-11-01");
+        if (!newQuery.toString().equals(query.toString()))
+            System.out.println("ERROR: queryTasks() method did not yield the same results as queryTasksByDate().");
 
-        File f = new File(PATH + "/database.db");
-        f.delete();
+        // TODO: test query methods
 
+
+        System.out.println("REGRESSION TESTING COMPLETE");
         System.exit(0);
+    }
+
+    /**
+     * Used for regression testing.
+     * Removes all table entries.
+     */
+    private void reset() {
+        // reset TaskTable in db by removing all tasks
+        ArrayList<Task> allTasks = this.getAllTasks();
+        for (Task task: allTasks) {
+            try {
+                this.deleteTask(task);
+            } catch (RowDoesNotExistException e) {
+                System.out.println(e);
+            }
+        }
+
+        // reset ContactsTable in db by removing all contacts
+        ArrayList<Contact> allContacts = this.getAllContacts();
+        for (Contact contact: allContacts) {
+            try {
+                this.deleteContact(contact);
+            } catch (RowDoesNotExistException e) {
+                System.out.println(e);
+            }
+        }
+
+        // reset CategoryTable in db by removing all categories
+        ArrayList<String> allCategories = this.getAllCategories();
+        for (String category: allCategories) {
+            try {
+                this.deleteCategory(category);
+            } catch (RowDoesNotExistException e) {
+                System.out.println(e);
+            }
+        }
+
+        // reset LoginTable
+        String sql = "DELETE FROM LoginTable";
+        try(Connection conn = DriverManager.getConnection(URL)){
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Failed to delete the user from LoginTable, reason:\n" + e);
+        }
     }
 }
