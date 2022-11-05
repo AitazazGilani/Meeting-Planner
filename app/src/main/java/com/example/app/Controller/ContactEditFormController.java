@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class ContactEditFormController {
     @FXML
     protected static Contact contact;
@@ -38,12 +40,15 @@ public class ContactEditFormController {
      */
     @FXML
     private void initialize(){
-        //TODO ContactEditForm Initializer
 
         //initialize with the data of the selected contact when edit it clicked.
+        ArrayList<String> categoryList = database.getAllCategories();
+        if(!categoryList.get(0).equals("None")){
+            categoryList.add(0, "None");
+        }
 
-        categoryChoice.setValue("(None)");
-        categoryChoice.getItems().setAll(database.getAllCategories());
+        categoryChoice.setValue(contact.getCategory());
+        categoryChoice.getItems().setAll(categoryList);
 
         titleTextField.setText(contact.getName());
         emailTextField.setText(contact.getEmail());
@@ -83,7 +88,6 @@ public class ContactEditFormController {
      */
     @FXML
     private void onSaveContactClick() throws RowDoesNotExistException {
-        //TODO ContactEditForm Save Button, UID isn't set?
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
@@ -95,6 +99,9 @@ public class ContactEditFormController {
 
         database.updateContact(contact);
 
+        Stage cur = (Stage) saveContactBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
     }
 
 

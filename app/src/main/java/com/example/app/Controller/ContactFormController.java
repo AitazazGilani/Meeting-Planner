@@ -21,7 +21,7 @@ public class ContactFormController {
     protected TextField titleTextField, emailTextField;
     //just defaulted the object type to Contact, as im entirely sure or don't remember what would go here for a Category.
     @FXML
-    protected ChoiceBox<Contact> categoryChoice;
+    protected ChoiceBox<String> categoryChoice;
 
     protected ManageDB database = new ManageDB();
 
@@ -31,6 +31,14 @@ public class ContactFormController {
     @FXML
     private void initialize(){
         //TODO ContactForm Initializer
+
+        ArrayList<String> categoryList = database.getAllCategories();
+        if(!categoryList.get(0).equals("None")){
+            categoryList.add(0, "None");
+        }
+
+        categoryChoice.setValue("None");
+        categoryChoice.getItems().setAll(categoryList);
 
         //don't really need much here, as it would be mostly blanked, mainly init and dropdown boxes with their information
         // with their information.
@@ -67,13 +75,13 @@ public class ContactFormController {
      */
     @FXML
     private void onSaveContactClick() {
-        //TODO ContactForm Save Button
-
         //Create a new contact with info from the form
         Contact c = new Contact(titleTextField.getText(),
                 emailTextField.getText(),
                 "",
-                "");
+                categoryChoice.getValue());
+
+        System.out.println(categoryChoice.getValue());
 
         //Add new contact c to DB
         database.createNewContact(c);

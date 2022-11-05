@@ -499,8 +499,8 @@ public class ManageDB {
                 Contact c = new Contact(
                         rs.getString("Name"),
                         rs.getString("Email"),
-                        rs.getString("Category"),
-                        rs.getString("TimeSpent")
+                        rs.getString("TimeSpent"),
+                        rs.getString("Category")
                 );
                 c.setUID(rs.getInt("UID"));
                 contacts.add(c);

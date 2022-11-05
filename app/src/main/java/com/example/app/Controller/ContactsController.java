@@ -3,20 +3,18 @@ package com.example.app.Controller;
 import com.example.app.App;
 import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
-import javafx.event.ActionEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.security.auth.callback.Callback;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -40,7 +38,7 @@ public class ContactsController {
     protected Button startBtn, pauseBtn, finishBtn, timerSummaryBtn;
 
     @FXML
-    protected ListView<String> contactsListView;
+    protected ListView<Contact> contactsListView;
 
     //Timer needs an object, don't really have much experience with timers yet so im not sure what to set the object as
     // yet.
@@ -58,20 +56,47 @@ public class ContactsController {
      */
     @FXML
     private void initialize(){
-        //TODO ContactTab Initializer
+        //TODO ContactTab Timers List (NOT CURRENT SPRINT)
 
-        //Get and display just the names of the Contacts for now.
-        //can't display the Contact Object outright
-        ArrayList<Contact> contacts = database.getAllContacts();
-        ArrayList<String> contactNames = new ArrayList<>();
-        for(Contact contact : contacts){
-            contactNames.add(contact.getName());
+        contactsListView.getItems().setAll(database.getAllContacts());
+
+        //add a "None" option to the categories.
+        ArrayList<String> categoryList = database.getAllCategories();
+        if(!categoryList.get(0).equals("None")){
+            categoryList.add(0, "None");
         }
+        sortByChoiceBox.setValue("None");
+        sortByChoiceBox.getItems().setAll(categoryList);
 
-        contactsListView.getItems().setAll(contactNames);
+        //change the text of each cell to its Contacts Name
+        contactsListView.setCellFactory(param -> new ListCell<Contact>(){
+            @Override
+            protected void updateItem(Contact item, boolean empty){
+                super.updateItem(item, empty);
 
-        sortByChoiceBox.setValue("(None)");
-        sortByChoiceBox.getItems().setAll(database.getAllCategories());
+                if(empty || item == null || item.getName() == null){
+                    setText(null);
+                }
+                else{
+                    setText(item.getName());
+                }
+            }
+        });
+
+        //when changing between cells in the viewList, update the selected contact with the selected cell's data.
+        contactsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Contact>() {
+            @Override
+            public void changed(ObservableValue<? extends Contact> observableValue, Contact contact, Contact t1) {
+                contactNameLabel.setText("Name: " + contactsListView.getSelectionModel().getSelectedItem().getName());
+                contactEmailLabel.setText("Email: " + contactsListView.getSelectionModel().getSelectedItem().getEmail());
+                if (Objects.equals(contactsListView.getSelectionModel().getSelectedItem().getCategory(), "")){
+                    contactCategoryLabel.setText("Category: None");
+                }
+                else{
+                    contactCategoryLabel.setText("Category: " + contactsListView.getSelectionModel().getSelectedItem().getCategory());
+                }
+            }
+        });
     }
 
     /**
@@ -134,20 +159,19 @@ public class ContactsController {
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
-        String contactName = contactsListView.getSelectionModel().getSelectedItem();
-
-        ArrayList<Contact> contacts = database.getAllContacts();
+        Contact contact = contactsListView.getSelectionModel().getSelectedItem();
         ContactEditFormController contactEditFormController = new ContactEditFormController();
+        contactEditFormController.editContactData(contact);
         //get the contact based on the name.
-        for(Contact contact : contacts){
-            if(contact == null){
-                break;
-            }
-            if(contact.getName().equals(contactName)){
-                contactEditFormController.editContactData(contact);
-                break;
-            }
-        }
+//        for(Contact contact : contacts){
+//            if(contact == null){
+//                break;
+//            }
+//            if(contact.getName().equals(contactName)){
+//
+//                break;
+//            }
+//        }
 
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ContactEditFormView.fxml")));
         //create a new window for the new task
