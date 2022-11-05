@@ -2,6 +2,7 @@ package com.example.app.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 public class TaskEditFormController {
     @FXML
@@ -60,7 +61,10 @@ public class TaskEditFormController {
      */
     @FXML
     private void onCancelClick() {
-        //TODO TaskEditForm Cancel Button
+
+        Stage cur = (Stage) cancelBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.

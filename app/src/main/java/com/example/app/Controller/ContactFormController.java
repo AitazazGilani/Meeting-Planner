@@ -37,7 +37,6 @@ public class ContactFormController {
      */
     @FXML
     private void onCancelClick() {
-        //TODO ContactForm Cancel Button
 
         //Gets current stage (new contact window)
         Stage cur = (Stage) cancelBtn.getScene().getWindow();

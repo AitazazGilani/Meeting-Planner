@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 public class CalendarController {
 
-    //TODO Future reference, the ListView may not be of the Task Object, confirm this in the future.
+    //TODO Minor: Future reference, the ListView may not be of the Task Object, confirm this in the future.
     @FXML
     protected ListView<Task> selectedDateTaskListView;
 
@@ -60,6 +60,8 @@ public class CalendarController {
     @FXML
     private void clickCalendarTab() {
         //TODO CalendarTab Button refresh
+
+        initialize();
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.

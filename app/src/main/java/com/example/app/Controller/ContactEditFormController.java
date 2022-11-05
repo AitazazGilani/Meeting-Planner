@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class ContactEditFormController {
     @FXML
@@ -26,6 +27,9 @@ public class ContactEditFormController {
         //TODO ContactEditForm Initializer
 
         //initialize with the data of the selected contact when edit it clicked.
+
+
+
     }
 
     /**
@@ -33,11 +37,15 @@ public class ContactEditFormController {
      */
     @FXML
     private void onCancelClick() {
-        //TODO ContactEditForm Cancel Button
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
         //Close the Edit Form
+
+        Stage cur = (Stage) cancelBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
+
     }
 
     /**

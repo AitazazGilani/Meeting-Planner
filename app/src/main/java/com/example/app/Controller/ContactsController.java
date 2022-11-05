@@ -110,17 +110,24 @@ public class ContactsController {
         stage.getScene().setRoot(fxmlLoader);
     }
 
-    //TODO Duplicate the NewContactView and create an EditContactView, for the edit button. delete will just delete the currently selected item.
-
     /**
      * Open ContactForm on click with current contacts information and id etc
      */
     @FXML
-    private void onEditContactClick() {
-        //TODO ContactTab Edit Button
+    private void onEditContactClick() throws IOException {
+        //TODO ContactTab Edit Button, current not initialized with any data.
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ContactEditFormView.fxml")));
+        //create a new window for the new task
+        Stage newContactWindow = new Stage();
+        newContactWindow.setTitle("New Task");
+        newContactWindow.setScene(new Scene(fxmlLoader, 900, 600));
+        //open the window
+        newContactWindow.show();
+
     }
 
     /**
@@ -142,7 +149,7 @@ public class ContactsController {
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
-        //TODO Check if the window is already open, as to not create 300 tabs.
+        //TODO Minor: Check if the window is already open, as to not create 300 tabs.
 
         //Load the Task form view into the loader
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ContactFormView.fxml")));
@@ -170,8 +177,15 @@ public class ContactsController {
      * ? new Category, again figure out the Category. is it a new Object?
      */
     @FXML
-    private void onNewCategoryClick() {
-        //TODO ContactTab New Category Button
+    private void onNewCategoryClick() throws IOException {
+
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("CategoryFormView.fxml")));
+        //create a new window for the new task
+        Stage newContactWindow = new Stage();
+        newContactWindow.setTitle("New Category");
+        newContactWindow.setScene(new Scene(fxmlLoader, 600, 200));
+        //open the window
+        newContactWindow.show();
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.

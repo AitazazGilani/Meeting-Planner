@@ -84,7 +84,7 @@ public class TaskFormController {
      */
     @FXML
     private void onCancelClick() {
-        //TODO TaskForm Cancel Button
+
 
         //Gets current stage (new task window)
         Stage cur = (Stage) cancelBtn.getScene().getWindow();

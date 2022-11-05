@@ -102,11 +102,20 @@ public class TasksController {
      * Open a Task Form initialized with the currently selected Task
      */
     @FXML
-    private void onEditClick() {
-        //TODO TaskTab Edit Button
+    private void onEditClick() throws IOException {
+        //TODO TaskTab Edit Button Currently not initialized with any data.
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+
+        //Load the Task form view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("TaskFormView.fxml")));
+        //create a new window for the new task
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("New Task");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 900, 600));
+        //open the window
+        newTaskWindow.show();
     }
 
     /**
@@ -144,10 +153,16 @@ public class TasksController {
      * ? is Category its own object? My tired brain can't remember
      */
     @FXML
-    private void onNewCategoryClick() {
-        //TODO TaskTab NewCategory Button
-
+    private void onNewCategoryClick() throws IOException {
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("CategoryFormView.fxml")));
+        //create a new window for the new task
+        Stage newContactWindow = new Stage();
+        newContactWindow.setTitle("New Category");
+        newContactWindow.setScene(new Scene(fxmlLoader, 600, 200));
+        //open the window
+        newContactWindow.show();
     }
 }
