@@ -1,12 +1,14 @@
 package com.example.app.Controller;
 
 import com.example.app.database.Contact;
+import com.example.app.database.ManageDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class ContactFormController {
     @FXML
@@ -37,6 +39,11 @@ public class ContactFormController {
     private void onCancelClick() {
         //TODO ContactForm Cancel Button
 
+        //Gets current stage (new contact window)
+        Stage cur = (Stage) cancelBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
+
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
@@ -58,6 +65,17 @@ public class ContactFormController {
     @FXML
     private void onSaveContactClick() {
         //TODO ContactForm Save Button
+
+        //Create a new contact with info from the form
+        Contact c = new Contact(titleTextField.getText(), emailTextField.getText(), "", "");
+
+        //Add new contact c to DB
+        ManageDB.createNewContact(c);
+
+        //Gets current stage (new contact window)
+        Stage cur = (Stage) saveContactBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
