@@ -38,7 +38,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="550.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.ContactsController">
+<BorderPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.ContactsController">
    <left>
   <AnchorPane prefHeight="550.0" prefWidth="222.0" style="-fx-background-color: #DDDDDD;" BorderPane.alignment="CENTER">
     <children>
@@ -99,23 +99,17 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
             </VBox>
-            <Label layoutX="10.0" layoutY="373.0" prefHeight="17.0" prefWidth="203.0" text="________________________________________" textAlignment="CENTER" AnchorPane.topAnchor="373.0" />
-            <Button fx:id="newContactBtn" alignment="CENTER" layoutX="30.0" layoutY="419.0" mnemonicParsing="false" onAction="#onNewContactClick" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #5A83FC;" text="+ new contact" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Button>
             <Label layoutX="9.0" layoutY="44.0" prefHeight="17.0" prefWidth="203.0" text="________________________________________" textAlignment="CENTER" AnchorPane.topAnchor="50.0" />
             <Label layoutX="84.0" layoutY="26.0" text="Details" AnchorPane.topAnchor="23.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <VBox layoutX="10.0" layoutY="267.0" prefHeight="65.0" prefWidth="201.0" spacing="6.0">
+            <VBox alignment="CENTER" layoutX="10.0" layoutY="267.0" prefHeight="65.0" prefWidth="201.0" spacing="8.0" AnchorPane.topAnchor="280.0">
                <children>
                   <Label fx:id="selectedTimerLabel" text="Current Timer: 00:00:00">
                      <font>
-                        <Font size="13.0" />
+                        <Font size="15.0" />
                      </font>
                   </Label>
                   <HBox fx:id="timerBtnBox" alignment="TOP_CENTER" prefHeight="34.0" prefWidth="196.0" spacing="14.0">
@@ -127,9 +121,15 @@
                   </HBox>
                </children>
             </VBox>
-            <Button fx:id="timerSummaryBtn" layoutX="27.0" layoutY="345.0" mnemonicParsing="false" onAction="#onTimerSummaryClick" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #808080;" text="View Timer Summary" textFill="WHITE">
+            <Button fx:id="timerSummaryBtn" alignment="CENTER" layoutX="27.0" layoutY="345.0" mnemonicParsing="false" onAction="#onTimerSummaryClick" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #808080;" text="View Timer Summary" textAlignment="CENTER" textFill="WHITE" AnchorPane.topAnchor="360.0">
                <font>
                   <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Label layoutX="10.0" layoutY="373.0" prefHeight="17.0" prefWidth="203.0" text="________________________________________" textAlignment="CENTER" AnchorPane.topAnchor="386.0" />
+            <Button fx:id="newContactBtn" alignment="CENTER" layoutX="30.0" layoutY="419.0" mnemonicParsing="false" onAction="#onNewContactClick" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #5A83FC;" text="+ new contact" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Button>
     </children>
@@ -138,41 +138,57 @@
    <center>
 <AnchorPane id="Content" minWidth="457.0" prefHeight="550.0" prefWidth="430.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="TOP_CENTER" layoutY="92.0" prefHeight="410.0" prefWidth="636.0" spacing="25.0" AnchorPane.topAnchor="92.0">
+            <Button fx:id="newCategoryBtn" alignment="CENTER" layoutX="587.0" layoutY="48.0" mnemonicParsing="false" onAction="#onNewCategoryClick" prefHeight="36.0" prefWidth="146.0" style="-fx-background-color: #5A83FC;" text="+ new category" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="48.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <HBox alignment="CENTER" prefHeight="52.0" prefWidth="500.0" spacing="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <VBox prefHeight="405.0" prefWidth="284.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="220.0" spacing="6.0">
+                     <children>
+                        <Label text="Search:">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <TextField fx:id="searchBarTextField" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="52.0" prefWidth="220.0" spacing="6.0">
+                     <children>
+                        <Label text="Sort by: ">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="sortByChoiceBox" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+               </children></HBox>
+            <HBox alignment="TOP_CENTER" layoutY="137.0" prefHeight="516.0" prefWidth="757.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="137.0">
+               <children>
+                  <VBox prefHeight="405.0" prefWidth="340.0">
                      <children>
                         <Label text="Contacts">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="contactsListView" prefHeight="351.0" prefWidth="255.0" style="-fx-background-color: #EBEBEB;" />
+                        <ListView fx:id="contactsListView" prefHeight="351.0" prefWidth="300.0" style="-fx-background-color: #EBEBEB;" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="405.0" prefWidth="284.0">
+                  <VBox prefHeight="405.0" prefWidth="340.0">
                      <children>
                         <Label text="Current Timers">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="currentTimersListView" prefHeight="351.0" prefWidth="255.0" style="-fx-background-color: #EBEBEB;" />
+                        <ListView fx:id="currentTimersListView" prefHeight="351.0" prefWidth="255.0" style="-fx-background-color: #EBEBEB;" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <ChoiceBox fx:id="sortByChoiceBox" layoutX="101.0" layoutY="48.0" prefWidth="150.0" AnchorPane.leftAnchor="101.0" AnchorPane.topAnchor="48.0" />
-            <Label layoutX="42.0" layoutY="50.0" text="Sort by: " AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="50.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Button fx:id="newCategoryBtn" alignment="CENTER" layoutX="427.0" layoutY="43.0" mnemonicParsing="false" onAction="#onNewCategoryClick" prefHeight="36.0" prefWidth="146.0" style="-fx-background-color: #5A83FC;" text="+ new category" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="43.0">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Button>
          </children>
 </AnchorPane>
    </center>

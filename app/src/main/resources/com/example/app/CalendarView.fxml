@@ -38,9 +38,9 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="550.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.CalendarController">
+<BorderPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.CalendarController">
    <left>
-  <AnchorPane prefHeight="550.0" prefWidth="222.0" style="-fx-background-color: #DDDDDD;" BorderPane.alignment="CENTER" >
+  <AnchorPane prefHeight="550.0" prefWidth="222.0" style="-fx-background-color: #DDDDDD;" BorderPane.alignment="CENTER">
     <children>
             <Button fx:id="calendarTabBtn" mnemonicParsing="false" onAction="#clickCalendarTab" prefHeight="80.0" prefWidth="222.0" style="-fx-background-color: #8CA8FC; -fx-background-radius: 0;" text="Calendar" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -68,14 +68,15 @@
           <Font size="18.0" fx:id="x1" />
                </font>
             </Label>
-            <ListView fx:id="selectedDateTaskListView" layoutY="120.0" prefHeight="276.0" prefWidth="223.0" style="-fx-background-color: DDDDDD;" AnchorPane.topAnchor="120.0" />
+            <ListView fx:id="selectedDateTaskListView" layoutY="120.0" prefHeight="396.0" prefWidth="223.0" style="-fx-background-color: DDDDDD;" AnchorPane.bottomAnchor="137.0" AnchorPane.topAnchor="120.0" />
             <Label fx:id="numberOfTasksLabel" layoutX="14.0" layoutY="84.0" text="(# of) Task(s):" AnchorPane.topAnchor="84.0" />
             <Label layoutX="9.0" layoutY="48.0" prefHeight="17.0" prefWidth="203.0" text="________________________________________" textAlignment="CENTER" AnchorPane.topAnchor="50.0" />
-            <Button fx:id="newTaskBtn" alignment="CENTER" onAction="#clickNewTask" layoutX="39.0" layoutY="418.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="144.0" style="-fx-background-color: #5A83FC;" text="+ new task" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="29.5">
+            <Button fx:id="newTaskBtn" alignment="CENTER" layoutX="39.0" layoutY="418.0" mnemonicParsing="false" onAction="#clickNewTask" prefHeight="54.0" prefWidth="144.0" style="-fx-background-color: #5A83FC;" text="+ new task" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="29.5">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
+            <Label layoutX="9.0" layoutY="513.0" prefHeight="17.0" prefWidth="203.0" text="________________________________________" textAlignment="CENTER" AnchorPane.bottomAnchor="120.0" />
     </children>
   </AnchorPane>
    </right>
