@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class ContactFormController {
     @FXML
     protected Button cancelBtn, deleteBtn, saveContactBtn;
@@ -20,6 +22,8 @@ public class ContactFormController {
     //just defaulted the object type to Contact, as im entirely sure or don't remember what would go here for a Category.
     @FXML
     protected ChoiceBox<Contact> categoryChoice;
+
+    protected ManageDB database = new ManageDB();
 
     /**
      * This initializes the ContactForm with the appropriate information on startup.
@@ -37,7 +41,6 @@ public class ContactFormController {
      */
     @FXML
     private void onCancelClick() {
-        //TODO ContactForm Cancel Button
 
         //Gets current stage (new contact window)
         Stage cur = (Stage) cancelBtn.getScene().getWindow();
@@ -53,7 +56,7 @@ public class ContactFormController {
      */
     @FXML
     private void onDeleteClick() {
-        //TODO ContactForm Delete Button
+        //this doesn't need to be here currently
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
@@ -67,10 +70,13 @@ public class ContactFormController {
         //TODO ContactForm Save Button
 
         //Create a new contact with info from the form
-        Contact c = new Contact(titleTextField.getText(), emailTextField.getText(), "", "");
+        Contact c = new Contact(titleTextField.getText(),
+                emailTextField.getText(),
+                "",
+                "");
 
         //Add new contact c to DB
-        ManageDB.createNewContact(c);
+        database.createNewContact(c);
 
         //Gets current stage (new contact window)
         Stage cur = (Stage) saveContactBtn.getScene().getWindow();

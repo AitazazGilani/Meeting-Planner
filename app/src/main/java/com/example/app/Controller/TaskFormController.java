@@ -27,6 +27,8 @@ public class TaskFormController {
     @FXML
     protected ChoiceBox categoryChoice;
 
+    protected ManageDB database = new ManageDB();
+
     /**
      * This initializes the Task Form with the appropriate information on startup.
      */
@@ -46,10 +48,20 @@ public class TaskFormController {
 
         //Grab all info from text fields/dropdowns/options and create a new task with that info
 
+<<<<<<< HEAD
         Task t = new Task(titleTextField.getText(), taskDatePicker.getValue().toString(), timeTextField.getText(), "", "", "", "self");
+=======
+        Task t = new Task(titleTextField.getText(),
+                taskDatePicker.getValue().toString(),
+                timeTextField.getText(),
+                "",
+                "",
+                "",
+                "self");
+>>>>>>> 0a7eb4a7a24371f908de40cf0723ffab8e5faa29
 
         //Add new task to the db
-        ManageDB.createNewTask(t);
+        database.createNewTask(t);
 
         //Gets current stage (new task window)
         Stage cur = (Stage) saveTaskBtn.getScene().getWindow();
@@ -65,7 +77,7 @@ public class TaskFormController {
      */
     @FXML
     private void onDeleteClick() {
-        //TODO TaskForm Delete Button
+        //Doesn't need to be here currently
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
@@ -76,7 +88,7 @@ public class TaskFormController {
      */
     @FXML
     private void onCancelClick() {
-        //TODO TaskForm Cancel Button
+
 
         //Gets current stage (new task window)
         Stage cur = (Stage) cancelBtn.getScene().getWindow();

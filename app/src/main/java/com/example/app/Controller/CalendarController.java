@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Objects;
 import java.util.Stack;
 
+import com.example.app.database.ManageDB;
 import com.example.app.database.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ import javafx.stage.Stage;
 
 public class CalendarController {
 
-    //TODO Future reference, the ListView may not be of the Task Object, confirm this in the future.
+    //TODO Minor: Future reference, the ListView may not be of the Task Object, confirm this in the future.
     @FXML
     protected ListView<Task> selectedDateTaskListView;
 
@@ -35,6 +36,8 @@ public class CalendarController {
     @FXML
     protected Label selectedDateLabel, numberOfTasksLabel;
 
+    protected ManageDB database = new ManageDB();
+
     /**
      * This initializes the CalendarView with information on startup.
      */
@@ -42,6 +45,9 @@ public class CalendarController {
     private void initialize(){
         //TODO CalendarTab Initializer
 
+        GraphicalCalendar calendar = new GraphicalCalendar();
+
+        centerAnchorPane.getChildren().setAll(calendar);
 
         //init with the information that would be displayed in the calendar, however, currently we do not
         // have any calendar to work with.
@@ -56,7 +62,9 @@ public class CalendarController {
      */
     @FXML
     private void clickCalendarTab() {
-        //TODO CalendarTab Button refresh
+        //TODO Minor: CalendarTab Button refresh
+
+        initialize();
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
