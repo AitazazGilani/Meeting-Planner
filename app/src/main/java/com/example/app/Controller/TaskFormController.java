@@ -46,8 +46,6 @@ public class TaskFormController {
 
         //Grab all info from text fields/dropdowns/options and create a new task with that info
 
-
-
         Task t = new Task(titleTextField.getText(), taskDatePicker.getValue().toString(), timeTextField.getText(), "", "", "", "self");
 
         //Add new task to the db
