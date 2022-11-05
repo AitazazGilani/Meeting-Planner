@@ -42,6 +42,9 @@ public class CalendarController {
     private void initialize(){
         //TODO CalendarTab Initializer
 
+        GraphicalCalendar calendar = new GraphicalCalendar();
+
+        centerAnchorPane.getChildren().setAll(calendar);
 
         //init with the information that would be displayed in the calendar, however, currently we do not
         // have any calendar to work with.
