@@ -1,5 +1,6 @@
 package com.example.app.Controller;
 
+import com.example.app.database.ManageDB;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -23,6 +24,8 @@ public class TaskEditFormController {
     //? Category Object?
     @FXML
     protected ChoiceBox categoryChoice;
+
+    protected ManageDB database = new ManageDB();
 
     /**
      * This initializes the Task Form with the appropriate information on startup.
@@ -50,7 +53,7 @@ public class TaskEditFormController {
      */
     @FXML
     private void onDeleteClick() {
-        //TODO TaskEditForm Delete Button
+        //doesn't need to be here currently
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.

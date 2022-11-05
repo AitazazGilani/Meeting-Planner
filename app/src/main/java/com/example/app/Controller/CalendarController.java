@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Objects;
 import java.util.Stack;
 
+import com.example.app.database.ManageDB;
 import com.example.app.database.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,6 +36,8 @@ public class CalendarController {
     @FXML
     protected Label selectedDateLabel, numberOfTasksLabel;
 
+    protected ManageDB database = new ManageDB();
+
     /**
      * This initializes the CalendarView with information on startup.
      */
@@ -59,7 +62,7 @@ public class CalendarController {
      */
     @FXML
     private void clickCalendarTab() {
-        //TODO CalendarTab Button refresh
+        //TODO Minor: CalendarTab Button refresh
 
         initialize();
 

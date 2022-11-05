@@ -21,6 +21,8 @@ public class ContactFormController {
     @FXML
     protected ChoiceBox<Contact> categoryChoice;
 
+    protected ManageDB database = new ManageDB();
+
     /**
      * This initializes the ContactForm with the appropriate information on startup.
      */
@@ -52,7 +54,7 @@ public class ContactFormController {
      */
     @FXML
     private void onDeleteClick() {
-        //TODO ContactForm Delete Button
+        //this doesn't need to be here currently
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
@@ -72,7 +74,7 @@ public class ContactFormController {
                 "");
 
         //Add new contact c to DB
-        ManageDB.createNewContact(c);
+        database.createNewContact(c);
 
         //Gets current stage (new contact window)
         Stage cur = (Stage) saveContactBtn.getScene().getWindow();

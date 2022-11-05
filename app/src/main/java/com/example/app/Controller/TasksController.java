@@ -1,6 +1,7 @@
 package com.example.app.Controller;
 
 import com.example.app.App;
+import com.example.app.database.ManageDB;
 import com.example.app.database.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +37,8 @@ public class TasksController {
     //figure out what obj this is made of.
     @FXML
     protected ChoiceBox sortByChoiceBox;
+
+    protected ManageDB database = new ManageDB();
 
     /**
      * This initializes the Tasks Tab with the appropriate information on startup.
@@ -137,7 +140,7 @@ public class TasksController {
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
-        //TODO Check if the window is already open, as to not create 300 tabs.
+        //TODO Minor: Check if the window is already open, as to not create 300 tabs.
 
         //Load the Task form view into the loader
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("TaskFormView.fxml")));

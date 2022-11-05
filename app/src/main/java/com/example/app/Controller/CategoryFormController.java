@@ -1,28 +1,39 @@
 package com.example.app.Controller;
 
+import com.example.app.database.ManageDB;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class CategoryFormController {
-    public TextField categoryNameTextField;
-    public Button cancelBtn;
-    public Button addCategoryBtn;
 
-    public void initialize(){
+    @FXML
+    protected TextField categoryNameTextField;
+
+    @FXML
+    protected Button cancelBtn;
+
+    @FXML
+    protected Button addCategoryBtn;
+
+    protected ManageDB database = new ManageDB();
+
+    @FXML
+    private void initialize(){
 
     }
 
-    public void onCancelClick() {
+    @FXML
+    private void onCancelClick() {
         Stage cur = (Stage) cancelBtn.getScene().getWindow();
         //Close the window
         cur.close();
     }
 
-    public void onAddCategoryClick() {
-        //TODO Add Category Button
-
-
+    @FXML
+    private void onAddCategoryClick() {
+        database.createNewCategory(categoryNameTextField.getText());
     }
 }

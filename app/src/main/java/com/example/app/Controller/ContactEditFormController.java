@@ -1,6 +1,7 @@
 package com.example.app.Controller;
 
 import com.example.app.database.Contact;
+import com.example.app.database.ManageDB;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -18,6 +19,8 @@ public class ContactEditFormController {
     //just defaulted the object type to Contact, as im entirely sure or don't remember what would go here for a Category.
     @FXML
     protected ChoiceBox<Contact> categoryChoice;
+
+    protected ManageDB database = new ManageDB();
 
     /**
      * This initializes the ContactForm with the appropriate information on startup.
@@ -53,7 +56,6 @@ public class ContactEditFormController {
      */
     @FXML
     private void onDeleteClick() {
-        //TODO ContactEditForm Delete Button
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
@@ -70,5 +72,6 @@ public class ContactEditFormController {
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
         //update the current task and save/overwrite it to the database
+
     }
 }

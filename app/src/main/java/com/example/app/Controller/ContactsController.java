@@ -2,6 +2,7 @@ package com.example.app.Controller;
 
 import com.example.app.App;
 import com.example.app.database.Contact;
+import com.example.app.database.ManageDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +49,8 @@ public class ContactsController {
     //Also figure out what object this should be.
     @FXML
     protected ChoiceBox sortByChoiceBox;
+
+    protected ManageDB database = new ManageDB();
 
     /**
      * This initializes the Contacts Tab with the appropriate information on startup.
@@ -167,7 +170,7 @@ public class ContactsController {
      */
     @FXML
     private void onTimerSummaryClick() {
-        //TODO ContactTab Timer Button
+        //TODO Minor: ContactTab Timer Button
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
