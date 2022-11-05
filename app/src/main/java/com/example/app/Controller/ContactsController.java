@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ContactsController {
@@ -39,7 +40,7 @@ public class ContactsController {
     protected Button startBtn, pauseBtn, finishBtn, timerSummaryBtn;
 
     @FXML
-    protected ListView<Contact> contactsListView;
+    protected ListView<String> contactsListView;
 
     //Timer needs an object, don't really have much experience with timers yet so im not sure what to set the object as
     // yet.
@@ -48,7 +49,7 @@ public class ContactsController {
 
     //Also figure out what object this should be.
     @FXML
-    protected ChoiceBox sortByChoiceBox;
+    protected ChoiceBox<String> sortByChoiceBox;
 
     protected ManageDB database = new ManageDB();
 
@@ -59,8 +60,18 @@ public class ContactsController {
     private void initialize(){
         //TODO ContactTab Initializer
 
-        //Init the contact tab with every contact based on their information, would have to figure out the whole timer
-        // thing, but it should be fairly straight forward.
+        //Get and display just the names of the Contacts for now.
+        //can't display the Contact Object outright
+        ArrayList<Contact> contacts = database.getAllContacts();
+        ArrayList<String> contactNames = new ArrayList<>();
+        for(Contact contact : contacts){
+            contactNames.add(contact.getName());
+        }
+
+        contactsListView.getItems().setAll(contactNames);
+
+        sortByChoiceBox.setValue("(None)");
+        sortByChoiceBox.getItems().setAll(database.getAllCategories());
     }
 
     /**
@@ -122,6 +133,21 @@ public class ContactsController {
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+
+        String contactName = contactsListView.getSelectionModel().getSelectedItem();
+
+        ArrayList<Contact> contacts = database.getAllContacts();
+        ContactEditFormController contactEditFormController = new ContactEditFormController();
+        //get the contact based on the name.
+        for(Contact contact : contacts){
+            if(contact == null){
+                break;
+            }
+            if(contact.getName().equals(contactName)){
+                contactEditFormController.editContactData(contact);
+                break;
+            }
+        }
 
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ContactEditFormView.fxml")));
         //create a new window for the new task

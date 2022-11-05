@@ -35,5 +35,8 @@ public class CategoryFormController {
     @FXML
     private void onAddCategoryClick() {
         database.createNewCategory(categoryNameTextField.getText());
+        Stage cur = (Stage) addCategoryBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
     }
 }
