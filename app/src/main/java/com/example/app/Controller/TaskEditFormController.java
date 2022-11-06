@@ -22,7 +22,7 @@ public class TaskEditFormController {
     protected Label viewHeader;
 
     @FXML
-    protected TextField titleTextField, timeTextField;
+    protected TextField titleTextField, timeTextField, durationTextField;
 
     @FXML
     protected DatePicker taskDatePicker;
@@ -54,8 +54,10 @@ public class TaskEditFormController {
         timeTextField.setText(task.getTime());
 
         ArrayList<String> categoryList = database.getAllCategories();
-        if(!categoryList.get(0).equals("None")){
-            categoryList.add(0, "None");
+        if(!categoryList.isEmpty()){
+            if(!categoryList.get(0).equals("None")){
+                categoryList.add(0, "None");
+            }
         }
 
         categoryChoice.setValue(task.getCategory());

@@ -36,7 +36,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="467.0" prefWidth="297.0" style="-fx-background-color: #DDDDDD;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.ContactFormController">
+<AnchorPane prefHeight="467.0" prefWidth="297.0" style="-fx-background-color: #DDDDDD;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.ContactEditFormController">
 <children>
       <Label fx:id="viewHeader" layoutX="99.0" layoutY="25.0" text="Enter Details" AnchorPane.topAnchor="25.0">
          <font>
