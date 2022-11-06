@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,10 +19,10 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 
-class GraphicalCalendar extends VBox {
+public class GraphicalCalendar extends VBox {
     private Calendar currentMonth;
 
-    private List<Button> calendarButtonList = new ArrayList();
+    public List<Button> calendarButtonList = new ArrayList();
 
     public GraphicalCalendar() {
         currentMonth = new GregorianCalendar();
@@ -234,11 +237,17 @@ class GraphicalCalendar extends VBox {
      * Sets an event handler for each button in the calendar grid.
      */
     private void setButtonHandlers() {
-        for(Button tempButton : calendarButtonList)
-        {
-            // ToDo: event handler to controller.
-        }
-
+//        for(Button tempButton : calendarButtonList)
+//        {
+//            // ToDo: event handler to controller.
+//
+//            tempButton.setOnAction(new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent actionEvent) {
+//
+//                }
+//            });
+//        }
     }
 
 

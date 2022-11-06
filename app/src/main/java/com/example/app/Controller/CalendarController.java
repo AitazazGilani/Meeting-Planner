@@ -1,15 +1,18 @@
 package com.example.app.Controller;
 
-import com.example.app.*;
+
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 import java.util.Stack;
 
+import com.example.app.App;
 import com.example.app.database.ManageDB;
 import com.example.app.database.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import com.example.app.UI.*;
 
 public class CalendarController {
 
@@ -48,6 +52,25 @@ public class CalendarController {
         GraphicalCalendar calendar = new GraphicalCalendar();
 
         centerAnchorPane.getChildren().setAll(calendar);
+
+        for(Button tempButton : calendar.calendarButtonList)
+        {
+            // ToDo: event handler to controller.
+
+            tempButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    ArrayList<Task> currentTasks = database.queryTasks(ManageDB.TaskQuery.DATE, tempButton.getId());
+
+                    numberOfTasksLabel.setText("(# of) Task(s): " + currentTasks.size());
+
+                    selectedDateTaskListView.getItems().setAll(currentTasks);
+
+                    selectedDateLabel.setText(tempButton.getId());
+
+                }
+            });
+        }
 
         //init with the information that would be displayed in the calendar, however, currently we do not
         // have any calendar to work with.
