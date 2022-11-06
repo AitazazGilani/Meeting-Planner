@@ -47,11 +47,11 @@ public class TasksController {
     @FXML
     protected ChoiceBox<String> sortByChoiceBox;
 
-    @FXML
-    protected TableColumn<Task, String> titleColumn = new TableColumn<>("Title"),
-            dateColumn = new TableColumn<>("Date"),
-            timeColumn = new TableColumn<>("Time"),
-            categoryColumn = new TableColumn<>("Category");
+//    @FXML
+//    protected TableColumn<Task, String> titleColumn = new TableColumn<>("Title"),
+//            dateColumn = new TableColumn<>("Date"),
+//            timeColumn = new TableColumn<>("Time"),
+//            categoryColumn = new TableColumn<>("Category");
 
     protected ManageDB database = new ManageDB();
 
@@ -62,20 +62,25 @@ public class TasksController {
     private void initialize(){
         //init and display all tasks in order by date
 
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        tasksTableView.getColumns().add(titleColumn);
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        tasksTableView.getColumns().add(dateColumn);
-        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        tasksTableView.getColumns().add(timeColumn);
-        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-        tasksTableView.getColumns().add(categoryColumn);
+//        titleColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+//        tasksTableView.getColumns().add(titleColumn);
+//        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+//        tasksTableView.getColumns().add(dateColumn);
+//        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+//        tasksTableView.getColumns().add(timeColumn);
+//        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+//        tasksTableView.getColumns().add(categoryColumn);
 
-
-        titleColumn.setPrefWidth(200);
-        dateColumn.setPrefWidth(100);
-        timeColumn.setPrefWidth(100);
-        categoryColumn.setPrefWidth(100);
+        taskTitleTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        taskDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        taskTimeTableColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        taskCategoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        taskDurationTableColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        taskContactTableColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        //these three don't need to be displayed right now, so they will be blank
+//        taskTimeSpentTableColumn
+//        taskRepeatingTableColumn
+//        taskReminderSetTableColumn
 
         ArrayList<Task> tasks = database.getAllTasks();
 
@@ -98,11 +103,18 @@ public class TasksController {
                 taskRepeatingLabel.setText("Repeating: Currently not implemented");
                 taskReminderSetLabel.setText("Reminder Set: Currently not implemented");
                 taskTimeLabel.setText("Time: " + tasksTableView.getSelectionModel().getSelectedItem().getTime());
+                taskDurationLabel.setText("Duration: " + tasksTableView.getSelectionModel().getSelectedItem().getDuration());
                 if (Objects.equals(tasksTableView.getSelectionModel().getSelectedItem().getCategory(), "")){
                     taskCategoryLabel.setText("Category: None");
                 }
                 else{
                     taskCategoryLabel.setText("Category: " + tasksTableView.getSelectionModel().getSelectedItem().getCategory());
+                }
+                if (Objects.equals(tasksTableView.getSelectionModel().getSelectedItem().getContactName(), "")){
+                    taskContactLabel.setText("Contact: None");
+                }
+                else{
+                    taskContactLabel.setText("Contact: " + tasksTableView.getSelectionModel().getSelectedItem().getContactName());
                 }
 
 
