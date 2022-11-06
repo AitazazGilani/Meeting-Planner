@@ -1,22 +1,25 @@
 package com.example.app.Controller;
 
 import com.example.app.App;
+import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
+import com.example.app.database.RowDoesNotExistException;
 import com.example.app.database.Task;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class TasksController {
@@ -32,11 +35,17 @@ public class TasksController {
             taskCategoryLabel;
 
     @FXML
-    protected ListView<Task> tasksListView;
+    protected TableView<Task> tasksTableView;
 
     //figure out what obj this is made of.
     @FXML
-    protected ChoiceBox sortByChoiceBox;
+    protected ChoiceBox<String> sortByChoiceBox;
+
+    @FXML
+    protected TableColumn<Task, String> titleColumn = new TableColumn<>("Title"),
+            dateColumn = new TableColumn<>("Date"),
+            timeColumn = new TableColumn<>("Time"),
+            categoryColumn = new TableColumn<>("Category");
 
     protected ManageDB database = new ManageDB();
 
@@ -45,9 +54,55 @@ public class TasksController {
      */
     @FXML
     private void initialize(){
-        //TODO TaskTab Initializer
+        //init and display all tasks in order by date
 
-        //init and display all tasks in order by date (earliest date to latest date)
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tasksTableView.getColumns().add(titleColumn);
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        tasksTableView.getColumns().add(dateColumn);
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        tasksTableView.getColumns().add(timeColumn);
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        tasksTableView.getColumns().add(categoryColumn);
+
+
+        titleColumn.setPrefWidth(200);
+        dateColumn.setPrefWidth(100);
+        timeColumn.setPrefWidth(100);
+        categoryColumn.setPrefWidth(100);
+
+        ArrayList<Task> tasks = database.getAllTasks();
+
+        for(Task task : tasks){
+            tasksTableView.getItems().add(task);
+        }
+
+        ArrayList<String> categoryList = database.getAllCategories();
+        if(!categoryList.get(0).equals("None")){
+            categoryList.add(0, "None");
+        }
+        sortByChoiceBox.setValue("None");
+        sortByChoiceBox.getItems().setAll(categoryList);
+
+        tasksTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
+            @Override
+            public void changed(ObservableValue<? extends Task> observableValue, Task task, Task t1) {
+                taskNameLabel.setText("Name: " + tasksTableView.getSelectionModel().getSelectedItem().getName());
+                taskDateLabel.setText("Date: " + tasksTableView.getSelectionModel().getSelectedItem().getDate());
+                taskRepeatingLabel.setText("Repeating: Currently not implemented");
+                taskReminderSetLabel.setText("Reminder Set: Currently not implemented");
+                taskTimeLabel.setText("Time: " + tasksTableView.getSelectionModel().getSelectedItem().getTime());
+                if (Objects.equals(tasksTableView.getSelectionModel().getSelectedItem().getCategory(), "")){
+                    taskCategoryLabel.setText("Category: None");
+                }
+                else{
+                    taskCategoryLabel.setText("Category: " + tasksTableView.getSelectionModel().getSelectedItem().getCategory());
+                }
+
+
+            }
+        });
+
     }
 
     /**
@@ -55,7 +110,7 @@ public class TasksController {
      */
     @FXML
     private void onTasksTabClick() {
-        //TODO TaskTab Refresher
+        //TODO Minor: TaskTab Refresher
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
@@ -106,13 +161,20 @@ public class TasksController {
      */
     @FXML
     private void onEditClick() throws IOException {
-        //TODO TaskTab Edit Button Currently not initialized with any data.
-
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
+        if(tasksTableView.getSelectionModel().getSelectedItem() != null){
+            Task task = tasksTableView.getSelectionModel().getSelectedItem();
+            TaskEditFormController taskEditFormController = new TaskEditFormController();
+            taskEditFormController.editTaskData(task);
+        }
+        else{
+            return;
+        }
+
         //Load the Task form view into the loader
-        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("TaskFormView.fxml")));
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("TaskEditFormView.fxml")));
         //create a new window for the new task
         Stage newTaskWindow = new Stage();
         newTaskWindow.setTitle("New Task");
@@ -125,8 +187,13 @@ public class TasksController {
      * Delete the currently selected Task
      */
     @FXML
-    private void onDeleteClick() {
-        //TODO TaskTab Delete Button
+    private void onDeleteClick() throws RowDoesNotExistException {
+
+        //TODO Minor: Delete Button refreshes page.
+
+        if(tasksTableView.getSelectionModel().getSelectedItem() != null){
+            database.deleteTask(tasksTableView.getSelectionModel().getSelectedItem());
+        }
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.

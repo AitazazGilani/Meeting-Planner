@@ -3,6 +3,8 @@ package com.example.app.Controller;
 import com.example.app.App;
 import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
+
+import com.example.app.database.RowDoesNotExistException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -14,7 +16,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.security.auth.callback.Callback;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -41,9 +42,9 @@ public class ContactsController {
     protected ListView<Contact> contactsListView;
 
     //Timer needs an object, don't really have much experience with timers yet so im not sure what to set the object as
-    // yet.
+    // yet. just defaulted to String
     @FXML
-    protected ListView currentTimersListView;
+    protected ListView<String> currentTimersListView;
 
     //Also figure out what object this should be.
     @FXML
@@ -69,15 +70,14 @@ public class ContactsController {
         sortByChoiceBox.getItems().setAll(categoryList);
 
         //change the text of each cell to its Contacts Name
-        contactsListView.setCellFactory(param -> new ListCell<Contact>(){
+        contactsListView.setCellFactory(param -> new ListCell<>() {
             @Override
-            protected void updateItem(Contact item, boolean empty){
+            protected void updateItem(Contact item, boolean empty) {
                 super.updateItem(item, empty);
 
-                if(empty || item == null || item.getName() == null){
+                if (empty || item == null || item.getName() == null) {
                     setText(null);
-                }
-                else{
+                } else {
                     setText(item.getName());
                 }
             }
@@ -104,7 +104,7 @@ public class ContactsController {
      */
     @FXML
     private void onContactsTabClick() {
-        //TODO ContactTab refresh
+        //TODO Minor: ContactTab refresh
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
@@ -154,7 +154,6 @@ public class ContactsController {
      */
     @FXML
     private void onEditContactClick() throws IOException {
-        //TODO ContactTab Edit Button, current not initialized with any data.
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
@@ -162,16 +161,6 @@ public class ContactsController {
         Contact contact = contactsListView.getSelectionModel().getSelectedItem();
         ContactEditFormController contactEditFormController = new ContactEditFormController();
         contactEditFormController.editContactData(contact);
-        //get the contact based on the name.
-//        for(Contact contact : contacts){
-//            if(contact == null){
-//                break;
-//            }
-//            if(contact.getName().equals(contactName)){
-//
-//                break;
-//            }
-//        }
 
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ContactEditFormView.fxml")));
         //create a new window for the new task
@@ -187,8 +176,12 @@ public class ContactsController {
      * Delete Currently selected Contact
      */
     @FXML
-    private void onDeleteContactClick() {
-        //TODO ContactTab Delete Button
+    private void onDeleteContactClick() throws RowDoesNotExistException {
+        //TODO Minor: ContactTab Delete Button refreshes page.
+
+        if(contactsListView.getSelectionModel().getSelectedItem() != null){
+            database.deleteContact(contactsListView.getSelectionModel().getSelectedItem());
+        }
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.

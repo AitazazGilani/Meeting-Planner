@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class TaskFormController {
     @FXML
     protected Button saveTaskBtn, deleteBtn, cancelBtn;
@@ -25,7 +27,7 @@ public class TaskFormController {
 
     //? Category Object?
     @FXML
-    protected ChoiceBox categoryChoice;
+    protected ChoiceBox<String> categoryChoice;
 
     protected ManageDB database = new ManageDB();
 
@@ -34,7 +36,13 @@ public class TaskFormController {
      */
     @FXML
     private void initialize(){
-        //TODO TaskForm Initializer
+        ArrayList<String> categoryList = database.getAllCategories();
+        if(!categoryList.get(0).equals("None")){
+            categoryList.add(0, "None");
+        }
+
+        categoryChoice.setValue("None");
+        categoryChoice.getItems().setAll(categoryList);
 
         //init the task forms information, text boxes should be blank, and dropdown boxes need information
     }
@@ -49,10 +57,10 @@ public class TaskFormController {
         Task t = new Task(titleTextField.getText(),
                 taskDatePicker.getValue().toString(),
                 timeTextField.getText(),
+                categoryChoice.getValue(),
                 "",
                 "",
-                "",
-                "self");
+                "");
 
         //Add new task to the db
         database.createNewTask(t);
