@@ -1,17 +1,23 @@
 package com.example.app.Controller;
 
+import com.example.app.App;
 import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 import com.example.app.database.RowDoesNotExistException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ContactEditFormController {
     @FXML
@@ -108,7 +114,16 @@ public class ContactEditFormController {
     }
 
 
-    public void onCategoryClick(ActionEvent actionEvent) {
+    public void onCategoryClick() throws IOException {
+        //note, there used to be a param for: ActionEvent actionEvent
+        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("CategoryFormView.fxml")));
+        //create a new window for the new task
+        Stage newContactWindow = new Stage();
+        newContactWindow.setTitle("New Category");
+        newContactWindow.setScene(new Scene(fxmlLoader, 600, 200));
+        //open the window
+        newContactWindow.show();
 
     }
 }

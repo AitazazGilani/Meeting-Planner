@@ -132,7 +132,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="newCategoryBtn" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #808080;" text="new category" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="newCategoryBtn" mnemonicParsing="false" onAction="#onCategoryClick" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #808080;" text="new category" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
