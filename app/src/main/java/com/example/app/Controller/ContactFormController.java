@@ -30,7 +30,6 @@ public class ContactFormController {
      */
     @FXML
     private void initialize(){
-        //TODO ContactForm Initializer
 
         ArrayList<String> categoryList = database.getAllCategories();
         if(!categoryList.get(0).equals("None")){
