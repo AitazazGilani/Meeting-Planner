@@ -1,14 +1,19 @@
 package com.example.app.Controller;
 
+import com.example.app.App;
 import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 import com.example.app.database.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TaskFormController {
 
@@ -26,11 +31,8 @@ public class TaskFormController {
 
     @FXML
     protected CheckBox repeatingCheckBox, reminderCheckBox;
-
-    //? Category Object?
     @FXML
-    protected ChoiceBox<String> categoryChoice;
-    public ChoiceBox<Contact> contactChoice;
+    protected ChoiceBox<String> categoryChoice, contactChoice;
 
     protected ManageDB database = new ManageDB();
 
@@ -39,18 +41,40 @@ public class TaskFormController {
      */
     @FXML
     private void initialize(){
+        //get the categories in the database
         ArrayList<String> categoryList = database.getAllCategories();
 
+        //initialize the
         if(!categoryList.isEmpty()){
             if(!categoryList.get(0).equals("None")){
                 categoryList.add(0, "None");
             }
         }
+        else{
+            //if it is empty, add None as a category.
+            categoryList.add("None");
+        }
 
         categoryChoice.setValue("None");
         categoryChoice.getItems().setAll(categoryList);
 
-        //init the task forms information, text boxes should be blank, and dropdown boxes need information
+        //create a list of strings from the names of the contacts in the database to initialize the contacts choice box
+        ArrayList<String> contactList = new ArrayList<>();
+        for(Contact contact : database.getAllContacts()){
+            contactList.add(contact.getName());
+        }
+        //if there are contacts in the database, set the first item to None
+        if(!contactList.isEmpty()){
+            if(!contactList.get(0).equals("None")){
+                contactList.add(0, "None");
+            }
+        }
+        else{
+            //if it is empty, add None as a category.
+            contactList.add("None");
+        }
+        contactChoice.setValue("None");
+        contactChoice.getItems().setAll(contactList);
     }
 
     /**
@@ -58,15 +82,14 @@ public class TaskFormController {
      */
     @FXML
     private void onSaveTaskClick() {
-        //TODO TaskForm Save Button
         //Create a new task t with info from text fields/dropdowns/etc
         Task t = new Task(titleTextField.getText(),
                 taskDatePicker.getValue().toString(),
                 timeTextField.getText(),
                 categoryChoice.getValue(),
+                durationTextField.getText(),
                 "",
-                "",
-                "");
+                contactChoice.getValue());
 
         //Add new task to the db
         database.createNewTask(t);
@@ -75,19 +98,6 @@ public class TaskFormController {
         Stage cur = (Stage) saveTaskBtn.getScene().getWindow();
         //Close the window after saving the task
         cur.close();
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-    }
-
-    /**
-     * Delete Current Task?
-     */
-    @FXML
-    private void onDeleteClick() {
-        //Doesn't need to be here currently
-
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
 
     /**
@@ -99,8 +109,18 @@ public class TaskFormController {
         Stage cur = (Stage) cancelBtn.getScene().getWindow();
         //Close the new task window
         cur.close();
+    }
 
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+    /**
+     * Opens the New Category window to create a new category
+     */
+    public void onCategoryClick() throws IOException {
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("CategoryFormView.fxml")));
+        //create a new window for the new task
+        Stage newContactWindow = new Stage();
+        newContactWindow.setTitle("New Category");
+        newContactWindow.setScene(new Scene(fxmlLoader, 600, 200));
+        //open the window
+        newContactWindow.show();
     }
 }

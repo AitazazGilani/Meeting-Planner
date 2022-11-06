@@ -5,7 +5,6 @@ import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 
 import com.example.app.database.RowDoesNotExistException;
-import com.example.app.database.Task;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -24,7 +23,7 @@ import java.util.Objects;
 
 public class ContactsController {
 
-    //currently doesn't need to be implemented
+    //currently, doesn't need to be implemented
     @FXML
     protected TextField searchBarTextField;
 
@@ -56,15 +55,6 @@ public class ContactsController {
     @FXML
     protected Button startBtn, pauseBtn, finishBtn, timerSummaryBtn;
 
-//    @FXML
-//    protected ListView<Contact> contactsListView;
-
-    //Timer needs an object, don't really have much experience with timers yet so im not sure what to set the object as
-    // yet. just defaulted to String
-//    @FXML
-//    protected ListView<String> currentTimersListView;
-
-    //Also figure out what object this should be.
     @FXML
     protected ChoiceBox<String> sortByChoiceBox;
 
@@ -77,12 +67,13 @@ public class ContactsController {
     private void initialize(){
         //TODO ContactTab Timers List (NOT CURRENT SPRINT)
 
+        //set all the cells in the table to what is in the database.
         contactsTableView.getItems().setAll(database.getAllContacts());
 
+        //set the cell values to match the contact object for displaying
         contactNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         contactEmailTableColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         contactCategoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-
 
         //add a "None" option to the categories.
         ArrayList<String> categoryList = database.getAllCategories();
@@ -91,32 +82,16 @@ public class ContactsController {
                 categoryList.add(0, "None");
             }
         }
+        else{
+            //if it is empty, add None as a category.
+            categoryList.add("None");
+        }
 
         sortByChoiceBox.setValue("None");
         sortByChoiceBox.getItems().setAll(categoryList);
 
-        ArrayList<Contact> contacts = database.getAllContacts();
-
-        for(Contact contact : contacts){
-            contactsTableView.getItems().add(contact);
-        }
-
-
-
-        //change the text of each cell to its Contacts Name
-//        contactsListView.setCellFactory(param -> new ListCell<>() {
-//            @Override
-//            protected void updateItem(Contact item, boolean empty) {
-//                super.updateItem(item, empty);
-//
-//                if (empty || item == null || item.getName() == null) {
-//                    setText(null);
-//                } else {
-//                    setText(item.getName());
-//                }
-//            }
-//        });
-
+        //this block looks for when a cell in the table is selected, then when a cell is selected, updates the details
+        // on the right side of the scene
         contactsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Contact>() {
             @Override
             public void changed(ObservableValue<? extends Contact> observableValue, Contact contact, Contact t1) {
@@ -130,21 +105,6 @@ public class ContactsController {
                 }
             }
         });
-
-//        //when changing between cells in the viewList, update the selected contact with the selected cell's data.
-//        contactsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Contact>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Contact> observableValue, Contact contact, Contact t1) {
-//                contactNameLabel.setText("Name: " + contactsListView.getSelectionModel().getSelectedItem().getName());
-//                contactEmailLabel.setText("Email: " + contactsListView.getSelectionModel().getSelectedItem().getEmail());
-//                if (Objects.equals(contactsListView.getSelectionModel().getSelectedItem().getCategory(), "")){
-//                    contactCategoryLabel.setText("Category: None");
-//                }
-//                else{
-//                    contactCategoryLabel.setText("Category: " + contactsListView.getSelectionModel().getSelectedItem().getCategory());
-//                }
-//            }
-//        });
     }
 
     /**
@@ -170,9 +130,6 @@ public class ContactsController {
      */
     @FXML
     private void onCalendarTabClick() throws IOException {
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-
         //loads the TaskView into fxmlLoader.
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("CalendarView.fxml")));
         //gets the current stage.
@@ -186,9 +143,6 @@ public class ContactsController {
      */
     @FXML
     private void onTasksTabClick() throws IOException {
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-
         //loads the TaskView into fxmlLoader.
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("TasksView.fxml")));
         //gets the current stage.
@@ -202,13 +156,15 @@ public class ContactsController {
      */
     @FXML
     private void onEditContactClick() throws IOException {
-
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-
-        Contact contact = contactsTableView.getSelectionModel().getSelectedItem();
-        ContactEditFormController contactEditFormController = new ContactEditFormController();
-        contactEditFormController.editContactData(contact);
+        //check if a contact is selected.
+        if(contactsTableView.getSelectionModel().getSelectedItem() != null){
+            Contact contact = contactsTableView.getSelectionModel().getSelectedItem();
+            ContactEditFormController contactEditFormController = new ContactEditFormController();
+            contactEditFormController.editContactData(contact);
+        }
+        else{
+            return;
+        }
 
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ContactEditFormView.fxml")));
         //create a new window for the new task
@@ -230,9 +186,6 @@ public class ContactsController {
         if(contactsTableView.getSelectionModel().getSelectedItem() != null){
             database.deleteContact(contactsTableView.getSelectionModel().getSelectedItem());
         }
-
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
 
     /**
@@ -240,9 +193,6 @@ public class ContactsController {
      */
     @FXML
     private void onNewContactClick() throws IOException {
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-
         //TODO Minor: Check if the window is already open, as to not create 300 tabs.
 
         //Load the Task form view into the loader
@@ -262,17 +212,13 @@ public class ContactsController {
     @FXML
     private void onTimerSummaryClick() {
         //TODO Minor: ContactTab Timer Button
-
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
 
     /**
-     * ? new Category, again figure out the Category. is it a new Object?
+     * Opens the New Category window to create a new category
      */
     @FXML
     private void onNewCategoryClick() throws IOException {
-
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("CategoryFormView.fxml")));
         //create a new window for the new task
         Stage newContactWindow = new Stage();
@@ -280,10 +226,5 @@ public class ContactsController {
         newContactWindow.setScene(new Scene(fxmlLoader, 600, 200));
         //open the window
         newContactWindow.show();
-
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-
-        //Currently, there isn't a form for the button to connect to, Lexi is doing that
     }
 }

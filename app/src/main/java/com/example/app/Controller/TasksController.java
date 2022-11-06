@@ -1,16 +1,13 @@
 package com.example.app.Controller;
 
 import com.example.app.App;
-import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 import com.example.app.database.RowDoesNotExistException;
 import com.example.app.database.Task;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -43,15 +40,8 @@ public class TasksController {
     @FXML
     protected TableView<Task> tasksTableView;
 
-    //figure out what obj this is made of.
     @FXML
     protected ChoiceBox<String> sortByChoiceBox;
-
-//    @FXML
-//    protected TableColumn<Task, String> titleColumn = new TableColumn<>("Title"),
-//            dateColumn = new TableColumn<>("Date"),
-//            timeColumn = new TableColumn<>("Time"),
-//            categoryColumn = new TableColumn<>("Category");
 
     protected ManageDB database = new ManageDB();
 
@@ -60,45 +50,33 @@ public class TasksController {
      */
     @FXML
     private void initialize(){
-        //init and display all tasks in order by date
 
-//        titleColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        tasksTableView.getColumns().add(titleColumn);
-//        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-//        tasksTableView.getColumns().add(dateColumn);
-//        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-//        tasksTableView.getColumns().add(timeColumn);
-//        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-//        tasksTableView.getColumns().add(categoryColumn);
-
+        //set the cell values to match the task objects for displaying
         taskTitleTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         taskDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         taskTimeTableColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        taskCategoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        taskCategoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         taskDurationTableColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
         taskContactTableColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-        //these three don't need to be displayed right now, so they will be blank
-//        taskTimeSpentTableColumn
-//        taskRepeatingTableColumn
-//        taskReminderSetTableColumn
 
-        ArrayList<Task> tasks = database.getAllTasks();
+        //get a list of tasks and add them to the table
+        tasksTableView.getItems().setAll(database.getAllTasks());
 
-        for(Task task : tasks){
-            tasksTableView.getItems().add(task);
-        }
-
+        //initialize the category choice box with the categories in the database
         ArrayList<String> categoryList = database.getAllCategories();
-
         if(!categoryList.isEmpty()){
             if(!categoryList.get(0).equals("None")){
                 categoryList.add(0, "None");
             }
         }
-
+        else{
+            //if it is empty, add None as a category.
+            categoryList.add("None");
+        }
         sortByChoiceBox.setValue("None");
         sortByChoiceBox.getItems().setAll(categoryList);
 
+        //update the details on the right of the scene when a new table cell is selected by the user.
         tasksTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
             public void changed(ObservableValue<? extends Task> observableValue, Task task, Task t1) {
@@ -150,9 +128,6 @@ public class TasksController {
      */
     @FXML
     private void onCalendarTabClick() throws IOException {
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-
         //loads the TaskView into fxmlLoader.
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("CalendarView.fxml")));
         //gets the current stage.
@@ -167,9 +142,6 @@ public class TasksController {
      */
     @FXML
     private void onContactsTabClick() throws IOException {
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-
         //loads the TaskView into fxmlLoader.
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ContactsView.fxml")));
         //gets the current stage.
@@ -183,9 +155,7 @@ public class TasksController {
      */
     @FXML
     private void onEditClick() throws IOException {
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-
+        //check if a cell is selected, if so open the init edit menu
         if(tasksTableView.getSelectionModel().getSelectedItem() != null){
             Task task = tasksTableView.getSelectionModel().getSelectedItem();
             TaskEditFormController taskEditFormController = new TaskEditFormController();
@@ -200,7 +170,7 @@ public class TasksController {
         //create a new window for the new task
         Stage newTaskWindow = new Stage();
         newTaskWindow.setTitle("New Task");
-        newTaskWindow.setScene(new Scene(fxmlLoader, 900, 600));
+        newTaskWindow.setScene(new Scene(fxmlLoader, 900, 700));
         //open the window
         newTaskWindow.show();
     }
@@ -210,15 +180,11 @@ public class TasksController {
      */
     @FXML
     private void onDeleteClick() throws RowDoesNotExistException {
-
         //TODO Minor: Delete Button refreshes page.
 
         if(tasksTableView.getSelectionModel().getSelectedItem() != null){
             database.deleteTask(tasksTableView.getSelectionModel().getSelectedItem());
         }
-
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
 
     /**
@@ -226,9 +192,6 @@ public class TasksController {
      */
     @FXML
     private void onNewTaskClick() throws IOException {
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-
         //TODO Minor: Check if the window is already open, as to not create 300 tabs.
 
         //Load the Task form view into the loader
@@ -236,19 +199,16 @@ public class TasksController {
         //create a new window for the new task
         Stage newTaskWindow = new Stage();
         newTaskWindow.setTitle("New Task");
-        newTaskWindow.setScene(new Scene(fxmlLoader, 900, 600));
+        newTaskWindow.setScene(new Scene(fxmlLoader, 900, 700));
         //open the window
         newTaskWindow.show();
     }
 
     /**
-     * ? is Category its own object? My tired brain can't remember
+     * Opens the New Category window to create a new category
      */
     @FXML
     private void onNewCategoryClick() throws IOException {
-        //note, there used to be a param for: ActionEvent actionEvent
-        //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
-
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("CategoryFormView.fxml")));
         //create a new window for the new task
         Stage newContactWindow = new Stage();

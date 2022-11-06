@@ -1,7 +1,6 @@
 package com.example.app.Controller;
 
 import com.example.app.database.ManageDB;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -22,19 +21,25 @@ public class CategoryFormController {
 
     @FXML
     private void initialize(){
-
+        //doesn't need to be initialized with anything
     }
 
     @FXML
     private void onCancelClick() {
+        //get the stage
         Stage cur = (Stage) cancelBtn.getScene().getWindow();
         //Close the window
         cur.close();
     }
 
+    /**
+     * Opens the New Category window to create a new category
+     */
     @FXML
     private void onAddCategoryClick() {
+        //add the category to the database
         database.createNewCategory(categoryNameTextField.getText());
+        //get the stage
         Stage cur = (Stage) addCategoryBtn.getScene().getWindow();
         //Close the window
         cur.close();
