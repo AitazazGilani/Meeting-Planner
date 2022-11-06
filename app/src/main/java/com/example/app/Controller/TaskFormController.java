@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class TaskFormController {
-    
+
     @FXML
     protected Button saveTaskBtn, newCategoryBtn, cancelBtn;
 
@@ -40,8 +40,11 @@ public class TaskFormController {
     @FXML
     private void initialize(){
         ArrayList<String> categoryList = database.getAllCategories();
-        if(!categoryList.get(0).equals("None")){
-            categoryList.add(0, "None");
+
+        if(!categoryList.isEmpty()){
+            if(!categoryList.get(0).equals("None")){
+                categoryList.add(0, "None");
+            }
         }
 
         categoryChoice.setValue("None");
