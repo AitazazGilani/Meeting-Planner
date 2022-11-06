@@ -3,6 +3,7 @@ package com.example.app.Controller;
 import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 import com.example.app.database.RowDoesNotExistException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -43,8 +44,10 @@ public class ContactEditFormController {
 
         //initialize with the data of the selected contact when edit it clicked.
         ArrayList<String> categoryList = database.getAllCategories();
-        if(!categoryList.get(0).equals("None")){
-            categoryList.add(0, "None");
+        if(!categoryList.isEmpty()){
+            if(!categoryList.get(0).equals("None")){
+                categoryList.add(0, "None");
+            }
         }
 
         categoryChoice.setValue(contact.getCategory());
@@ -105,4 +108,7 @@ public class ContactEditFormController {
     }
 
 
+    public void onCategoryClick(ActionEvent actionEvent) {
+
+    }
 }
