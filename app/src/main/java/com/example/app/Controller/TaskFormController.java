@@ -45,12 +45,7 @@ public class TaskFormController {
     @FXML
     private void onSaveTaskClick() {
         //TODO TaskForm Save Button
-
-        //Grab all info from text fields/dropdowns/options and create a new task with that info
-
-<<<<<<< HEAD
-        Task t = new Task(titleTextField.getText(), taskDatePicker.getValue().toString(), timeTextField.getText(), "", "", "", "self");
-=======
+        //Create a new task t with info from text fields/dropdowns/etc
         Task t = new Task(titleTextField.getText(),
                 taskDatePicker.getValue().toString(),
                 timeTextField.getText(),
@@ -58,7 +53,6 @@ public class TaskFormController {
                 "",
                 "",
                 "self");
->>>>>>> 0a7eb4a7a24371f908de40cf0723ffab8e5faa29
 
         //Add new task to the db
         database.createNewTask(t);
@@ -67,7 +61,6 @@ public class TaskFormController {
         Stage cur = (Stage) saveTaskBtn.getScene().getWindow();
         //Close the window after saving the task
         cur.close();
-
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
     }
@@ -88,11 +81,9 @@ public class TaskFormController {
      */
     @FXML
     private void onCancelClick() {
-
-
         //Gets current stage (new task window)
         Stage cur = (Stage) cancelBtn.getScene().getWindow();
-        //Close the window
+        //Close the new task window
         cur.close();
 
         //note, there used to be a param for: ActionEvent actionEvent
