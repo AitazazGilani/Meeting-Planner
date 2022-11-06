@@ -13,8 +13,9 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class ContactFormController {
+    
     @FXML
-    protected Button cancelBtn, deleteBtn, saveContactBtn;
+    protected Button cancelBtn, newCategoryBtn, saveContactBtn;
     @FXML
     protected Label viewHeader;
     @FXML
@@ -92,5 +93,8 @@ public class ContactFormController {
 
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
+    }
+
+    public void onCategoryClick(ActionEvent actionEvent) {
     }
 }
