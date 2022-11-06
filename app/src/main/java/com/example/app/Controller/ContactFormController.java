@@ -33,8 +33,10 @@ public class ContactFormController {
     private void initialize(){
 
         ArrayList<String> categoryList = database.getAllCategories();
-        if(!categoryList.get(0).equals("None")){
-            categoryList.add(0, "None");
+        if (!categoryList.isEmpty()){
+            if(!categoryList.get(0).equals("None")){
+                categoryList.add(0, "None");
+            }
         }
 
         categoryChoice.setValue("None");
