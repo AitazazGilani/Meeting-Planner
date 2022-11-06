@@ -174,7 +174,13 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="contactsListView" prefHeight="351.0" prefWidth="300.0" style="-fx-background-color: #EBEBEB;" VBox.vgrow="ALWAYS" />
+                        <TableView fx:id="contactsTableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                          <columns>
+                            <TableColumn fx:id="contactNameTableColumn" prefWidth="100.0" text="Name" />
+                            <TableColumn fx:id="contactEmailTableColumn" prefWidth="140.0" text="Email" />
+                              <TableColumn fx:id="contactCategoryTableColumn" prefWidth="100.0" text="Category" />
+                          </columns>
+                        </TableView>
                      </children>
                   </VBox>
                   <VBox prefHeight="405.0" prefWidth="340.0">
@@ -184,7 +190,12 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="currentTimersListView" prefHeight="351.0" prefWidth="255.0" style="-fx-background-color: #EBEBEB;" VBox.vgrow="ALWAYS" />
+                        <TableView fx:id="currentTimersTableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                          <columns>
+                            <TableColumn fx:id="currentTimersContactTableColumn" prefWidth="150.0" text="Contact" />
+                            <TableColumn fx:id="currentTimersTimeElapsedTableColumn" prefWidth="150.0" text="Time Elapsed" />
+                          </columns>
+                        </TableView>
                      </children>
                   </VBox>
                </children>
