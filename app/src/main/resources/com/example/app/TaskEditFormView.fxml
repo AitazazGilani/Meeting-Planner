@@ -66,7 +66,7 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="timeTextField" prefWidth="140.0" promptText="e.g. 14:30" />
+                  <TextField fx:id="timeTextField" prefWidth="140.0" promptText="HH:MM:SS" />
                </children></HBox>
             <HBox layoutX="25.0" layoutY="402.0" prefHeight="100.0" prefWidth="200.0" spacing="13.0">
                <children>
@@ -75,7 +75,7 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="durationTextField" prefWidth="140.0" promptText="e.g. hh:mm" />
+                  <TextField fx:id="durationTextField" prefWidth="140.0" promptText="HH:MM:SS" />
                </children></HBox>
             <HBox layoutX="25.0" layoutY="427.0" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>

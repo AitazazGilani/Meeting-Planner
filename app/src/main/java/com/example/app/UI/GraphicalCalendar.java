@@ -1,4 +1,4 @@
-package com.example.cmpt_370_test;
+package com.example.app.UI;
 
 /* Code sourced from: http://www.java2s.com/ref/java/javafx-gridpane-layout-calendar.html */
 
