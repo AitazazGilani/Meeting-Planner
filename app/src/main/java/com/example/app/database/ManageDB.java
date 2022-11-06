@@ -359,6 +359,7 @@ public class ManageDB {
      * @return an arraylist of tasks which match the query
      */
     public ArrayList<Task> queryTasks(TaskQuery queryType, String query) {
+        // TODO: task name and category
         // TODO: CLARIFY WHICH QUERIES WE ACTUALLY NEED
         ArrayList<Task> allTasks = this.getAllTasks();
         ArrayList<Task> ret = new ArrayList<>();
@@ -476,7 +477,7 @@ public class ManageDB {
         return tasks;
     }
 
-    /**NOT TESTED
+    /**
      * Get all present contacts from the database
      * @return an ArrayList of Contact objects
      */
@@ -490,8 +491,8 @@ public class ManageDB {
                 Contact c = new Contact(
                         rs.getString("Name"),
                         rs.getString("Email"),
-                        rs.getString("Category"),
-                        rs.getString("TimeSpent")
+                        rs.getString("TimeSpent"),
+                        rs.getString("Category")
                 );
                 c.setUID(rs.getInt("UID"));
                 contacts.add(c);
@@ -503,7 +504,7 @@ public class ManageDB {
         return contacts;
     }
 
-    /**NOT TESTED
+    /**
      * Get all present categories from the database
      * @return an ArrayList of category strings
      */
