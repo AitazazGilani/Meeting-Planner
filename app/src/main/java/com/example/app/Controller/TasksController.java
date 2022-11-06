@@ -23,6 +23,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class TasksController {
+    @FXML
+    protected TableColumn<Task, String> taskTitleTableColumn, taskDateTableColumn, taskTimeTableColumn, taskDurationTableColumn,
+            taskRepeatingTableColumn, taskReminderSetTableColumn, taskCategoryTableColumn, taskContactTableColumn, taskTimeSpentTableColumn;
+
+    @FXML
+    protected TextField searchBarTextField;
 
     @FXML
     protected Button calendarTabBtn, tasksTabBtn, contactsTabBtn, newCategoryBtn, newTaskBtn, deleteBtn, editBtn;
@@ -32,7 +38,7 @@ public class TasksController {
 
     @FXML
     protected Label taskNameLabel, taskDateLabel, taskRepeatingLabel, taskReminderSetLabel, taskTimeLabel,
-            taskCategoryLabel;
+            taskCategoryLabel, taskTimeSpentLabel, taskContactLabel, taskDurationLabel;
 
     @FXML
     protected TableView<Task> tasksTableView;

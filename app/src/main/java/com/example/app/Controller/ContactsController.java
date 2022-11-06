@@ -5,6 +5,7 @@ import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 
 import com.example.app.database.RowDoesNotExistException;
+import com.example.app.database.Task;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -21,6 +23,22 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ContactsController {
+
+    //currently doesn't need to be implemented
+    @FXML
+    protected TextField searchBarTextField;
+
+    @FXML
+    protected TableView<Contact> contactsTableView;
+
+    @FXML
+    protected TableColumn<Contact, String> contactNameTableColumn, contactEmailTableColumn, contactCategoryTableColumn;
+
+    @FXML
+    protected TableView<String> currentTimersTableView;
+
+    @FXML
+    protected TableColumn<String, String> currentTimersContactTableColumn, currentTimersTimeElapsedTableColumn;
 
     @FXML
     protected Button calendarTabBtn, tasksTabBtn, contactsTabBtn, editContactBtn, deleteContactBtn,
@@ -38,13 +56,13 @@ public class ContactsController {
     @FXML
     protected Button startBtn, pauseBtn, finishBtn, timerSummaryBtn;
 
-    @FXML
-    protected ListView<Contact> contactsListView;
+//    @FXML
+//    protected ListView<Contact> contactsListView;
 
     //Timer needs an object, don't really have much experience with timers yet so im not sure what to set the object as
     // yet. just defaulted to String
-    @FXML
-    protected ListView<String> currentTimersListView;
+//    @FXML
+//    protected ListView<String> currentTimersListView;
 
     //Also figure out what object this should be.
     @FXML
@@ -59,7 +77,12 @@ public class ContactsController {
     private void initialize(){
         //TODO ContactTab Timers List (NOT CURRENT SPRINT)
 
-        contactsListView.getItems().setAll(database.getAllContacts());
+        contactsTableView.getItems().setAll(database.getAllContacts());
+
+        contactNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        contactEmailTableColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        contactCategoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+
 
         //add a "None" option to the categories.
         ArrayList<String> categoryList = database.getAllCategories();
@@ -69,34 +92,56 @@ public class ContactsController {
         sortByChoiceBox.setValue("None");
         sortByChoiceBox.getItems().setAll(categoryList);
 
+        ArrayList<Contact> contacts = database.getAllContacts();
+
+        for(Contact contact : contacts){
+            contactsTableView.getItems().add(contact);
+        }
+
+
+
         //change the text of each cell to its Contacts Name
-        contactsListView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(Contact item, boolean empty) {
-                super.updateItem(item, empty);
+//        contactsListView.setCellFactory(param -> new ListCell<>() {
+//            @Override
+//            protected void updateItem(Contact item, boolean empty) {
+//                super.updateItem(item, empty);
+//
+//                if (empty || item == null || item.getName() == null) {
+//                    setText(null);
+//                } else {
+//                    setText(item.getName());
+//                }
+//            }
+//        });
 
-                if (empty || item == null || item.getName() == null) {
-                    setText(null);
-                } else {
-                    setText(item.getName());
-                }
-            }
-        });
-
-        //when changing between cells in the viewList, update the selected contact with the selected cell's data.
-        contactsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Contact>() {
+        contactsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Contact>() {
             @Override
             public void changed(ObservableValue<? extends Contact> observableValue, Contact contact, Contact t1) {
-                contactNameLabel.setText("Name: " + contactsListView.getSelectionModel().getSelectedItem().getName());
-                contactEmailLabel.setText("Email: " + contactsListView.getSelectionModel().getSelectedItem().getEmail());
-                if (Objects.equals(contactsListView.getSelectionModel().getSelectedItem().getCategory(), "")){
+                contactNameLabel.setText("Name: " + contactsTableView.getSelectionModel().getSelectedItem().getName());
+                contactEmailLabel.setText("Email: " + contactsTableView.getSelectionModel().getSelectedItem().getEmail());
+                if (Objects.equals(contactsTableView.getSelectionModel().getSelectedItem().getCategory(), "")){
                     contactCategoryLabel.setText("Category: None");
                 }
                 else{
-                    contactCategoryLabel.setText("Category: " + contactsListView.getSelectionModel().getSelectedItem().getCategory());
+                    contactCategoryLabel.setText("Category: " + contactsTableView.getSelectionModel().getSelectedItem().getCategory());
                 }
             }
         });
+
+//        //when changing between cells in the viewList, update the selected contact with the selected cell's data.
+//        contactsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Contact>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Contact> observableValue, Contact contact, Contact t1) {
+//                contactNameLabel.setText("Name: " + contactsListView.getSelectionModel().getSelectedItem().getName());
+//                contactEmailLabel.setText("Email: " + contactsListView.getSelectionModel().getSelectedItem().getEmail());
+//                if (Objects.equals(contactsListView.getSelectionModel().getSelectedItem().getCategory(), "")){
+//                    contactCategoryLabel.setText("Category: None");
+//                }
+//                else{
+//                    contactCategoryLabel.setText("Category: " + contactsListView.getSelectionModel().getSelectedItem().getCategory());
+//                }
+//            }
+//        });
     }
 
     /**
@@ -158,7 +203,7 @@ public class ContactsController {
         //note, there used to be a param for: ActionEvent actionEvent
         //I removed it as it doesn't seem necessary at the moment, just keep it in mind.
 
-        Contact contact = contactsListView.getSelectionModel().getSelectedItem();
+        Contact contact = contactsTableView.getSelectionModel().getSelectedItem();
         ContactEditFormController contactEditFormController = new ContactEditFormController();
         contactEditFormController.editContactData(contact);
 
@@ -179,8 +224,8 @@ public class ContactsController {
     private void onDeleteContactClick() throws RowDoesNotExistException {
         //TODO Minor: ContactTab Delete Button refreshes page.
 
-        if(contactsListView.getSelectionModel().getSelectedItem() != null){
-            database.deleteContact(contactsListView.getSelectionModel().getSelectedItem());
+        if(contactsTableView.getSelectionModel().getSelectedItem() != null){
+            database.deleteContact(contactsTableView.getSelectionModel().getSelectedItem());
         }
 
         //note, there used to be a param for: ActionEvent actionEvent

@@ -1,5 +1,6 @@
 package com.example.app.Controller;
 
+import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 import com.example.app.database.Task;
 import javafx.event.ActionEvent;
@@ -10,14 +11,15 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class TaskFormController {
+    
     @FXML
-    protected Button saveTaskBtn, deleteBtn, cancelBtn;
+    protected Button saveTaskBtn, newCategoryBtn, cancelBtn;
 
     @FXML
     protected Label viewHeader;
 
     @FXML
-    protected TextField titleTextField, timeTextField;
+    protected TextField titleTextField, timeTextField, durationTextField;
 
     @FXML
     protected DatePicker taskDatePicker;
@@ -28,6 +30,7 @@ public class TaskFormController {
     //? Category Object?
     @FXML
     protected ChoiceBox<String> categoryChoice;
+    public ChoiceBox<Contact> contactChoice;
 
     protected ManageDB database = new ManageDB();
 
