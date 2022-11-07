@@ -32,6 +32,14 @@ public class ManageDBTests {
         // REGRESSION TESTS
         System.out.println("\nRUNNING REGRESSION TESTS");
 
+        //test case 0: create and connect to the database
+        try{
+            db = new ManageDB();
+        }
+        catch(Exception e){
+            System.out.println("ERROR: could not create and connect a new DB\n"+e);
+        }
+
         // test case 1: create a new user (tests createNewUser())
         try {
             db.createNewUser("username", "password");
@@ -142,6 +150,17 @@ public class ManageDBTests {
             System.out.println("ERROR: Failed to delete the given task, reason: "+e);
         }
 
+        //test case 8.5: delete a task with no UID
+        try{
+            Task t = new Task("test","dd-mm-yyyy","00:00:00","","","","");
+            db.deleteTask(t);
+        } catch (RowDoesNotExistException e) {
+            //caught exception, passed
+        }
+        catch (Exception e){
+            System.out.println("ERROR: failed to throw RowDoesNotExist exception for a task with no UID, reason:\n"+e);
+        }
+
         //Test case 9: delete a Category (tests deleteCategory())
         try {
             ArrayList<String> arr = db.getAllCategories();
@@ -190,6 +209,17 @@ public class ManageDBTests {
         }
         catch (Exception e){
             System.out.println("ERROR: Failed to delete the given contact, reason: "+e);
+        }
+
+        //test case 10.5: delete a Contact with no UID
+        try{
+            Contact c = new Contact("john","juandoe@email.com","","");
+            db.deleteContact(c);
+        } catch (RowDoesNotExistException e) {
+            //caught exception, passed
+        }
+        catch (Exception e){
+            System.out.println("ERROR: failed to throw RowDoesNotExist exception for a contact with no UID, reason:\n"+e);
         }
 
         // test case 11: update a contact (tests updateContact())
