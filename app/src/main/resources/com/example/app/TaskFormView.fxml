@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="681.0" prefWidth="297.0" style="-fx-background-color: #DDDDDD;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.TaskFormController">
+<children>
+      <VBox layoutX="10.0" layoutY="61.0" prefHeight="393.0" prefWidth="277.0" style="-fx-spacing: 25; -fx-padding: 15;" AnchorPane.topAnchor="61.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+               <children>
+                  <Label text="Title:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="titleTextField" prefHeight="25.0" prefWidth="180.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="37.0">
+               <children>
+                  <Label text="Date:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="taskDatePicker" prefWidth="180.0" promptText="Select Date" />
+               </children></HBox>
+            <HBox layoutX="25.0" layoutY="69.0" prefHeight="100.0" prefWidth="200.0" spacing="35.0">
+               <children>
+                  <Label text="Time:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="timeTextField" prefWidth="140.0" promptText="HH:MM:SS" />
+               </children></HBox>
+            <HBox layoutX="25.0" layoutY="402.0" prefHeight="100.0" prefWidth="200.0" spacing="13.0">
+               <children>
+                  <Label text="Duration:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="durationTextField" prefWidth="140.0" promptText="HH:MM:SS" />
+               </children></HBox>
+            <HBox layoutX="25.0" layoutY="427.0" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+               <children>
+                  <Label text="Repeating:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="repeatingCheckBox" mnemonicParsing="false" />
+               </children></HBox>
+            <HBox layoutX="25.0" layoutY="427.0" prefHeight="100.0" prefWidth="200.0" spacing="22.0">
+               <children>
+                  <Label text="Reminder Set:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="reminderCheckBox" mnemonicParsing="false" />
+               </children>
+            </HBox>
+            <HBox layoutX="25.0" layoutY="452.0" prefHeight="100.0" prefWidth="200.0" spacing="12.0">
+               <children>
+                  <Label text="Category:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="categoryChoice" prefWidth="180.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="19.0">
+               <children>
+                  <Label text="Contact:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="contactChoice" prefWidth="180.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Label layoutX="10.0" layoutY="43.0" prefHeight="17.0" prefWidth="277.0" text="_______________________________________________________" textAlignment="CENTER" AnchorPane.topAnchor="50.0" />
+      <Label fx:id="viewHeader" layoutX="99.0" layoutY="24.0" text="Enter Details" AnchorPane.topAnchor="24.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="10.0" layoutY="376.0" prefHeight="17.0" prefWidth="277.0" text="_______________________________________________________" textAlignment="CENTER" AnchorPane.bottomAnchor="157.0" />
+      <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="297.0" spacing="30.0" AnchorPane.bottomAnchor="166.0">
+         <children>
+            <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#onCancelClick" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #FFFFFF;" text="cancel" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="newCategoryBtn" mnemonicParsing="false" onAction="#onCategoryClick" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #808080;" text="new category" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <Button fx:id="saveTaskBtn" alignment="CENTER" layoutX="77.0" layoutY="436.0" mnemonicParsing="false" onAction="#onSaveTaskClick" prefHeight="54.0" prefWidth="144.0" style="-fx-background-color: #5A83FC;" text="save task" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="60.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+</children>
+</AnchorPane>
