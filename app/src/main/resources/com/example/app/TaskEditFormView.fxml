@@ -77,15 +77,6 @@
                   </Label>
                   <TextField fx:id="durationTextField" prefWidth="140.0" promptText="HH:MM:SS" />
                </children></HBox>
-            <HBox layoutX="25.0" layoutY="427.0" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
-               <children>
-                  <Label text="Repeating:">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <CheckBox fx:id="repeatingCheckBox" mnemonicParsing="false" />
-               </children></HBox>
             <HBox layoutX="25.0" layoutY="427.0" prefHeight="100.0" prefWidth="200.0" spacing="22.0">
                <children>
                   <Label text="Reminder Set:">

@@ -57,77 +57,98 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
+            <Button fx:id="lockBtn" alignment="CENTER" layoutX="29.0" layoutY="570.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #AAAAAA;" text="lock app" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
     </children>
   </AnchorPane>
    </left>
    <right>
   <AnchorPane prefHeight="550.0" prefWidth="221.0" style="-fx-background-color: #DDDDDD;" BorderPane.alignment="CENTER">
     <children>
-            <VBox fx:id="selectedContactInfoBox" layoutX="2.0" layoutY="61.0" prefHeight="143.0" prefWidth="219.0" spacing="18.0" AnchorPane.topAnchor="61.0">
+            <CheckBox fx:id="favouriteContactCheckBox" mnemonicParsing="false" text="Favourite" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="66.0">
+               <font>
+                  <Font size="13.0" />
+               </font></CheckBox>
+            <VBox fx:id="selectedContactInfoBox" layoutX="2.0" layoutY="61.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="170.0" prefWidth="219.0" spacing="15.0" AnchorPane.topAnchor="86.0">
                <children>
-                  <Label fx:id="contactNameLabel" text="Name:">
+                  <Label fx:id="contactNameLabel" maxWidth="-Infinity" prefWidth="195.0" text="Name:" wrapText="true">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label fx:id="contactEmailLabel" text="Email:">
+                  <Label fx:id="contactEmailLabel" maxWidth="-Infinity" prefWidth="195.0" text="Email:" wrapText="true">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label fx:id="contactCategoryLabel" text="Category:">
+                  <Label fx:id="contactCategoryLabel" maxWidth="-Infinity" prefWidth="195.0" text="Category:" wrapText="true">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
-                     <children>
-                        <Button fx:id="editContactBtn" mnemonicParsing="false" onAction="#onEditContactClick" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="edit" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="deleteContactBtn" mnemonicParsing="false" onAction="#onDeleteContactClick" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="delete" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
                </children>
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
             </VBox>
+            <HBox alignment="TOP_CENTER" layoutX="16.0" layoutY="246.0" prefHeight="34.0" prefWidth="189.0" spacing="30.0" AnchorPane.topAnchor="230.0">
+               <children>
+                  <Button fx:id="editContactBtn" mnemonicParsing="false" onAction="#onEditContactClick" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="edit" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="deleteContactBtn" mnemonicParsing="false" onAction="#onDeleteContactClick" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF;" text="delete" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
             <Label layoutX="9.0" layoutY="44.0" prefHeight="17.0" prefWidth="203.0" text="________________________________________" textAlignment="CENTER" AnchorPane.topAnchor="50.0" />
             <Label layoutX="84.0" layoutY="26.0" text="Details" AnchorPane.topAnchor="23.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <VBox alignment="CENTER" layoutX="10.0" layoutY="267.0" prefHeight="65.0" prefWidth="201.0" spacing="8.0" AnchorPane.topAnchor="280.0">
+            <VBox alignment="CENTER" layoutX="11.0" layoutY="319.0" prefHeight="65.0" prefWidth="201.0" spacing="8.0" AnchorPane.topAnchor="319.0">
                <children>
-                  <Label fx:id="selectedTimerLabel" text="Current Timer: 00:00:00">
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Current Timer:">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label fx:id="selectedTimerLabel" text="00h : 00m : 00s">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <HBox fx:id="timerBtnBox" alignment="TOP_CENTER" prefHeight="34.0" prefWidth="196.0" spacing="14.0">
+                  <HBox fx:id="timerBtnBox" alignment="TOP_CENTER" prefHeight="34.0" prefWidth="196.0" spacing="18.0">
                      <children>
                         <Button fx:id="startBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #FFFFFF;" text="start" />
                         <Button fx:id="pauseBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #FFFFFF;" text="pause" />
                         <Button fx:id="finishBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #FFFFFF;" text="finish" />
                      </children>
                   </HBox>
+                  <Button fx:id="timerSummaryBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onTimerSummaryClick" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #808080;" text="View Timer Summary" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
-            <Button fx:id="timerSummaryBtn" alignment="CENTER" layoutX="27.0" layoutY="345.0" mnemonicParsing="false" onAction="#onTimerSummaryClick" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #808080;" text="View Timer Summary" textAlignment="CENTER" textFill="WHITE" AnchorPane.topAnchor="360.0">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Label layoutX="10.0" layoutY="373.0" prefHeight="17.0" prefWidth="203.0" text="________________________________________" textAlignment="CENTER" AnchorPane.topAnchor="386.0" />
-            <Button fx:id="newContactBtn" alignment="CENTER" layoutX="30.0" layoutY="419.0" mnemonicParsing="false" onAction="#onNewContactClick" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #5A83FC;" text="+ new contact" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
+            <Label layoutX="9.0" layoutY="471.0" prefHeight="17.0" prefWidth="203.0" text="________________________________________" textAlignment="CENTER" AnchorPane.bottomAnchor="110.0" />
+            <Button fx:id="newContactBtn" alignment="CENTER" layoutX="29.0" layoutY="568.0" mnemonicParsing="false" onAction="#onNewContactClick" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #5A83FC;" text="+ new contact" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -143,18 +164,9 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Button>
-            <HBox alignment="CENTER" prefHeight="52.0" prefWidth="500.0" spacing="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="500.0" spacing="30.0" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="220.0" spacing="6.0">
-                     <children>
-                        <Label text="Search:">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Label>
-                        <TextField fx:id="searchBarTextField" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="52.0" prefWidth="220.0" spacing="6.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="220.0" spacing="6.0">
                      <children>
                         <Label text="Sort by: ">
                            <font>
@@ -164,10 +176,19 @@
                         <ChoiceBox fx:id="sortByChoiceBox" prefWidth="150.0" />
                      </children>
                   </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="111.0" spacing="6.0">
+                     <children>
+                        <CheckBox fx:id="favouritesSortCheckBox" mnemonicParsing="false" text="Favourites">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                     </children>
+                  </HBox>
                </children></HBox>
-            <HBox alignment="TOP_CENTER" layoutY="137.0" prefHeight="516.0" prefWidth="757.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="137.0">
+            <HBox alignment="TOP_CENTER" layoutY="137.0" prefHeight="516.0" prefWidth="757.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="137.0">
                <children>
-                  <VBox prefHeight="405.0" prefWidth="340.0">
+                  <VBox prefHeight="405.0" prefWidth="340.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label text="Contacts">
                            <font>
@@ -180,10 +201,16 @@
                             <TableColumn fx:id="contactEmailTableColumn" prefWidth="140.0" text="Email" />
                               <TableColumn fx:id="contactCategoryTableColumn" prefWidth="100.0" text="Category" />
                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                      </children>
+                     <HBox.margin>
+                        <Insets left="24.0" />
+                     </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="405.0" prefWidth="340.0">
+                  <VBox prefHeight="405.0" prefWidth="340.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label text="Current Timers">
                            <font>
@@ -195,8 +222,14 @@
                             <TableColumn fx:id="currentTimersContactTableColumn" prefWidth="150.0" text="Contact" />
                             <TableColumn fx:id="currentTimersTimeElapsedTableColumn" prefWidth="150.0" text="Time Elapsed" />
                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                      </children>
+                     <HBox.margin>
+                        <Insets right="24.0" />
+                     </HBox.margin>
                   </VBox>
                </children>
             </HBox>
@@ -225,39 +258,9 @@
    <top>
     <MenuBar BorderPane.alignment="CENTER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu fx:id="accountMenu" mnemonicParsing="false" text="Account">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem fx:id="logOutMenuItem" mnemonicParsing="false" text="Log Out" />
           </items>
         </Menu>
       </menus>
