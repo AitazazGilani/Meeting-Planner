@@ -7,6 +7,10 @@ package com.example.app.database;
 public class Contact implements TableObject<Contact> {
     String name, email, timeSpent, category;
 
+    /**to track if the task is favourited or not
+     * initialized to be false by default**/
+    boolean favourite;
+
     /**
      * ID for the contact, must be null if the views/controller are creating a contact.
      * handled by ManageDB
@@ -20,6 +24,7 @@ public class Contact implements TableObject<Contact> {
         // TODO: are we even gonna use timeSpent in Contacts?
         this.timeSpent = timeSpent;
         this.category = category;
+        favourite = false;
     }
 
     public String getName() {
@@ -53,6 +58,10 @@ public class Contact implements TableObject<Contact> {
     public void setCategory(String s) {
         this.category = s;
     }
+
+    public boolean isFavourite() { return favourite; }
+
+    public void setFavourite(boolean favourite) { this.favourite = favourite; }
 
     /**
      * DO NOT USE IN VIEWS OR CONTROLLER, Set the UID for a task.
