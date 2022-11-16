@@ -478,7 +478,7 @@ public class ManageDB {
                         rs.getString("ContactName")
                 );
                 t.setUID(rs.getInt("UID"));
-                t.setFavourite(rs.getBoolean("Favorite"));
+                t.setFavorite(rs.getBoolean("Favorite"));
                 tasks.add(t);
             }
         }
@@ -584,7 +584,7 @@ public class ManageDB {
                 "    TaskDuration varchar(255),\n" +
                 "    TimeSpent varchar(255), \n" +
                 "    ContactName varchar(255), \n" +
-                "    Favourite varchar(255) \n" +
+                "    Favorite varchar(255) \n" +
                 ");\n";
 
         String createCategoryTable = "CREATE TABLE CategoryTable(\n" +

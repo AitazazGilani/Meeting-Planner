@@ -9,7 +9,7 @@ public class Contact implements TableObject<Contact> {
 
     /**to track if the task is favourited or not
      * initialized to be false by default**/
-    boolean favourite;
+    boolean favorite;
 
     /**
      * ID for the contact, must be null if the views/controller are creating a contact.
@@ -24,7 +24,7 @@ public class Contact implements TableObject<Contact> {
         // TODO: are we even gonna use timeSpent in Contacts?
         this.timeSpent = timeSpent;
         this.category = category;
-        favourite = false;
+        favorite = false;
     }
 
     public String getName() {
@@ -59,9 +59,9 @@ public class Contact implements TableObject<Contact> {
         this.category = s;
     }
 
-    public boolean isFavourite() { return favourite; }
+    public boolean isFavorite() { return favorite; }
 
-    public void setFavourite(boolean favourite) { this.favourite = favourite; }
+    public void setFavorite(boolean favorite) { this.favorite = favorite; }
 
     /**
      * DO NOT USE IN VIEWS OR CONTROLLER, Set the UID for a task.
