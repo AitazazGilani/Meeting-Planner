@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.CalendarController">
+   <left>
+  <AnchorPane prefHeight="550.0" prefWidth="222.0" BorderPane.alignment="CENTER">
+    <children>
+            <Button fx:id="unlockBtn" alignment="CENTER" layoutX="29.0" layoutY="569.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #8CA8FC;" text="unlock app" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+    </children>
+  </AnchorPane>
+   </left>
+   <right>
+  <AnchorPane prefHeight="653.0" prefWidth="221.0" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <AnchorPane id="Content" fx:id="centerAnchorPane" minWidth="457.0" prefHeight="550.0" prefWidth="430.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="255.0" layoutY="316.0" prefHeight="26.0" prefWidth="247.0" text="The application is locked." textAlignment="CENTER" textFill="#707070" AnchorPane.bottomAnchor="316.0" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="255.0" AnchorPane.topAnchor="316.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+   </center>
+   <bottom>
+    <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="22.0" spacing="5.0" BorderPane.alignment="CENTER">
+      <children>
+        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="CMPT 370 Group Project" HBox.hgrow="ALWAYS">
+          <font>
+            <Font size="11.0" fx:id="x3" />
+          </font>
+          <textFill>
+            <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+          </textFill>
+        </Label>
+        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+        <Label font="$x3" maxWidth="-1.0" text="Lab: T05    Group: Monke Business" textFill="$x4" HBox.hgrow="NEVER" />
+      </children>
+      <padding>
+        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+      </padding>
+    </HBox>
+   </bottom>
+   <top>
+    <MenuBar BorderPane.alignment="CENTER">
+      <menus>
+        <Menu fx:id="accountMenu" mnemonicParsing="false" text="Account">
+          <items>
+            <MenuItem fx:id="logOutMenuItem" mnemonicParsing="false" text="Log Out" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+   </top>
+</BorderPane>
