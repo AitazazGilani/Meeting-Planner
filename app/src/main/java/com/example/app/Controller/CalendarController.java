@@ -22,7 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import com.example.app.UI.*;
 
-public class CalendarController {
+public class CalendarController{
 
     //TODO Minor: Future reference, the ListView may not be of the Task Object, confirm this in the future.
     @FXML
@@ -39,18 +39,40 @@ public class CalendarController {
 
     protected ManageDB database = new ManageDB();
 
+    protected GraphicalCalendar calendar = new GraphicalCalendar();
+
     /**
      * This initializes the CalendarView with information on startup.
      */
     @FXML
     private void initialize(){
         //create new calendar graphic
-        GraphicalCalendar calendar = new GraphicalCalendar();
 
         //set the scenes center pane to the calendar
         centerAnchorPane.getChildren().setAll(calendar);
 
-        //for every cell of buttons in the calendar, create an onAction event handler to handle date selectes
+        //for every cell of buttons in the calendar, create an onAction event handler to handle date selects
+        setButtonHandlers();
+    }
+
+    /**
+     * Sets an event handler for each button in the calendar grid.
+     */
+    private void setButtonHandlers() {
+        calendar.nextBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                calendar.next();
+                setButtonHandlers();
+            }
+        });
+        calendar.prevBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                calendar.previous();
+                setButtonHandlers();
+            }
+        });
         for(Button tempButton : calendar.calendarButtonList)
         {
             tempButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -69,6 +91,7 @@ public class CalendarController {
             });
         }
     }
+
 
     /**
      * Move and display the Calendar Tab

@@ -2,13 +2,6 @@ package com.example.app.UI;
 
 /* Code sourced from: http://www.java2s.com/ref/java/javafx-gridpane-layout-calendar.html */
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,11 +11,17 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class GraphicalCalendar extends VBox {
     private Calendar currentMonth;
 
     public List<Button> calendarButtonList = new ArrayList();
+
+    public Button nextBtn, prevBtn;
 
     public GraphicalCalendar() {
         currentMonth = new GregorianCalendar();
@@ -48,12 +47,12 @@ public class GraphicalCalendar extends VBox {
         calendarTitle.setStyle("-fx-font-size: 24; -fx-font-weight: BOLD;");
 
         // Buttons to change between months
-        Button prevBtn = new Button("<--");
+        prevBtn = new Button("<--");
         prevBtn.setPrefWidth(45);
         prevBtn.setPrefHeight(30);
         prevBtn.setStyle("-fx-font-size: 14; -fx-font-weight: BOLD;");
 
-        Button nextBtn = new Button("-->");
+        nextBtn = new Button("-->");
         nextBtn.setPrefWidth(45);
         nextBtn.setPrefHeight(30);
         nextBtn.setStyle("-fx-font-size: 14; -fx-font-weight: BOLD;");
@@ -239,11 +238,17 @@ public class GraphicalCalendar extends VBox {
     private void setButtonHandlers() {
 //        for(Button tempButton : calendarButtonList)
 //        {
-//            // ToDo: event handler to controller.
-//
 //            tempButton.setOnAction(new EventHandler<ActionEvent>() {
 //                @Override
 //                public void handle(ActionEvent actionEvent) {
+//                    //when a cell is selected update the details on the right of the scene with the right data.
+//                    ArrayList<Task> currentTasks = database.queryTasks(ManageDB.TaskQuery.DATE, tempButton.getId());
+//
+//                    CalendarController.numberOfTasksLabel.setText("(# of) Task(s): " + currentTasks.size());
+//
+//                    CalendarController.selectedDateTaskListView.getItems().setAll(currentTasks);
+//
+//                    CalendarController.selectedDateLabel.setText(tempButton.getId());
 //
 //                }
 //            });
@@ -253,14 +258,14 @@ public class GraphicalCalendar extends VBox {
 
     /* Added clear button list when changing months */
 
-    private void previous() {
+    public void previous() {
         getChildren().clear();
         clearCalendarButtonList();
         currentMonth = getPreviousMonth(currentMonth);
         drawCalendar();
     }
 
-    private void next() {
+    public void next() {
         getChildren().clear();
         clearCalendarButtonList();
         currentMonth = getNextMonth(currentMonth);
