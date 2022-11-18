@@ -32,7 +32,7 @@ public class CalendarController {
     protected AnchorPane centerAnchorPane;
 
     @FXML
-    protected Button tasksTabBtn, calendarTabBtn, contactsTabBtn, newTaskBtn;
+    protected Button tasksTabBtn, calendarTabBtn, contactsTabBtn, newTaskBtn, lockBtn;
 
     @FXML
     protected Label selectedDateLabel, numberOfTasksLabel;
@@ -131,5 +131,21 @@ public class CalendarController {
         newTaskWindow.setScene(new Scene(fxmlLoader, 900, 700));
         //open the window
         newTaskWindow.show();
+    }
+
+    public void clickLockButton() throws IOException {
+        //Load the locked screen view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("LockedView.fxml")));
+        //create a new window for the locked screen
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("Screen Locked");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
+        //open the window
+        newTaskWindow.show();
+
+        //Gets current stage (new contact window)
+        Stage cur = (Stage) lockBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
     }
 }

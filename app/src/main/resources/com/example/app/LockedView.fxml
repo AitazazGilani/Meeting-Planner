@@ -38,11 +38,11 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.CalendarController">
+<BorderPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.LockviewController">
    <left>
   <AnchorPane prefHeight="550.0" prefWidth="222.0" BorderPane.alignment="CENTER">
     <children>
-            <Button fx:id="unlockBtn" alignment="CENTER" layoutX="29.0" layoutY="569.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #8CA8FC;" text="unlock app" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
+            <Button fx:id="unlockBtn" onAction="#clickUnlockButton" alignment="CENTER" layoutX="29.0" layoutY="569.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #8CA8FC;" text="unlock app" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

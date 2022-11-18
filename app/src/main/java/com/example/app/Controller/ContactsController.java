@@ -41,7 +41,7 @@ public class ContactsController {
 
     @FXML
     protected Button calendarTabBtn, tasksTabBtn, contactsTabBtn, editContactBtn, deleteContactBtn,
-            newContactBtn, newCategoryBtn;
+            newContactBtn, newCategoryBtn, lockBtn;
 
     @FXML
     protected VBox selectedContactInfoBox;
@@ -226,5 +226,21 @@ public class ContactsController {
         newContactWindow.setScene(new Scene(fxmlLoader, 600, 200));
         //open the window
         newContactWindow.show();
+    }
+
+    public void clickLockButton() throws IOException {
+        //Load the locked screen view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("LockedView.fxml")));
+        //create a new window for the locked screen
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("Screen Locked");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
+        //open the window
+        newTaskWindow.show();
+
+        //Gets current stage (new contact window)
+        Stage cur = (Stage) lockBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
     }
 }

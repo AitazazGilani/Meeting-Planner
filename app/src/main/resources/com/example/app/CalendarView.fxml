@@ -57,7 +57,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="lockBtn" alignment="CENTER" layoutX="29.0" layoutY="569.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #AAAAAA;" text="lock app" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
+            <Button fx:id="lockBtn" alignment="CENTER" layoutX="29.0" layoutY="569.0" mnemonicParsing="false" onAction="#clickLockButton" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #AAAAAA;" text="lock app" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

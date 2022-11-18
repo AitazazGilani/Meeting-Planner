@@ -28,7 +28,7 @@ public class TasksController {
     protected TextField searchBarTextField;
 
     @FXML
-    protected Button calendarTabBtn, tasksTabBtn, contactsTabBtn, newCategoryBtn, newTaskBtn, deleteBtn, editBtn;
+    protected Button calendarTabBtn, tasksTabBtn, contactsTabBtn, newCategoryBtn, newTaskBtn, deleteBtn, editBtn, lockBtn;
 
     @FXML
     protected VBox selectedTaskInfoBox;
@@ -216,5 +216,21 @@ public class TasksController {
         newContactWindow.setScene(new Scene(fxmlLoader, 600, 200));
         //open the window
         newContactWindow.show();
+    }
+
+    public void clickLockButton() throws IOException {
+        //Load the locked screen view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("LockedView.fxml")));
+        //create a new window for the locked screen
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("Screen Locked");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
+        //open the window
+        newTaskWindow.show();
+
+        //Gets current stage (new contact window)
+        Stage cur = (Stage) lockBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
     }
 }
