@@ -228,7 +228,8 @@ public class ContactsController {
         newContactWindow.show();
     }
 
-    public void clickLockButton() throws IOException {
+    @FXML
+    private void clickLockButton() throws IOException {
         //Load the locked screen view into the loader
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("LockedView.fxml")));
         //create a new window for the locked screen
