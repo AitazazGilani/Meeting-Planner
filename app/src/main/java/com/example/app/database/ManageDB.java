@@ -38,6 +38,7 @@ public class ManageDB {
             System.out.println(".db file does not exist");
             try {
                 createNewDB();
+                createNewCategory("Completed");
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -477,6 +478,7 @@ public class ManageDB {
                         rs.getString("ContactName")
                 );
                 t.setUID(rs.getInt("UID"));
+                t.setFavorite(rs.getBoolean("Favorite"));
                 tasks.add(t);
             }
         }
@@ -572,6 +574,7 @@ public class ManageDB {
                 "    TimeSpent varchar(255)\n" +
                 ");";
 
+        //TODO: added a var to track favourited tasks, see what needs to be updated in the functions above
         String createTaskTable = "CREATE TABLE TaskTable(\n" +
                 "    UID integer primary key autoincrement,\n"+
                 "    TaskName varchar(255),\n" +
@@ -580,12 +583,14 @@ public class ManageDB {
                 "    Category varchar(255),\n" +
                 "    TaskDuration varchar(255),\n" +
                 "    TimeSpent varchar(255), \n" +
-                "    ContactName varchar(255)\n" +
+                "    ContactName varchar(255), \n" +
+                "    Favorite varchar(255) \n" +
                 ");\n";
 
         String createCategoryTable = "CREATE TABLE CategoryTable(\n" +
                 "    Category varchar(255)\n" +
                 ");\n";
+
 
         // Execute the strings above as SQL statements to create the necessary tables in the db
         try (Connection conn = DriverManager.getConnection(URL)) {

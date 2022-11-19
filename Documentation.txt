@@ -1,0 +1,249 @@
+
+Description of all functions in the program for ease-of-use. 
+
+Format:
+
+Class Type
+	Class
+		Documentation
+
+		Function
+			Documentation
+
+
+Controller Classes
+
+	CalendarController
+		The controller for the calendar UI. 
+
+		initialize
+			Initializes the CalendarView with information on startup.
+
+		clickCalendarTab //UNUSED
+			Display the calendar portion and refreshes if already displayed.
+
+		clickTasksTab
+			Display the tasks portion of the program. 
+			Throws: IOException
+
+		clickContactsTab
+			Display the contacts portion of the program. 
+			Throws: IOException
+
+		clickNewTask
+			Display the TaskForm tab (new tasks)
+
+
+	ContactFormController
+		The controller for the ContactForm, or contact entry UI. 
+
+		initialize
+			Initializes the ContactForm with information on startup.
+			
+		onCancelClick //UNUSED
+			Closes the ContactForm and discards any entered info. 
+			
+		onDeleteClick //UNUSED
+			Deletes the currently selected contact.
+			
+		onContactClick //UNUSED
+			Saves the info entered into the ContactForm, creates a new contact 
+			with that info, and sends it to the database. 
+			
+			
+	ContactsController
+		The controller for the Contacts portion of the program. 
+
+		initialize
+			Initialize the contacts portion of the program. 
+			
+		onContactsTabClick //UNUSED
+			Move the view to the contacts portion when clicked. 
+			
+		onCalendarTabClick 
+			Move the view to the calendar portion when clicked. 
+			Throws: IOException
+
+		onTasksTabClick
+			Move the view to the tasks portion when clicked. 
+			Throws: IOException
+
+		onEditContactClick
+			Open ContactForm with current contacts information on click. 
+
+		onDeleteContactClick
+			Delete the currently selected contact from the database. 
+
+		onNewContactClick
+			Opens the ContactForm to create a new contact and add it to the 
+			database.
+			Throws: IOException
+
+		onTimerSummaryClick //TODO - not implemented. 
+			Display timer summary page 
+
+		onNewCategoryClick //TODO - not implemented. 
+			Create a new category for the tasks. 
+
+
+	ExampleAppController
+		//TODO - Test class, needs to be removed. 
+
+
+	TaskFormController
+		The controller for the TaskForm, or task entry UI.
+
+		initialize
+			Initialize the TaskForm with appropriate info on startup. 
+
+		onSaveTaskClick //TODO - not implemented
+			Saves the current task to the database 
+			TODO - Possibly needs error and input handling 
+
+		onDeleteClick //TODO - not implemented
+			Delete currently selected task. 
+
+		onCancelClick
+			Close the currently open TaskForm and discard all entered info. 
+
+
+	TasksController
+		The controller for the task portion of the program. 
+
+		initialize
+			Initialize the Task tab with appropriate info on startup.
+
+		onTasksTabClick //TODO - not implemented
+			Move the view to the Task tab when selected. 
+
+		onCalendarTabClick
+			Move the view to the Calendar tab when selected. 
+
+		onContactsTabClick
+			Move the view to the Contacts tab when selected.
+
+		onEditClick //TODO - not implemented
+			Open a TaskForm initialized with the currently selected Task's 
+			information.
+
+		onDeleteClick //TODO - not implemented
+			Delete the currently selected Task from the database. 
+
+		onNewTaskClick
+			Open a blank task form to create a new Task.
+			Throws: IOException
+
+		onNewCategoryClick //TODO - not implemented
+			Open Category form to create a new Category and add it to the 
+			database
+			//TODO - Unsure of category object and how it's being used. 
+
+
+Database Classes
+	
+	Contact - implements TableObject<Contact>
+		Constructor class for contact objects in the database. 
+
+		Contact (function)
+			Setters for contact constructor. 
+			@param name: First and Last name of the contact 
+			@param email: Email of the contact
+			@param timeSpent: The amount of time spent with this contact
+			@param category: The category associated with this contact
+
+		Getters are self-explanatory. 
+
+		//TODO - toString method? 
+
+
+	ManageDB
+		The database handling. 
+
+		ManageDB
+			Creates a file of database.db in a static location.
+
+		createNewUser //UNUSED
+			Creates a new user - may be unnecessary 
+
+		createNewContact
+			Insert a contact into the database. 
+			@param p: Contact Object to be added 
+
+		createNewTask
+			Insert a task into the database. 
+			Task object must have:
+				Date in the format YYYY-MM-DD
+	     		Time format must be in: HH:mm:ss
+	     		Time must be in 24hr format
+     		@param t: Task object to be added
+
+     	deleteTask
+     		Delete a task by a given task object, the object must originate from the Database or else it wont contain a unique ID
+			@param t: Task Object to be deleted
+
+		updateContact //TODO - not implemented
+			Update a contact in the database
+			@param c: Contact Object to be updated. 
+
+		updateTask //TODO - not implemented
+			Update a task in the database
+			@param t: Task Object to be updated.
+
+		queryTask //TODO - not implemented 
+			Query tasks by date, time, category, contact, etc
+			@param t: Task Object to be queried. 
+
+		queryContact //TODO - not implemented
+			Query contacts based on amount of time spent with them. 
+			@param c: Contact Object to query //Maybe incorrect - unsure 
+
+		getAllTasks
+			Get all the tasks present in the database
+     		@return An ArrayList of Task objects
+
+     	getAllContacts //TODO - not tested
+     		Get all contacts present in the database
+     		@return An ArrayList of Contact objects
+
+     	createNewDB
+     		Creates a new database for a new user 
+     		//Maybe unnecessary? 
+
+     	main
+     		Testing 
+
+
+    TableObject 
+    	Gets objects in Tables of database //I think? 
+
+    	toString - self-explanatory. 
+
+
+    Task
+		Constructor class for Task objects in the database. 
+
+		Task (function)
+			Setters for Task constructor
+			@param name: Name of task
+			@param date: Date of task in form YYYY-MM-DD
+			@param time: Time of task in form HH:mm:ss (24 hour time)
+			@param category: Category of the task
+			@param duration: Length of task
+			@param timespent: Amount of time spent on the task
+			@param contactName: Contact associated with task, if any
+
+		Getters are self-explanatory
+
+		//TODO - toString method? 
+
+
+View Classes
+	App
+		Builds the scene for the program
+
+	HelloApplication
+		Handles the FXML loader and files associated. 
+		Also initializes ManageDB
+
+	Launcher
+		Used to run the application
