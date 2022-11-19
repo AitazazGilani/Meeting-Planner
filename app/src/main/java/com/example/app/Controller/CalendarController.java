@@ -24,7 +24,6 @@ import com.example.app.UI.*;
 
 public class CalendarController{
 
-    //TODO Minor: Future reference, the ListView may not be of the Task Object, confirm this in the future.
     @FXML
     protected ListView<Task> selectedDateTaskListView;
 

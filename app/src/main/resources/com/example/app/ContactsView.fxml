@@ -68,7 +68,7 @@
    <right>
   <AnchorPane prefHeight="550.0" prefWidth="221.0" style="-fx-background-color: #DDDDDD;" BorderPane.alignment="CENTER">
     <children>
-            <CheckBox fx:id="favouriteContactCheckBox" mnemonicParsing="false" text="Favourite" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="66.0">
+            <CheckBox fx:id="favouriteContactCheckBox" mnemonicParsing="false" onAction="#onFavoriteClick" text="Favourite" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="66.0">
                <font>
                   <Font size="13.0" />
                </font></CheckBox>
@@ -132,9 +132,9 @@
                   </Label>
                   <HBox fx:id="timerBtnBox" alignment="TOP_CENTER" prefHeight="34.0" prefWidth="196.0" spacing="18.0">
                      <children>
-                        <Button fx:id="startBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #FFFFFF;" text="start" />
-                        <Button fx:id="pauseBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #FFFFFF;" text="pause" />
-                        <Button fx:id="finishBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #FFFFFF;" text="finish" />
+                        <Button fx:id="startBtn" mnemonicParsing="false" onAction="#onTimerStartClick" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #FFFFFF;" text="start" />
+                        <Button fx:id="pauseBtn" mnemonicParsing="false" onAction="#onTimerPauseClick" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #FFFFFF;" text="pause" />
+                        <Button fx:id="finishBtn" mnemonicParsing="false" onAction="#onTimerFinishClick" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #FFFFFF;" text="finish" />
                      </children>
                   </HBox>
                   <Button fx:id="timerSummaryBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onTimerSummaryClick" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #808080;" text="View Timer Summary" textAlignment="CENTER" textFill="WHITE">
@@ -178,7 +178,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="111.0" spacing="6.0">
                      <children>
-                        <CheckBox fx:id="favouritesSortCheckBox" mnemonicParsing="false" text="Favourites">
+                        <CheckBox fx:id="favouritesSortCheckBox" mnemonicParsing="false" onAction="#onFavoriteSortClick" text="Favourites">
                            <font>
                               <Font size="14.0" />
                            </font>

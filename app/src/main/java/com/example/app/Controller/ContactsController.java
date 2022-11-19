@@ -3,7 +3,6 @@ package com.example.app.Controller;
 import com.example.app.App;
 import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
-
 import com.example.app.database.RowDoesNotExistException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,12 +22,11 @@ import java.util.Objects;
 
 public class ContactsController {
 
-    //currently, doesn't need to be implemented
-    @FXML
-    protected TextField searchBarTextField;
-
     @FXML
     protected TableView<Contact> contactsTableView;
+
+    @FXML
+    protected CheckBox favouriteContactCheckBox, favouritesSortCheckBox;
 
     @FXML
     protected TableColumn<Contact, String> contactNameTableColumn, contactEmailTableColumn, contactCategoryTableColumn;
@@ -227,4 +225,48 @@ public class ContactsController {
         //open the window
         newContactWindow.show();
     }
+
+    /**
+     * Toggles the favorite boolean in the currently selected contact
+     */
+    @FXML
+    public void onFavoriteClick() {
+    }
+
+    /**
+     * Starts a timer for a specific Contact
+     */
+    @FXML
+    public void onTimerStartClick() {
+        //TODO onTimerStartClick
+    }
+
+    /**
+     * Pauses a timer for a specific Contact
+     */
+    @FXML
+    public void onTimerPauseClick() {
+        //TODO onTimerPauseClick
+    }
+
+    /**
+     * Stops a timer for a specific Contact
+     */
+    @FXML
+    public void onTimerFinishClick() {
+        //TODO onTimerFinishClick
+    }
+
+    /**
+     * Sorts the contact list and displays the favorited Contacts
+     */
+    @FXML
+    public void onFavoriteSortClick() {
+        //TODO onFavoriteSortClick
+        if(favouritesSortCheckBox.isSelected()){
+
+        }
+    }
+
+    //TODO Also sort the contact list based on the selected category.
 }
