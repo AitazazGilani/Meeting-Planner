@@ -1,11 +1,13 @@
 package com.example.app.Controller;
 
 import com.example.app.App;
+import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 import com.example.app.database.RowDoesNotExistException;
 import com.example.app.database.Task;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,12 +22,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class TasksController {
-    @FXML
-    protected TableColumn<Task, String> taskTitleTableColumn, taskDateTableColumn, taskTimeTableColumn, taskDurationTableColumn,
-            taskRepeatingTableColumn, taskReminderSetTableColumn, taskCategoryTableColumn, taskContactTableColumn, taskTimeSpentTableColumn;
 
     @FXML
-    protected TextField searchBarTextField;
+    protected CheckBox favouriteTaskCheckBox, favouritesSortCheckBox;
+
+    @FXML
+    protected TableColumn<Task, String> taskTitleTableColumn, taskDateTableColumn, taskTimeTableColumn, taskDurationTableColumn,
+            taskFavoriteTableColumn, taskReminderSetTableColumn, taskCategoryTableColumn, taskContactTableColumn, taskTimeSpentTableColumn;
 
     @FXML
     protected Button calendarTabBtn, tasksTabBtn, contactsTabBtn, newCategoryBtn, newTaskBtn, deleteBtn, editBtn;
@@ -58,8 +61,10 @@ public class TasksController {
         taskCategoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         taskDurationTableColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
         taskContactTableColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        taskFavoriteTableColumn.setCellValueFactory(new PropertyValueFactory<>("favorite"));
 
         //get a list of tasks and add them to the table
+        //TODO Tasks doesn't Have a favorite column
         tasksTableView.getItems().setAll(database.getAllTasks());
 
         //initialize the category choice box with the categories in the database
@@ -86,6 +91,7 @@ public class TasksController {
                 taskReminderSetLabel.setText("Reminder Set: Currently not implemented");
                 taskTimeLabel.setText("Time: " + tasksTableView.getSelectionModel().getSelectedItem().getTime());
                 taskDurationLabel.setText("Duration: " + tasksTableView.getSelectionModel().getSelectedItem().getDuration());
+                favouriteTaskCheckBox.setSelected(tasksTableView.getSelectionModel().getSelectedItem().isFavorite());
                 if (Objects.equals(tasksTableView.getSelectionModel().getSelectedItem().getCategory(), "")){
                     taskCategoryLabel.setText("Category: None");
                 }
@@ -216,5 +222,24 @@ public class TasksController {
         newContactWindow.setScene(new Scene(fxmlLoader, 600, 200));
         //open the window
         newContactWindow.show();
+    }
+
+    /**
+     * toggles the favorite boolean of the selected task
+     */
+    public void onFavoriteTaskClick() throws RowDoesNotExistException {
+        //TODO onFavoriteTaskClick
+        if(tasksTableView.getSelectionModel().getSelectedItem() != null){
+            Task task = tasksTableView.getSelectionModel().getSelectedItem();
+            task.setFavorite(favouriteTaskCheckBox.isSelected());
+            database.updateTask(task);
+        }
+    }
+
+    /**
+     * Sorts the contact list and displays the favorited Tasks
+     */
+    public void onFavoriteSortClick() {
+        //TODO onFavoriteSortCLick
     }
 }

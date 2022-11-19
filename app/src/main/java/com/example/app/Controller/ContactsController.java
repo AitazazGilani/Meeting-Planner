@@ -95,6 +95,7 @@ public class ContactsController {
             public void changed(ObservableValue<? extends Contact> observableValue, Contact contact, Contact t1) {
                 contactNameLabel.setText("Name: " + contactsTableView.getSelectionModel().getSelectedItem().getName());
                 contactEmailLabel.setText("Email: " + contactsTableView.getSelectionModel().getSelectedItem().getEmail());
+                favouriteContactCheckBox.setSelected(contactsTableView.getSelectionModel().getSelectedItem().isFavorite());
                 if (Objects.equals(contactsTableView.getSelectionModel().getSelectedItem().getCategory(), "")){
                     contactCategoryLabel.setText("Category: None");
                 }
@@ -230,7 +231,13 @@ public class ContactsController {
      * Toggles the favorite boolean in the currently selected contact
      */
     @FXML
-    public void onFavoriteClick() {
+    public void onFavoriteClick() throws RowDoesNotExistException {
+        if(contactsTableView.getSelectionModel().getSelectedItem() != null){
+            Contact contact = contactsTableView.getSelectionModel().getSelectedItem();
+            contact.setFavorite(favouriteContactCheckBox.isSelected());
+            //TODO Favorite Contact does not exist in DB currently, update then uncomment
+            //database.updateContact(contact);
+        }
     }
 
     /**
