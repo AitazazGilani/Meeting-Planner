@@ -20,7 +20,7 @@ public class App extends Application {
         //creates the db file if there isnt one.
         new ManageDB();
 
-        FXMLLoader fxml = new FXMLLoader(App.class.getResource("CalendarView.fxml"));
+        FXMLLoader fxml = new FXMLLoader(App.class.getResource("NewLoginView.fxml"));
 
         Scene scene = new Scene(fxml.load());
         stage.setTitle("TODO Application");

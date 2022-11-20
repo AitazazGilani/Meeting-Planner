@@ -29,12 +29,12 @@ public class LockviewController {
     protected MenuItem logOutMenuItem;
 
 
-
-    public void clickUnlockButton() throws IOException {
+    @FXML
+    protected void clickUnlockButton() throws IOException {
 
         //Load the Calendar view into the loader
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("CalendarView.fxml")));
-        //create a new window for the new task
+        //create a new window for the calendar view
         Stage newTaskWindow = new Stage();
         newTaskWindow.setTitle("TODO Application");
         newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
@@ -42,7 +42,7 @@ public class LockviewController {
         newTaskWindow.show();
 
 
-        //Gets current stage (new contact window)
+        //Gets current stage (Locked screen)
         Stage cur = (Stage) unlockBtn.getScene().getWindow();
         //Close the window
         cur.close();

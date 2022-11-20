@@ -144,7 +144,7 @@ public class CalendarController {
         //open the window
         newTaskWindow.show();
 
-        //Gets current stage (new contact window)
+        //Gets current stage (calendar view)
         Stage cur = (Stage) lockBtn.getScene().getWindow();
         //Close the window
         cur.close();

@@ -239,7 +239,7 @@ public class ContactsController {
         //open the window
         newTaskWindow.show();
 
-        //Gets current stage (new contact window)
+        //Gets current stage (Contacts view)
         Stage cur = (Stage) lockBtn.getScene().getWindow();
         //Close the window
         cur.close();
