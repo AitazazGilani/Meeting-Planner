@@ -78,8 +78,16 @@ public class TasksController {
             //if it is empty, add None as a category.
             categoryList.add("None");
         }
-        sortByChoiceBox.setValue("None");
-        sortByChoiceBox.getItems().setAll(categoryList);
+        ArrayList<String> sortList = new ArrayList<>();
+        sortList.add("Name");
+        sortList.add("Date & Time");
+        sortList.add("Category");
+        sortList.add("Contact");
+        sortList.add("TimeSpent");
+        sortList.add("Favorite");
+        sortByChoiceBox.setValue(sortList.get(1));
+        sortByChoiceBox.getItems().setAll(sortList);
+        onSortChoice();
 
         //update the details on the right of the scene when a new table cell is selected by the user.
         tasksTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
@@ -251,5 +259,45 @@ public class TasksController {
             }
             tasksTableView.getItems().setAll(favorites);
         }
+    }
+
+    public void onSortChoice() {
+        ArrayList<Task> newSortedList;
+        // if already filtered favorites only, then
+        if (favouritesSortCheckBox.isSelected()){
+            newSortedList = (ArrayList<Task>) tasksTableView.getItems();
+        } else {
+            newSortedList = database.getAllTasks();
+        }
+
+        switch (sortByChoiceBox.getValue()) {
+            case "Name":
+                // sort by name then date & time
+                newSortedList = database.sortTasks(newSortedList, "Name");
+                break;
+            case "Date & Time":
+                // convert date and time of every task into unix time and sort by number
+                newSortedList = database.sortTasks(newSortedList, "Date & Time");
+                break;
+            case "Category":
+                // sort by category name then date & time
+                newSortedList = database.sortTasks(newSortedList, "Category");
+                break;
+            case "Contact":
+                // sort by contact name then date & time
+                newSortedList = database.sortTasks(newSortedList, "Contact");
+                break;
+            case "TimeSpent":
+                // convert TimeSpent of every task into unix time and sort by number then date & time
+                newSortedList = database.sortTasks(newSortedList, "TimeSpent");
+                break;
+            case "Favorite":
+                // sort by fav on top then by date & time
+                newSortedList = database.sortTasks(newSortedList, "Favorite");
+                // TODO: implement fav sorting in managedb
+                break;
+        }
+
+        tasksTableView.getItems().setAll(newSortedList);
     }
 }
