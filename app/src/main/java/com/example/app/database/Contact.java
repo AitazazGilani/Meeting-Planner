@@ -21,7 +21,6 @@ public class Contact implements TableObject<Contact> {
     public Contact(String name, String email, String timeSpent, String category) {
         this.name = name;
         this.email = email;
-        // TODO: are we even gonna use timeSpent in Contacts?
         this.timeSpent = timeSpent;
         this.category = category;
         favorite = false;
@@ -77,11 +76,6 @@ public class Contact implements TableObject<Contact> {
      * @return uid
      */
     public int getUID(){return this.UID;}
-
-    public String toString() {
-        // TODO: implement toString method
-        return "";
-    }
 
     public boolean equals(Contact contact) {
         return contact.getName().equals(this.getName()) &&

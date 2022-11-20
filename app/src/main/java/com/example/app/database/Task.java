@@ -110,11 +110,6 @@ public class Task implements TableObject<Task> {
      */
     public int getUID(){return this.UID;}
 
-    public String toString() {
-        // TODO: implement toString method
-        return this.getName();
-    }
-
     public boolean equals(Task task) {
         return task.getName().equals(this.getName()) &&
                 task.getDate().equals(this.getDate()) &&

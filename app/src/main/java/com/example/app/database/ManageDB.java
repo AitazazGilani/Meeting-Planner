@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Serves as the model to provide interactions with the database.
@@ -80,7 +81,66 @@ public class ManageDB {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
 
+    /**
+     * Checks whether there is a user in LoginTable
+     *
+     * @return true if a user exists, false if a user does not exist in db
+     * @throws UserAlreadyExistsException if more than one user exists (should not happen)
+     */
+    public static Boolean userExists() throws UserAlreadyExistsException {
+        int count = 0;
+        try(Connection conn = DriverManager.getConnection(URL)){
+            Statement s = conn.createStatement();
+            ResultSet r = s.executeQuery("SELECT COUNT(*) AS rowcount FROM LoginTable");
+            r.next();
+            count = r.getInt("rowcount");
+            r.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        if (count == 0) {
+            return false;
+        } else if (count == 1)
+            return true;
+        else {
+            throw new UserAlreadyExistsException("Multiple users exist, there should only be one user");
+        }
+    }
+
+    /**
+     * Authenticates login attempt with user info in db
+     *
+     * @return true if login attempt was correct, false if username/password entered was incorrect
+     * @throws Exception if attempted to login when no users exist (should not happen)
+     */
+    public Boolean correctLogin(String username, String password) throws Exception {
+        if (!userExists())
+            throw new Exception("Attempted to login when no users exist.");
+
+        String[] userInfo = getUser();
+        return userInfo[0].equals(username) && userInfo[1].equals(password);
+    }
+
+    /**
+     * returns username and password stored in the db
+     * @return string array of username then password
+     */
+    private String[] getUser() {
+        String[] ret = new String[2];
+        String sql = "SELECT * FROM LoginTable WHERE rowid = 1";
+        try(Connection conn = DriverManager.getConnection(URL)){
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql);
+            ret[0] = rs.getString("Username");
+            ret[1] = rs.getString("Password");
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return ret;
     }
 
     /**
@@ -113,7 +173,6 @@ public class ManageDB {
      * @precond contact name string exists in ContactsTable or is blank for no contact
      * @postcond new task row is created in TaskTable in the db
      */
-
     public void createNewTask(Task t){
         String sql1 = "INSERT INTO TaskTable(TaskName, Date, Time, Category, TaskDuration, TimeSpent, ContactName) VALUES (?,?,?,?,?,?,?)";
         //for inserting a contact, using sql1 string
@@ -258,7 +317,6 @@ public class ManageDB {
     }
 
 
-    //todo: OPTIONAL function to delete a contact
     /**
      * Updates a contact, using uid to find the contact to update in the db
      * @param c Updated contact to query and update in the db
@@ -459,7 +517,6 @@ public class ManageDB {
      * Get all the tasks present in the database
      * @return An ArrayList of Task objects
      */
-
     public ArrayList<Task> getAllTasks(){
 
         ArrayList<Task> tasks = new ArrayList<Task>();
@@ -602,6 +659,48 @@ public class ManageDB {
             System.out.println("tables created in db");
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    public static void main(String[] args) {
+        // removes database if it already exists
+        File f = new File("res/database.db");
+        f.delete();
+
+        // create new db
+        ManageDB db = new ManageDB();
+
+        // REGRESSION TESTS
+        System.out.println("\nRUNNING REGRESSION TESTS");
+        try {
+            if (!db.userExists()) {
+                System.out.println("user does not exist, creating user");
+                db.createNewUser("shrek", "123abc");
+            } else {
+                System.out.println("user should not exist");
+            }
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+        System.out.println("authenticating user");
+        try {
+            if (!db.correctLogin("ss", "1")) {
+                System.out.println("Correct: incorrect username/password resulted in failed authentication");
+            } else {
+                System.out.println("Incorrect: incorrect username/password resulted in PASSED authentication");
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+        System.out.println("authenticating user");
+        try {
+            if (!db.correctLogin("shrek", "123abc")) {
+                System.out.println("Incorrect: correct username/password resulted in failed authentication");
+            } else {
+                System.out.println("Correct: correct username/password resulted in PASSED authentication");
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e);
         }
     }
 }
