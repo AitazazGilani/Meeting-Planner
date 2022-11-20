@@ -4,8 +4,10 @@ import com.example.app.App;
 import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 import com.example.app.database.RowDoesNotExistException;
+import com.example.app.database.Task;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -84,9 +86,14 @@ public class ContactsController {
             //if it is empty, add None as a category.
             categoryList.add("None");
         }
-
-        sortByChoiceBox.setValue("None");
-        sortByChoiceBox.getItems().setAll(categoryList);
+        ArrayList<String> sortList = new ArrayList<>();
+        sortList.add("Name");
+        sortList.add("Category");
+        sortList.add("Time Elapsed");
+        sortList.add("Favorite");
+        sortByChoiceBox.setValue(sortList.get(0));
+        sortByChoiceBox.getItems().setAll(sortList);
+        onSortChoice();
 
         //this block looks for when a cell in the table is selected, then when a cell is selected, updates the details
         // on the right side of the scene
@@ -283,4 +290,35 @@ public class ContactsController {
     }
 
 
+    public void onSortChoice() {
+        ArrayList<Contact> newSortedList;
+        // if already filtered favorites only, then
+        if (favouritesSortCheckBox.isSelected()){
+            newSortedList = (ArrayList<Contact>) contactsTableView.getItems();
+        } else {
+            newSortedList = database.getAllContacts();
+        }
+
+        switch (sortByChoiceBox.getValue()) {
+            case "Name":
+                // sort by name
+                newSortedList = database.sortContacts(newSortedList, "Name");
+                break;
+            case "Category":
+                // sort by category name
+                newSortedList = database.sortContacts(newSortedList, "Category");
+                break;
+            case "Time Elapsed":
+                newSortedList = database.sortContacts(newSortedList, "Time Elapsed");
+                // TODO: implement time elapsed sorting in managedb
+                break;
+            case "Favorite":
+                // sort by fav on top then by date & time
+                newSortedList = database.sortContacts(newSortedList, "Favorite");
+                // TODO: implement fav sorting in managedb
+                break;
+        }
+
+        contactsTableView.getItems().setAll(newSortedList);
+    }
 }

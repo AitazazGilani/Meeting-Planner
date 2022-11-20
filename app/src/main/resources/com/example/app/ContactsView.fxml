@@ -173,7 +173,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="sortByChoiceBox" prefWidth="150.0" />
+                        <ChoiceBox fx:id="sortByChoiceBox" prefWidth="150.0" onAction="#onSortChoice"/>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="111.0" spacing="6.0">

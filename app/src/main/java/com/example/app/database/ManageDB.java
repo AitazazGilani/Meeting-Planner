@@ -258,7 +258,6 @@ public class ManageDB {
     }
 
 
-    //todo: OPTIONAL function to delete a contact
     /**
      * Updates a contact, using uid to find the contact to update in the db
      * @param c Updated contact to query and update in the db
@@ -456,10 +455,178 @@ public class ManageDB {
     }
 
     /**
+     * Sorts input task list by an input type of sort
+     *
+     * @param newSortedList list of tasks to sort and return
+     * @param type type of sorting to be done
+     * @return newSortedList sorted by type
+     */
+    public ArrayList<Task> sortTasks(ArrayList<Task> newSortedList, String type) {
+        // TODO: test sortTasks()
+        ArrayList<Task> ret = newSortedList;
+        switch (type) {
+            case "Name":
+                // sort by name then date & time
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        if (t1.getName().toLowerCase().compareTo(t2.getName().toLowerCase()) == 0) {
+                            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
+                            try {
+                                Date d1 = df.parse(t1.getDate() + t1.getTime());
+                                Date d2 = df.parse(t2.getDate() + t2.getTime());
+                                return d1.compareTo(d2);
+                            } catch (ParseException e) {
+                                System.out.println("Parse failed: " + e);
+                                return 0;
+                            }
+                        } else {
+                            return t1.getName().toLowerCase().compareTo(t2.getName().toLowerCase());
+                        }
+                    }
+                });
+                break;
+            case "Date & Time":
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+//                        final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                        final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
+                        try {
+                            Date d1 = df.parse(t1.getDate() + t1.getTime());
+                            Date d2 = df.parse(t2.getDate() + t2.getTime());
+                            System.out.println("comparing:\n"+d1+"\n"+d2+"\n"+d1.compareTo(d2));
+                            return d1.compareTo(d2);
+                        } catch (ParseException e) {
+                            System.out.println("Parse failed: " + e);
+                            return 0;
+                        }
+                    }
+                });
+                break;
+            case "Category":
+                // sort by category name then date & time
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        if (t1.getCategory().toLowerCase().compareTo(t2.getCategory().toLowerCase()) == 0) {
+                            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
+                            try {
+                                Date d1 = df.parse(t1.getDate() + t1.getTime());
+                                Date d2 = df.parse(t2.getDate() + t2.getTime());
+                                return d1.compareTo(d2);
+                            } catch (ParseException e) {
+                                System.out.println("Parse failed: " + e);
+                                return 0;
+                            }
+                        } else {
+                            return t1.getCategory().toLowerCase().compareTo(t2.getCategory().toLowerCase());
+                        }
+                    }
+                });
+                break;
+            case "Contact":
+                // sort by contact name then date & time
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        if (t1.getContactName().toLowerCase().compareTo(t2.getContactName().toLowerCase()) == 0) {
+                            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
+                            try {
+                                Date d1 = df.parse(t1.getDate() + t1.getTime());
+                                Date d2 = df.parse(t2.getDate() + t2.getTime());
+                                return d1.compareTo(d2);
+                            } catch (ParseException e) {
+                                System.out.println("Parse failed: " + e);
+                                return 0;
+                            }
+                        } else {
+                            return t1.getContactName().toLowerCase().compareTo(t2.getContactName().toLowerCase());
+                        }
+                    }
+                });
+                break;
+            case "TimeSpent":
+                // convert TimeSpent of every task into unix time and sort by number
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        final DateFormat df = new SimpleDateFormat("HH:mm:ss");
+                        try {
+                            Date d1 = df.parse(t1.getTimeSpent());
+                            Date d2 = df.parse(t2.getTimeSpent());
+                            return d1.compareTo(d2);
+                        } catch (ParseException e) {
+                            System.out.println("Parse failed: " + e);
+                            return 0;
+                        }
+                    }
+                });
+                break;
+            case "Favorite":
+                // sort by fav on top then by date & time
+                // TODO: Implement favorite sorting
+                break;
+        }
+
+        return ret;
+    }
+
+
+    /**
+     * Sorts input contact list by an input type of sort
+     *
+     * @param newSortedList list of contacts to sort and return
+     * @param type type of sorting to be done
+     * @return newSortedList sorted by type
+     */
+    public ArrayList<Contact> sortContacts(ArrayList<Contact> newSortedList, String type) {
+        // TODO: test sortContacts()
+        ArrayList<Contact> ret = newSortedList;
+        switch (type) {
+            case "Name":
+                // sort by name
+                ret.sort(new Comparator<Contact>() {
+                    @Override
+                    public int compare(Contact c1, Contact c2) {
+                        return c1.getName().toLowerCase().compareTo(c2.getName().toLowerCase());
+                    }
+                });
+                break;
+            case "Category":
+                // sort by category name
+                ret.sort(new Comparator<Contact>() {
+                    @Override
+                    public int compare(Contact c1, Contact c2) {
+                        if (c1.getCategory().toLowerCase().compareTo(c2.getCategory().toLowerCase()) == 0) {
+                            return c1.getName().toLowerCase().compareTo(c2.getName().toLowerCase());
+                        } else {
+                            return c1.getCategory().toLowerCase().compareTo(c2.getCategory().toLowerCase());
+                        }
+                    }
+                });
+                break;
+            case "Time Elapsed":
+                // TODO: implement time elapsed sorting
+                break;
+            case "Favorite":
+                // TODO: implement favorite sorting
+                break;
+        }
+
+        return ret;
+    }
+
+
+    /**
      * Get all the tasks present in the database
      * @return An ArrayList of Task objects
      */
-
     public ArrayList<Task> getAllTasks(){
 
         ArrayList<Task> tasks = new ArrayList<Task>();
@@ -571,7 +738,8 @@ public class ManageDB {
                 "    Name varchar(255),\n" +
                 "    Email varchar(255),\n" +
                 "    Category varchar(255),\n" +
-                "    TimeSpent varchar(255)\n" +
+                "    TimeSpent varchar(255),\n" +
+                "    Favorite varchar(255) \n" +
                 ");";
 
         //TODO: added a var to track favourited tasks, see what needs to be updated in the functions above
@@ -603,5 +771,6 @@ public class ManageDB {
         } catch (Exception e) {
             System.out.println(e);
         }
+        System.out.println("finished creating new db");
     }
 }
