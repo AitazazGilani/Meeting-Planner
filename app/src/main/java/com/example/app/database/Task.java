@@ -9,7 +9,7 @@ public class Task implements TableObject<Task> {
 
     /**to track if the task is favourited or not
      * initialized to be false by default**/
-    boolean favorite;
+    Boolean favorite;
 
     /**
      * ID for the task, must be null if the views/controller are creating a task.
@@ -91,9 +91,9 @@ public class Task implements TableObject<Task> {
         this.contactName = s;
     }
 
-    public boolean isFavorite() { return favorite; }
+    public Boolean isFavorite() { return favorite; }
 
-    public void setFavorite(boolean favorite) { this.favorite = favorite; }
+    public void setFavorite(Boolean favorite) { this.favorite = favorite; }
 
     /**
      * DO NOT USE IN VIEWS OR CONTROLLER, Set the UID for a task.

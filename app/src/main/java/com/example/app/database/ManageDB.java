@@ -143,7 +143,7 @@ public class ManageDB {
         return ret;
     }
 
-    //todo: test out favorite, and timers shows up correctly
+    //todo: test out favorite, and if timers shows up correctly
     /**
      * Create a new Contact in the db
      * @param p Contact to add to the db
@@ -177,7 +177,7 @@ public class ManageDB {
      * @postcond new task row is created in TaskTable in the db
      */
     public void createNewTask(Task t){
-        String sql1 = "INSERT INTO TaskTable(TaskName, Date, Time, Category, TaskDuration, TimeSpent, ContactName) VALUES (?,?,?,?,?,?,?)";
+        String sql1 = "INSERT INTO TaskTable(TaskName, Date, Time, Category, TaskDuration, TimeSpent, ContactName, Favorite) VALUES (?,?,?,?,?,?,?,?)";
         //for inserting a contact, using sql1 string
         try(Connection conn = DriverManager.getConnection(URL)){
             PreparedStatement pstmt = conn.prepareStatement(sql1); //Prepared statements are used for parametized statements
@@ -188,6 +188,7 @@ public class ManageDB {
             pstmt.setString(5,t.getDuration());
             pstmt.setString(6,t.getTimeSpent());
             pstmt.setString(7,t.getContactName());
+            pstmt.setBoolean(8,t.isFavorite());
 
             pstmt.executeUpdate();
         } catch (Exception e) {
@@ -371,7 +372,8 @@ public class ManageDB {
                 + "Category = ? , "
                 + "TaskDuration = ? , "
                 + "TimeSpent = ? , "
-                + "ContactName = ? "
+                + "ContactName = ?, "
+                + "Favorite = ?"
                 + "WHERE UID = ?";
 
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -383,7 +385,8 @@ public class ManageDB {
             pstmt.setString(5,t.getDuration());
             pstmt.setString(6,t.getTimeSpent());
             pstmt.setString(7,t.getContactName());
-            pstmt.setInt(8,id);
+            pstmt.setBoolean(8,t.isFavorite());
+            pstmt.setInt(9,id);
             pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Failed to update the given task, reason:\n" + e);
@@ -649,7 +652,8 @@ public class ManageDB {
                 "    Name varchar(255),\n" +
                 "    Email varchar(255),\n" +
                 "    Category varchar(255),\n" +
-                "    TimeSpent varchar(255)\n" +
+                "    TimeSpent varchar(255),\n" +
+                "    Favorite varchar(255) \n" +
                 ");";
 
         String createTaskTable = "CREATE TABLE TaskTable(\n" +
