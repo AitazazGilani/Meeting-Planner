@@ -143,6 +143,7 @@ public class ManageDB {
         return ret;
     }
 
+    //todo: test out favorite, and timers shows up correctly
     /**
      * Create a new Contact in the db
      * @param p Contact to add to the db
@@ -150,7 +151,7 @@ public class ManageDB {
      * @postcond new contact row is created in ContactsTable in the db
      */
     public void createNewContact(Contact p){
-        String sql1 = "INSERT INTO ContactsTable (Name, Email, Category, TimeSpent) VALUES (?,?,?,?)";
+        String sql1 = "INSERT INTO ContactsTable (Name, Email, Category, TimeSpent, Favorite, Timers) VALUES (?,?,?,?,?,?)";
         //for inserting a contact, using sql1 string
         try(Connection conn = DriverManager.getConnection(URL)){
             PreparedStatement pstmt = conn.prepareStatement(sql1); //Prepared statements are used for parametized statements
@@ -158,6 +159,8 @@ public class ManageDB {
             pstmt.setString(2,p.getEmail());
             pstmt.setString(3,p.getCategory());
             pstmt.setString(4,p.getTimeSpent());
+            pstmt.setBoolean(5,p.isFavorite());
+            pstmt.setString(6,p.timersToString());
             pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
@@ -316,7 +319,7 @@ public class ManageDB {
         }
     }
 
-
+//todo: test out if favorite and timers are setup correctly
     /**
      * Updates a contact, using uid to find the contact to update in the db
      * @param c Updated contact to query and update in the db
@@ -331,7 +334,9 @@ public class ManageDB {
         String sql = "UPDATE ContactsTable SET Name = ? , "
                 + "Email = ? , "
                 + "Category = ? , "
-                + "TimeSpent = ? "
+                + "TimeSpent = ? , "
+                + "Favorite = ?, "
+                + "Timers = ?, "
                 + "WHERE UID = ?";
 
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -340,7 +345,9 @@ public class ManageDB {
             pstmt.setString(2,c.getEmail());
             pstmt.setString(3,c.getCategory());
             pstmt.setString(4,c.getTimeSpent());
-            pstmt.setInt(5,id);
+            pstmt.setBoolean(5,c.isFavorite());
+            pstmt.setString(6,c.timersToString());
+            pstmt.setInt(7,id);
             pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Failed to update the given contact, reason:\n" + e);
@@ -563,6 +570,20 @@ public class ManageDB {
                         rs.getString("Category")
                 );
                 c.setUID(rs.getInt("UID"));
+                c.setFavorite(rs.getBoolean("Favorite"));
+
+                //todo:test out whether if timers are added correctly, check for any unique cases?
+
+                //pharse the timers into the array list
+                String t = rs.getString("Timers");
+                if(!t.equals(null) || !t.equals("")){
+                 String[] items = t.split(",");
+                 ArrayList<String> lst = new ArrayList<>();
+                 for(String item:items){
+                     lst.add(item);
+                 }
+                 c.setTimers(lst);
+                }
                 contacts.add(c);
             }
         }
@@ -631,7 +652,6 @@ public class ManageDB {
                 "    TimeSpent varchar(255)\n" +
                 ");";
 
-        //TODO: added a var to track favourited tasks, see what needs to be updated in the functions above
         String createTaskTable = "CREATE TABLE TaskTable(\n" +
                 "    UID integer primary key autoincrement,\n"+
                 "    TaskName varchar(255),\n" +
@@ -641,7 +661,8 @@ public class ManageDB {
                 "    TaskDuration varchar(255),\n" +
                 "    TimeSpent varchar(255), \n" +
                 "    ContactName varchar(255), \n" +
-                "    Favorite varchar(255) \n" +
+                "    Favorite varchar(255), \n" +
+                "    Timers varchar(255), \n" +
                 ");\n";
 
         String createCategoryTable = "CREATE TABLE CategoryTable(\n" +
