@@ -88,7 +88,11 @@ public class Contact implements TableObject<Contact> {
         String ret = "";
         if(timers.size() == 0) return ret;
         for(String item: timers){
-            ret = ret + "," + item;
+            if(ret.length() == 0) ret = item;
+            else{
+                ret = ret + "," + item;
+            }
+
         }
         return ret;
     }

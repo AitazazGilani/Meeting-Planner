@@ -822,7 +822,8 @@ public class ManageDB {
                 "    Email varchar(255),\n" +
                 "    Category varchar(255),\n" +
                 "    TimeSpent varchar(255),\n" +
-                "    Favorite varchar(255) \n" +
+                "    Favorite varchar(255), \n" +
+                "    Timers varchar(255) \n" +
                 ");";
 
         String createTaskTable = "CREATE TABLE TaskTable(\n" +
@@ -897,5 +898,12 @@ public class ManageDB {
         } catch (Exception e) {
             System.out.println("Error" + e);
         }
+
+        Contact person = new Contact("Guy","guy@guymail.com","","");
+        ArrayList<String> lst = new ArrayList<>();
+        lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS");
+        person.setTimers(lst);
+        db.createNewContact(person);
+
     }
 }
