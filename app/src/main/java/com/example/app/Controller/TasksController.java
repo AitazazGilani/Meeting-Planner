@@ -84,7 +84,8 @@ public class TasksController {
         sortList.add("Category");
         sortList.add("Contact");
         sortList.add("TimeSpent");
-        sortList.add("Favorite");
+        sortList.add("Favorites On Top");
+        sortList.add("Completed On Top");
         sortByChoiceBox.setValue(sortList.get(1));
         sortByChoiceBox.getItems().setAll(sortList);
         onSortChoice();
@@ -264,7 +265,7 @@ public class TasksController {
         ArrayList<Task> newSortedList;
         // if already filtered favorites only, then
         if (favouritesSortCheckBox.isSelected()){
-            newSortedList = (ArrayList<Task>) tasksTableView.getItems();
+            newSortedList = new ArrayList<Task>(tasksTableView.getItems());
         } else {
             newSortedList = database.getAllTasks();
         }
@@ -290,10 +291,25 @@ public class TasksController {
                 // convert TimeSpent of every task into unix time and sort by number then date & time
                 newSortedList = database.sortTasks(newSortedList, "TimeSpent");
                 break;
-            case "Favorite":
+            case "Favorites On Top":
                 // sort by fav on top then by date & time
                 newSortedList = database.sortTasks(newSortedList, "Favorite");
-                // TODO: implement fav sorting in managedb
+                break;
+            case "Completed On Top":
+                // sort by completed on top then by date & time
+                ArrayList<Task> notCompleted = new ArrayList<>();
+                ArrayList<Task> completed = new ArrayList<>();
+                for (Task task : tasksTableView.getItems()) {
+                    if (task.getCategory().equals("Completed")){
+                        completed.add(task);
+                    } else {
+                        notCompleted.add(task);
+                    }
+                }
+                completed = database.sortTasks(completed, "Date & Time");
+                notCompleted = database.sortTasks(notCompleted, "Date & Time");
+                newSortedList = completed;
+                newSortedList.addAll(notCompleted);
                 break;
         }
 

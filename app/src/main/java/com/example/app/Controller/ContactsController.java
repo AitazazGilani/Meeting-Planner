@@ -141,7 +141,7 @@ public class ContactsController {
         sortList.add("Name");
         sortList.add("Category");
         sortList.add("Time Elapsed");
-        sortList.add("Favorite");
+        sortList.add("Favorites On Top");
         sortByChoiceBox.setValue(sortList.get(0));
         sortByChoiceBox.getItems().setAll(sortList);
         onSortChoice();
@@ -380,10 +380,9 @@ public class ContactsController {
                 newSortedList = database.sortContacts(newSortedList, "Time Elapsed");
                 // TODO: implement time elapsed sorting in managedb
                 break;
-            case "Favorite":
-                // sort by fav on top then by date & time
+            case "Favorites On Top":
+                // sort by fav on top then by name
                 newSortedList = database.sortContacts(newSortedList, "Favorite");
-                // TODO: implement fav sorting in managedb
                 break;
         }
 
