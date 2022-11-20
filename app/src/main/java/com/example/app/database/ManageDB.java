@@ -337,7 +337,7 @@ public class ManageDB {
                 + "Category = ? , "
                 + "TimeSpent = ? , "
                 + "Favorite = ?, "
-                + "Timers = ?, "
+                + "Timers = ? "
                 + "WHERE UID = ?";
 
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -904,6 +904,16 @@ public class ManageDB {
         lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS");
         person.setTimers(lst);
         db.createNewContact(person);
+
+        
+        ArrayList<Contact> c = db.getAllContacts();
+        try {
+            Contact a = c.get(0);
+            a.setTimers(new ArrayList<>());
+            db.updateContact(a);
+        } catch (RowDoesNotExistException e) {
+            e.printStackTrace();
+        }
 
     }
 }
