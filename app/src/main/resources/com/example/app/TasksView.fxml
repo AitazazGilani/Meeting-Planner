@@ -228,7 +228,7 @@
       <menus>
         <Menu fx:id="accountMenu" mnemonicParsing="false" text="Account">
           <items>
-            <MenuItem fx:id="logOutMenuItem" mnemonicParsing="false" text="Log Out" />
+            <MenuItem fx:id="logOutMenuItem" mnemonicParsing="false" onAction="#ClickLogOut" text="Log Out" />
           </items>
         </Menu>
       </menus>

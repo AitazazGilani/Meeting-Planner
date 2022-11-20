@@ -68,10 +68,13 @@ public class NewLoginController {
 
 
             }catch (UserAlreadyExistsException | IOException e){
+                errorMessageLabel.setText("User already exists!");
                 System.out.println(e);
             }
 
+        }else{
+            //passwords didn't match
+            errorMessageLabel.setText("Passwords dont match!");
         }
-
     }
 }

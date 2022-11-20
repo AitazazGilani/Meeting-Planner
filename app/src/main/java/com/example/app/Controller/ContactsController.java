@@ -7,6 +7,7 @@ import com.example.app.database.ManageDB;
 import com.example.app.database.RowDoesNotExistException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +24,8 @@ import java.util.Objects;
 
 public class ContactsController {
 
+    public Menu accountMenu;
+    public MenuItem logOutMenuItem;
     //currently, doesn't need to be implemented
     @FXML
     protected TextField searchBarTextField;
@@ -243,5 +246,24 @@ public class ContactsController {
         Stage cur = (Stage) lockBtn.getScene().getWindow();
         //Close the window
         cur.close();
+    }
+
+    public void ClickLogOut() throws IOException {
+
+        //Load the returning user login view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ReturningLoginView.fxml")));
+        //create a new window for the returning user login view
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("TODO Application");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
+        //open the window
+        newTaskWindow.show();
+
+
+        //Gets current stage (contacts view)
+        Stage cur = (Stage) lockBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
+
     }
 }
