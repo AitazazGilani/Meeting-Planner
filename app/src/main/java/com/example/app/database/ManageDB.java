@@ -109,7 +109,6 @@ public class ManageDB {
             throw new UserAlreadyExistsException("Multiple users exist, there should only be one user");
         }
     }
-
     /**
      * Authenticates login attempt with user info in db
      *
@@ -124,6 +123,7 @@ public class ManageDB {
         return userInfo[0].equals(username) && userInfo[1].equals(password);
     }
 
+    //todo: test out favorite, and if timers shows up correctly
     /**
      * returns username and password stored in the db
      * @return string array of username then password
@@ -143,7 +143,7 @@ public class ManageDB {
         return ret;
     }
 
-    //todo: test out favorite, and if timers shows up correctly
+
     /**
      * Create a new Contact in the db
      * @param p Contact to add to the db
@@ -337,7 +337,7 @@ public class ManageDB {
                 + "Category = ? , "
                 + "TimeSpent = ? , "
                 + "Favorite = ?, "
-                + "Timers = ?, "
+                + "Timers = ? "
                 + "WHERE UID = ?";
 
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -822,7 +822,8 @@ public class ManageDB {
                 "    Email varchar(255),\n" +
                 "    Category varchar(255),\n" +
                 "    TimeSpent varchar(255),\n" +
-                "    Favorite varchar(255) \n" +
+                "    Favorite varchar(255), \n" +
+                "    Timers varchar(255) \n" +
                 ");";
 
         String createTaskTable = "CREATE TABLE TaskTable(\n" +
@@ -897,5 +898,22 @@ public class ManageDB {
         } catch (Exception e) {
             System.out.println("Error" + e);
         }
+
+        Contact person = new Contact("Guy","guy@guymail.com","","");
+        ArrayList<String> lst = new ArrayList<>();
+        lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS");
+        person.setTimers(lst);
+        db.createNewContact(person);
+
+        
+        ArrayList<Contact> c = db.getAllContacts();
+        try {
+            Contact a = c.get(0);
+            a.setTimers(new ArrayList<>());
+            db.updateContact(a);
+        } catch (RowDoesNotExistException e) {
+            e.printStackTrace();
+        }
+
     }
 }
