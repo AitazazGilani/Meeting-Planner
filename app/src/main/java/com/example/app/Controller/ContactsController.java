@@ -145,7 +145,6 @@ public class ContactsController {
         ArrayList<String> sortList = new ArrayList<>();
         sortList.add("Name");
         sortList.add("Category");
-        sortList.add("Time Elapsed");
         sortList.add("Favorites On Top");
         sortByChoiceBox.setValue(sortList.get(0));
         sortByChoiceBox.getItems().setAll(sortList);
@@ -401,10 +400,6 @@ public class ContactsController {
             case "Category":
                 // sort by category name
                 newSortedList = database.sortContacts(newSortedList, "Category");
-                break;
-            case "Time Elapsed":
-                newSortedList = database.sortContacts(newSortedList, "Time Elapsed");
-                // TODO: implement time elapsed sorting in managedb
                 break;
             case "Favorites On Top":
                 // sort by fav on top then by name

@@ -696,9 +696,6 @@ public class ManageDB {
                     }
                 });
                 break;
-            case "Time Elapsed":
-                // TODO: implement time elapsed sorting
-                break;
             case "Favorite":
                 // sort by favorites on top then by name
                 ret.sort(new Comparator<Contact>() {
