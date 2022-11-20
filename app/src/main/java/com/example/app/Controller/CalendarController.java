@@ -11,9 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -23,6 +21,10 @@ import java.util.Objects;
 
 public class CalendarController{
 
+    public Menu accountMenu;
+    public MenuItem logOutMenuItem;
+    //TODO Minor: Future reference, the ListView may not be of the Task Object, confirm this in the future.
+
     @FXML
     protected ListView<Task> selectedDateTaskListView;
 
@@ -30,7 +32,7 @@ public class CalendarController{
     protected AnchorPane centerAnchorPane;
 
     @FXML
-    protected Button tasksTabBtn, calendarTabBtn, contactsTabBtn, newTaskBtn;
+    protected Button tasksTabBtn, calendarTabBtn, contactsTabBtn, newTaskBtn, lockBtn;
 
     @FXML
     protected Label selectedDateLabel, numberOfTasksLabel;
@@ -152,5 +154,46 @@ public class CalendarController{
         newTaskWindow.setScene(new Scene(fxmlLoader, 900, 700));
         //open the window
         newTaskWindow.show();
+    }
+
+    /**
+     * 'Locks' the application by hiding everything with a blank screen
+     */
+    @FXML
+    private void clickLockButton() throws IOException {
+        //Load the locked screen view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("LockedView.fxml")));
+        //create a new window for the locked screen
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("Screen Locked");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
+        //open the window
+        newTaskWindow.show();
+
+        //Gets current stage (calendar view)
+        Stage cur = (Stage) lockBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
+    }
+
+    /**
+     * Logs the current user out of the application, returning them to the returning user login page.
+     */
+    @FXML
+    public void ClickLogOut() throws IOException {
+        //Load the returning user login view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ReturningLoginView.fxml")));
+        //create a new window for the returning user login view
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("TODO Application");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
+        //open the window
+        newTaskWindow.show();
+
+
+        //Gets current stage (Calendar view)
+        Stage cur = (Stage) lockBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
     }
 }

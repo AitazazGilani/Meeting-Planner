@@ -5,6 +5,7 @@ import com.example.app.database.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +22,9 @@ import java.util.Objects;
 import java.time.LocalDate;
 
 public class ContactsController {
+    public Menu accountMenu;
+    public MenuItem logOutMenuItem;
+
     @FXML
     protected TableView<Contact> contactsTableView;
 
@@ -38,7 +42,7 @@ public class ContactsController {
 
     @FXML
     protected Button calendarTabBtn, tasksTabBtn, contactsTabBtn, editContactBtn, deleteContactBtn,
-            newContactBtn, newCategoryBtn;
+            newContactBtn, newCategoryBtn, lockBtn;
 
     @FXML
     protected VBox selectedContactInfoBox;
@@ -152,8 +156,7 @@ public class ContactsController {
         contactsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Contact>() {
             @Override
             public void changed(ObservableValue<? extends Contact> observableValue, Contact contact, Contact t1) {
-                ArrayList<String> dates = new ArrayList<>();
-                ArrayList<String> timers = new ArrayList<>();
+                currentTimersTableView.getItems().clear();
                 ArrayList<TimerWithDate> timerWithDates = new ArrayList<>();
 
                 contactNameLabel.setText("Name: " + contactsTableView.getSelectionModel().getSelectedItem().getName());
@@ -165,7 +168,7 @@ public class ContactsController {
                 else{
                     contactCategoryLabel.setText("Category: " + contactsTableView.getSelectionModel().getSelectedItem().getCategory());
                 }
-                if(!contactsTableView.getSelectionModel().getSelectedItem().getTimers().isEmpty()){
+                if(!contactsTableView.getSelectionModel().getSelectedItem().getTimers().get(0).equals("")){
                     for(String timer : contactsTableView.getSelectionModel().getSelectedItem().getTimers()){
                         String[] dateTimer = timer.split(";");
                         timerWithDates.add(new TimerWithDate(dateTimer[0], dateTimer[1]));
@@ -381,7 +384,7 @@ public class ContactsController {
     public void onSortChoice() {
         ArrayList<Contact> newSortedList;
         // if already filtered favorites only, then
-        if (favouritesSortCheckBox.isSelected()){
+        if (favouritesSortCheckBox.isSelected()) {
             newSortedList = (ArrayList<Contact>) contactsTableView.getItems();
         } else {
             newSortedList = database.getAllContacts();
@@ -406,7 +409,48 @@ public class ContactsController {
                 // TODO: implement fav sorting in managedb
                 break;
         }
-
         contactsTableView.getItems().setAll(newSortedList);
+    }
+
+    /**
+     * 'Locks' the application by hiding everything with a blank screen
+     */
+    @FXML
+    private void clickLockButton() throws IOException {
+        //Load the locked screen view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("LockedView.fxml")));
+        //create a new window for the locked screen
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("Screen Locked");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
+        //open the window
+        newTaskWindow.show();
+
+        //Gets current stage (Contacts view)
+        Stage cur = (Stage) lockBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
+    }
+
+    /**
+     * Logs the current user out of the application, returning them to the returning user login page.
+     */
+    @FXML
+    public void ClickLogOut() throws IOException {
+
+        //Load the returning user login view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ReturningLoginView.fxml")));
+        //create a new window for the returning user login view
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("TODO Application");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
+        //open the window
+        newTaskWindow.show();
+
+        //Gets current stage (contacts view)
+        Stage cur = (Stage) lockBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
+
     }
 }
