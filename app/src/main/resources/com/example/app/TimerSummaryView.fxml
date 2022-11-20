@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox prefHeight="288.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Time represented as HH:MM:SS" textFill="#9a9a9a">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="6.0" />
+         </padding>
+      </Label>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Label text="Total Time:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalTimeLabel" textFill="#5a83fc">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Label text="Timer Average:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalAverageLabel" textFill="#5a83fc">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Label text="Longest Timer:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="longestTimerLabel" textFill="#5a83fc">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Label text="Contact with Greatest Total Time: ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="contactWithGreatestTotalTimeLabel" textFill="#5a83fc">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Label text="All Timers:">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ListView fx:id="timersListView" prefHeight="200.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </ListView>
+   </children>
+   <padding>
+      <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+   </padding>
+</VBox>
