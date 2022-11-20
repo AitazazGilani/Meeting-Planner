@@ -118,7 +118,6 @@ public class ContactsController {
         //TODO ContactTab Timers List (NOT CURRENT SPRINT)
 
         //set all the cells in the table to what is in the database.
-        ArrayList<Contact> contacts = database.getAllContacts();
         contactsTableView.getItems().setAll(database.getAllContacts());
 
         //set the cell values to match the contact object for displaying
@@ -162,8 +161,6 @@ public class ContactsController {
                 }
             }
         });
-
-
     }
 
     /**

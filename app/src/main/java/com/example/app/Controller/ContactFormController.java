@@ -74,7 +74,7 @@ public class ContactFormController {
     @FXML
     private void onSaveContactClick() {
         //Create a new contact with info from the form
-        Contact c = new Contact(titleTextField.getText(),
+        Contact contact = new Contact(titleTextField.getText(),
                 emailTextField.getText(),
                 "",
                 categoryChoice.getValue());
@@ -82,7 +82,7 @@ public class ContactFormController {
         System.out.println(categoryChoice.getValue());
 
         //Add new contact c to DB
-        database.createNewContact(c);
+        database.createNewContact(contact);
 
         //Gets current stage (new contact window)
         Stage cur = (Stage) saveContactBtn.getScene().getWindow();
