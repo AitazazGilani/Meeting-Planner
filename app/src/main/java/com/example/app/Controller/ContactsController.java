@@ -104,7 +104,7 @@ public class ContactsController {
                     minutes = 0;
                     hours++;
                 }
-                String timerStrTest = String.format("%02dh:%02dh:%02ds", hours, minutes, seconds);
+                String timerStrTest = String.format("%02dh:%02dm:%02ds", hours, minutes, seconds);
                 selectedTimerLabel.setText(timerStrTest);
             }
         }
@@ -320,7 +320,7 @@ public class ContactsController {
      * Stops a timer for a specific Contact
      */
     @FXML
-    public void onTimerFinishClick() {
+    public void onTimerFinishClick() throws RowDoesNotExistException {
         //TODO onTimerFinishClick
         System.out.println("Finishing");
         //TODO Save timer to contact
@@ -331,8 +331,9 @@ public class ContactsController {
 
         contactTimers.add(selectedTimerLabel.getText());
 
-        //contact.setTimers(contactTimers);
+        contact.setTimers(contactTimers);
 
+        database.updateContact(contact);
 
         timer.stop();
     }
