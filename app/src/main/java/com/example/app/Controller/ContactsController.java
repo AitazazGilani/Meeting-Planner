@@ -5,10 +5,8 @@ import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
 import com.example.app.database.PausableTimer;
 import com.example.app.database.RowDoesNotExistException;
-import com.example.app.database.Task;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -120,6 +118,7 @@ public class ContactsController {
         //TODO ContactTab Timers List (NOT CURRENT SPRINT)
 
         //set all the cells in the table to what is in the database.
+        ArrayList<Contact> contacts = database.getAllContacts();
         contactsTableView.getItems().setAll(database.getAllContacts());
 
         //set the cell values to match the contact object for displaying
@@ -306,7 +305,6 @@ public class ContactsController {
      */
     @FXML
     public void onTimerStartClick() {
-        //TODO onTimerStartClick
         System.out.println("Starting");
         timer.start();
     }
@@ -316,7 +314,6 @@ public class ContactsController {
      */
     @FXML
     public void onTimerPauseClick() {
-        //TODO onTimerPauseClick
         //just toggle the timer
         System.out.println("Pausing");
         timer.pauseTimer();
@@ -330,6 +327,16 @@ public class ContactsController {
         //TODO onTimerFinishClick
         System.out.println("Finishing");
         //TODO Save timer to contact
+
+        Contact contact = contactsTableView.getSelectionModel().getSelectedItem();
+
+        ArrayList<String> contactTimers = contact.getTimers();
+
+        contactTimers.add(selectedTimerLabel.getText());
+
+        //contact.setTimers(contactTimers);
+
+
         timer.stop();
     }
 

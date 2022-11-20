@@ -37,7 +37,7 @@ public class TasksController {
     protected VBox selectedTaskInfoBox;
 
     @FXML
-    protected Label taskNameLabel, taskDateLabel, taskRepeatingLabel, taskReminderSetLabel, taskTimeLabel,
+    protected Label taskNameLabel, taskDateLabel, taskReminderSetLabel, taskTimeLabel,
             taskCategoryLabel, taskTimeSpentLabel, taskContactLabel, taskDurationLabel;
 
     @FXML
@@ -95,7 +95,6 @@ public class TasksController {
             public void changed(ObservableValue<? extends Task> observableValue, Task task, Task t1) {
                 taskNameLabel.setText("Name: " + tasksTableView.getSelectionModel().getSelectedItem().getName());
                 taskDateLabel.setText("Date: " + tasksTableView.getSelectionModel().getSelectedItem().getDate());
-                taskRepeatingLabel.setText("Repeating: Currently not implemented");
                 taskReminderSetLabel.setText("Reminder Set: Currently not implemented");
                 taskTimeLabel.setText("Time: " + tasksTableView.getSelectionModel().getSelectedItem().getTime());
                 taskDurationLabel.setText("Duration: " + tasksTableView.getSelectionModel().getSelectedItem().getDuration());

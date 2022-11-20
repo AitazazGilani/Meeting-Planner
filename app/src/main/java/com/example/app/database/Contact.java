@@ -1,5 +1,7 @@
 package com.example.app.database;
 
+import java.util.ArrayList;
+
 /**
  * A Contact object holds information about a single contact and is
  * used for interaction between the views/controllers and ManageDB.
@@ -9,7 +11,13 @@ public class Contact implements TableObject<Contact> {
 
     /**to track if the task is favourited or not
      * initialized to be false by default**/
-    boolean favorite;
+    Boolean favorite;
+
+    /**
+     * track the timers collected for the contact, each string item is in the format of
+     * YYYY-MM-DD;HH:MM:SS
+     */
+    ArrayList<String> timers;
 
     /**
      * ID for the contact, must be null if the views/controller are creating a contact.
@@ -21,10 +29,10 @@ public class Contact implements TableObject<Contact> {
     public Contact(String name, String email, String timeSpent, String category) {
         this.name = name;
         this.email = email;
-        // TODO: are we even gonna use timeSpent in Contacts?
         this.timeSpent = timeSpent;
         this.category = category;
         favorite = false;
+        timers = new ArrayList<>();
     }
 
     public String getName() {
@@ -59,9 +67,31 @@ public class Contact implements TableObject<Contact> {
         this.category = s;
     }
 
-    public boolean isFavorite() { return favorite; }
+    public Boolean isFavorite() { return favorite; }
 
-    public void setFavorite(boolean favorite) { this.favorite = favorite; }
+    public void setFavorite(Boolean favorite) { this.favorite = favorite; }
+
+    public ArrayList<String> getTimers() {
+        return timers;
+    }
+
+    public void setTimers(ArrayList<String> timers) {
+        this.timers = timers;
+    }
+
+    /**
+     * get the string repersentation of the timers in the format of
+     * YYYY-MM-DD;HH:MM:SS, YYYY-MM-DD;HH:MM:SS, YYYY-MM-DD;HH:MM:SS,....
+     * @return
+     */
+    public String timersToString(){
+        String ret = "";
+        if(timers.size() == 0) return ret;
+        for(String item: timers){
+            ret = ret + ", " + item;
+        }
+        return ret;
+    }
 
     /**
      * DO NOT USE IN VIEWS OR CONTROLLER, Set the UID for a task.
@@ -77,11 +107,6 @@ public class Contact implements TableObject<Contact> {
      * @return uid
      */
     public int getUID(){return this.UID;}
-
-    public String toString() {
-        // TODO: implement toString method
-        return "";
-    }
 
     public boolean equals(Contact contact) {
         return contact.getName().equals(this.getName()) &&
