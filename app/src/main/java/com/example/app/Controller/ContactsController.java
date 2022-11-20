@@ -269,11 +269,18 @@ public class ContactsController {
      */
     @FXML
     public void onFavoriteSortClick() {
-        //TODO onFavoriteSortClick
+        //TODO onFavoriteSortClick Favorite is currently not in the database come back when it is
+        contactsTableView.getItems().clear();
+        ArrayList<Contact> favorites = new ArrayList();
         if(favouritesSortCheckBox.isSelected()){
-
+            for (Contact contact : database.getAllContacts()){
+                if (contact.isFavorite()){
+                   favorites.add(contact);
+                }
+            }
+            contactsTableView.getItems().setAll(favorites);
         }
     }
 
-    //TODO Also sort the contact list based on the selected category.
+
 }
