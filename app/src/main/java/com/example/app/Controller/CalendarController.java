@@ -133,6 +133,9 @@ public class CalendarController {
         newTaskWindow.show();
     }
 
+    /**
+     * 'Locks' the application by hiding everything with a blank screen
+     */
     @FXML
     private void clickLockButton() throws IOException {
         //Load the locked screen view into the loader
@@ -150,6 +153,10 @@ public class CalendarController {
         cur.close();
     }
 
+    /**
+     * Logs the current user out of the application, returning them to the returning user login page.
+     */
+    @FXML
     public void ClickLogOut() throws IOException {
         //Load the returning user login view into the loader
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ReturningLoginView.fxml")));

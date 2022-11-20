@@ -30,6 +30,9 @@ public class LockviewController {
     protected MenuItem logOutMenuItem;
 
 
+    /**
+     * 'unlocks' the application by returning the user to the calendar view
+     */
     @FXML
     protected void clickUnlockButton() throws IOException {
 
@@ -51,7 +54,10 @@ public class LockviewController {
 
     }
 
-
+    /**
+     * Logs the current user out of the application, returning them to the returning user login page.
+     */
+    @FXML
     public void ClickLogOut() throws IOException {
         //Load the returning user login view into the loader
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ReturningLoginView.fxml")));

@@ -79,8 +79,68 @@ public class ManageDB {
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
+
+    /**
+     * Checks whether there is a user in LoginTable
+     *
+     * @return true if a user exists, false if a user does not exist in db
+     * @throws UserAlreadyExistsException if more than one user exists (should not happen)
+     */
+    public Boolean userExists() throws UserAlreadyExistsException {
+        int count = 0;
+        try(Connection conn = DriverManager.getConnection(URL)){
+            Statement s = conn.createStatement();
+            ResultSet r = s.executeQuery("SELECT COUNT(*) AS rowcount FROM LoginTable");
+            r.next();
+            count = r.getInt("rowcount");
+            r.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        if (count == 0) {
+            return false;
+        } else if (count == 1)
+            return true;
+        else {
+            throw new UserAlreadyExistsException("Multiple users exist, there should only be one user");
+        }
+    }
+
+    /**
+     * Authenticates login attempt with user info in db
+     *
+     * @return true if login attempt was correct, false if username/password entered was incorrect
+     * @throws Exception if attempted to login when no users exist (should not happen)
+     */
+    public Boolean correctLogin(String username, String password) throws Exception {
+        if (!userExists())
+            throw new Exception("Attempted to login when no users exist.");
+
+        String[] userInfo = getUser();
+        return userInfo[0].equals(username) && userInfo[1].equals(password);
+    }
+
+    /**
+     * returns username and password stored in the db
+     * @return string array of username then password
+     */
+    private String[] getUser() {
+        String[] ret = new String[2];
+        String sql = "SELECT * FROM LoginTable WHERE rowid = 1";
+        try(Connection conn = DriverManager.getConnection(URL)){
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql);
+            ret[0] = rs.getString("Username");
+            ret[1] = rs.getString("Password");
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return ret;
+    }
+
 
     /**
      * Create a new Contact in the db

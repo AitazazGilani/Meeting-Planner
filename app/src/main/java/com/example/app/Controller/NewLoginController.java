@@ -42,7 +42,10 @@ public class NewLoginController {
 
     protected ManageDB database = new ManageDB();
 
-
+    /**
+     * Creates a new user based off the info entered and adds it to the db.
+     * If all is well the application is opened to the 'home' calendar view
+     */
     @FXML
     protected void ClickLoginButton() throws UserAlreadyExistsException {
 
@@ -61,7 +64,7 @@ public class NewLoginController {
                 //open the window
                 newTaskWindow.show();
 
-                //Gets current stage (Locked screen)
+                //Gets current stage (new user view)
                 Stage cur = (Stage) loginBtn.getScene().getWindow();
                 //Close the window
                 cur.close();

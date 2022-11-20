@@ -230,7 +230,9 @@ public class ContactsController {
         //open the window
         newContactWindow.show();
     }
-
+    /**
+     * 'Locks' the application by hiding everything with a blank screen
+     */
     @FXML
     private void clickLockButton() throws IOException {
         //Load the locked screen view into the loader
@@ -248,6 +250,10 @@ public class ContactsController {
         cur.close();
     }
 
+    /**
+     * Logs the current user out of the application, returning them to the returning user login page.
+     */
+    @FXML
     public void ClickLogOut() throws IOException {
 
         //Load the returning user login view into the loader
@@ -258,7 +264,6 @@ public class ContactsController {
         newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
         //open the window
         newTaskWindow.show();
-
 
         //Gets current stage (contacts view)
         Stage cur = (Stage) lockBtn.getScene().getWindow();
