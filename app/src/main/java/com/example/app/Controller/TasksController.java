@@ -242,7 +242,7 @@ public class TasksController {
     public void onFavoriteSortClick() {
         //TODO onFavoriteSortClick Favorite is currently not in the database come back when it is
         tasksTableView.getItems().clear();
-        ArrayList<Task> favorites = new ArrayList();
+        ArrayList<Task> favorites = new ArrayList<>();
         if(favouritesSortCheckBox.isSelected()){
             for (Task task : database.getAllTasks()){
                 if (task.isFavorite()){

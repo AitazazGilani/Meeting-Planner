@@ -3,6 +3,7 @@ package com.example.app.Controller;
 import com.example.app.App;
 import com.example.app.database.Contact;
 import com.example.app.database.ManageDB;
+import com.example.app.database.PausableTimer;
 import com.example.app.database.RowDoesNotExistException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -58,6 +59,57 @@ public class ContactsController {
 
     protected ManageDB database = new ManageDB();
 
+    private PausableTimer timer = new PausableTimer() {
+        private long timestamp;
+        private long minutes;
+        private long hours;
+        private long seconds = 0;
+        private long fraction = 0;
+
+        @Override
+        public void start(){
+            timestamp = System.currentTimeMillis() - fraction;
+            super.start();
+        }
+
+        @Override
+        public void pauseTimer(){
+            super.stop();
+            // save leftover time not handled with the last update
+            fraction = System.currentTimeMillis() - timestamp;
+        }
+
+        @Override
+        public void stop(){
+            super.stop();
+            // save leftover time not handled with the last update
+            fraction = System.currentTimeMillis() - timestamp;
+        }
+
+        @Override
+        public void handle(long l) {
+            long newTime = System.currentTimeMillis();
+            if (timestamp + 1000 <= newTime) {
+                long roundUp = (newTime - timestamp) / 1000;
+                seconds += roundUp;
+                timestamp += 1000 * roundUp;
+
+                if (seconds >= 60) {
+                    seconds = 0;
+                    minutes++;
+                }
+
+                if (minutes >= 60) {
+                    seconds = 0;
+                    minutes = 0;
+                    hours++;
+                }
+                String timerStrTest = String.format("%02dh:%02dh:%02ds", hours, minutes, seconds);
+                selectedTimerLabel.setText(timerStrTest);
+            }
+        }
+    };
+
     /**
      * This initializes the Contacts Tab with the appropriate information on startup.
      */
@@ -104,6 +156,8 @@ public class ContactsController {
                 }
             }
         });
+
+
     }
 
     /**
@@ -246,6 +300,8 @@ public class ContactsController {
     @FXML
     public void onTimerStartClick() {
         //TODO onTimerStartClick
+        System.out.println("Starting");
+        timer.start();
     }
 
     /**
@@ -254,6 +310,9 @@ public class ContactsController {
     @FXML
     public void onTimerPauseClick() {
         //TODO onTimerPauseClick
+        //just toggle the timer
+        System.out.println("Pausing");
+        timer.pauseTimer();
     }
 
     /**
@@ -262,6 +321,9 @@ public class ContactsController {
     @FXML
     public void onTimerFinishClick() {
         //TODO onTimerFinishClick
+        System.out.println("Finishing");
+        //TODO Save timer to contact
+        timer.stop();
     }
 
     /**
@@ -271,7 +333,7 @@ public class ContactsController {
     public void onFavoriteSortClick() {
         //TODO onFavoriteSortClick Favorite is currently not in the database come back when it is
         contactsTableView.getItems().clear();
-        ArrayList<Contact> favorites = new ArrayList();
+        ArrayList<Contact> favorites = new ArrayList<>();
         if(favouritesSortCheckBox.isSelected()){
             for (Contact contact : database.getAllContacts()){
                 if (contact.isFavorite()){
@@ -283,4 +345,7 @@ public class ContactsController {
     }
 
 
+    public void setTimer(String format) {
+        selectedTimerLabel.setText(format);
+    }
 }

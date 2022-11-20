@@ -1,12 +1,8 @@
 package com.example.app.Controller;
 
 
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
-
 import com.example.app.App;
+import com.example.app.UI.GraphicalCalendar;
 import com.example.app.database.ManageDB;
 import com.example.app.database.Task;
 import javafx.event.ActionEvent;
@@ -20,7 +16,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import com.example.app.UI.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class CalendarController{
 
