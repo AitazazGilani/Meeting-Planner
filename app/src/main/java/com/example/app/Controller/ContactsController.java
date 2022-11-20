@@ -1,10 +1,8 @@
 package com.example.app.Controller;
 
 import com.example.app.App;
-import com.example.app.database.Contact;
-import com.example.app.database.ManageDB;
-import com.example.app.database.PausableTimer;
-import com.example.app.database.RowDoesNotExistException;
+import com.example.app.database.*;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -20,9 +18,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.time.LocalDate;
 
 public class ContactsController {
-
     @FXML
     protected TableView<Contact> contactsTableView;
 
@@ -33,7 +31,7 @@ public class ContactsController {
     protected TableColumn<Contact, String> contactNameTableColumn, contactEmailTableColumn, contactCategoryTableColumn;
 
     @FXML
-    protected TableView<String> currentTimersTableView;
+    protected TableView<TimerWithDate> currentTimersTableView;
 
     @FXML
     protected TableColumn<String, String> currentTimersContactTableColumn, currentTimersTimeElapsedTableColumn;
@@ -125,6 +123,10 @@ public class ContactsController {
         contactEmailTableColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         contactCategoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
+        currentTimersTimeElapsedTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        currentTimersContactTableColumn.setCellValueFactory(new PropertyValueFactory<>("timer"));
+        currentTimersContactTableColumn.setText("Date");
+
         //add a "None" option to the categories.
         ArrayList<String> categoryList = database.getAllCategories();
         if(!categoryList.isEmpty()){
@@ -150,6 +152,10 @@ public class ContactsController {
         contactsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Contact>() {
             @Override
             public void changed(ObservableValue<? extends Contact> observableValue, Contact contact, Contact t1) {
+                ArrayList<String> dates = new ArrayList<>();
+                ArrayList<String> timers = new ArrayList<>();
+                ArrayList<TimerWithDate> timerWithDates = new ArrayList<>();
+
                 contactNameLabel.setText("Name: " + contactsTableView.getSelectionModel().getSelectedItem().getName());
                 contactEmailLabel.setText("Email: " + contactsTableView.getSelectionModel().getSelectedItem().getEmail());
                 favouriteContactCheckBox.setSelected(contactsTableView.getSelectionModel().getSelectedItem().isFavorite());
@@ -159,6 +165,17 @@ public class ContactsController {
                 else{
                     contactCategoryLabel.setText("Category: " + contactsTableView.getSelectionModel().getSelectedItem().getCategory());
                 }
+                if(!contactsTableView.getSelectionModel().getSelectedItem().getTimers().isEmpty()){
+                    for(String timer : contactsTableView.getSelectionModel().getSelectedItem().getTimers()){
+                        String[] dateTimer = timer.split(";");
+                        timerWithDates.add(new TimerWithDate(dateTimer[0], dateTimer[1]));
+                    }
+                    currentTimersTableView.getItems().addAll(timerWithDates);
+                }
+
+
+
+
             }
         });
     }
@@ -321,6 +338,7 @@ public class ContactsController {
      */
     @FXML
     public void onTimerFinishClick() throws RowDoesNotExistException {
+
         //TODO onTimerFinishClick
         System.out.println("Finishing");
         //TODO Save timer to contact
@@ -329,12 +347,16 @@ public class ContactsController {
 
         ArrayList<String> contactTimers = contact.getTimers();
 
-        contactTimers.add(selectedTimerLabel.getText());
+        LocalDate date = LocalDate.now();
 
         contact.setTimers(contactTimers);
-
+        int dayOfMonth = date.getDayOfMonth();
+        int year = date.getYear();
+        int month = date.getMonthValue();
+        //format date with timer.
+        String dateAndTimer = year+"-"+month+"-"+dayOfMonth+";"+selectedTimerLabel.getText();
+        contactTimers.add(dateAndTimer);
         database.updateContact(contact);
-
         timer.stop();
     }
 
