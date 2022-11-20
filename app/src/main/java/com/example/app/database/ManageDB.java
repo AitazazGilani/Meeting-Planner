@@ -666,7 +666,7 @@ public class ManageDB {
                 "    TimeSpent varchar(255), \n" +
                 "    ContactName varchar(255), \n" +
                 "    Favorite varchar(255), \n" +
-                "    Timers varchar(255), \n" +
+                "    Timers varchar(255) \n" +
                 ");\n";
 
         String createCategoryTable = "CREATE TABLE CategoryTable(\n" +
