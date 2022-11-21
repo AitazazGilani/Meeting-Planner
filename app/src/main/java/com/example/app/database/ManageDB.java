@@ -729,21 +729,6 @@ public class ManageDB {
             System.out.println("Error" + e);
         }
 
-        Contact person = new Contact("Guy","guy@guymail.com","","");
-        ArrayList<String> lst = new ArrayList<>();
-        lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS");
-        person.setTimers(lst);
-        db.createNewContact(person);
-
-        
-        ArrayList<Contact> c = db.getAllContacts();
-        try {
-            Contact a = c.get(0);
-            a.setTimers(new ArrayList<>());
-            db.updateContact(a);
-        } catch (RowDoesNotExistException e) {
-            e.printStackTrace();
-        }
 
     }
 }
