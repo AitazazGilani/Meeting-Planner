@@ -57,21 +57,30 @@
                   <Font size="20.0" />
                </font>
             </Button>
+            <Button fx:id="lockBtn" alignment="CENTER" layoutX="29.0" layoutY="569.0" mnemonicParsing="false" onAction="#clickLockButton" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #AAAAAA;" text="lock app" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
     </children>
   </AnchorPane>
    </left>
    <right>
-  <AnchorPane prefHeight="550.0" prefWidth="221.0" style="-fx-background-color: #DDDDDD;" BorderPane.alignment="CENTER">
+  <AnchorPane prefHeight="653.0" prefWidth="221.0" style="-fx-background-color: #DDDDDD;" BorderPane.alignment="CENTER">
     <children>
-      <Label fx:id="selectedDateLabel" alignment="CENTER" layoutX="42.0" layoutY="21.0" style="&#10;" text="Month, Day, Year" textAlignment="CENTER" wrapText="false" AnchorPane.topAnchor="21.0">
-               <font>
-          <Font size="18.0" fx:id="x1" />
-               </font>
-            </Label>
-            <ListView fx:id="selectedDateTaskListView" layoutY="120.0" prefHeight="396.0" prefWidth="223.0" style="-fx-background-color: DDDDDD;" AnchorPane.bottomAnchor="137.0" AnchorPane.topAnchor="120.0" />
+            <HBox alignment="CENTER" layoutX="1.0" layoutY="15.0" prefHeight="40.0" prefWidth="222.0" AnchorPane.topAnchor="15.0">
+               <children>
+            <Label fx:id="selectedDateLabel" alignment="CENTER" style="&#10;" text="No Date Selected" wrapText="false">
+                     <font>
+                <Font size="18.0" fx:id="x1" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <ListView fx:id="selectedDateTaskListView" layoutY="120.0" prefHeight="396.0" prefWidth="221.0" AnchorPane.bottomAnchor="137.0" AnchorPane.topAnchor="120.0" />
             <Label fx:id="numberOfTasksLabel" layoutX="14.0" layoutY="84.0" text="(# of) Task(s):" AnchorPane.topAnchor="84.0" />
             <Label layoutX="9.0" layoutY="48.0" prefHeight="17.0" prefWidth="203.0" text="________________________________________" textAlignment="CENTER" AnchorPane.topAnchor="50.0" />
-            <Button fx:id="newTaskBtn" alignment="CENTER" layoutX="39.0" layoutY="418.0" mnemonicParsing="false" onAction="#clickNewTask" prefHeight="54.0" prefWidth="144.0" style="-fx-background-color: #5A83FC;" text="+ new task" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="29.5">
+            <Button fx:id="newTaskBtn" alignment="CENTER" layoutX="30.0" layoutY="568.0" mnemonicParsing="false" onAction="#clickNewTask" prefHeight="54.0" prefWidth="164.0" style="-fx-background-color: #5A83FC;" text="+ new task" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -105,39 +114,9 @@
    <top>
     <MenuBar BorderPane.alignment="CENTER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu fx:id="accountMenu" mnemonicParsing="false" text="Account">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem fx:id="logOutMenuItem" mnemonicParsing="false" onAction="#ClickLogOut" text="Log Out" />
           </items>
         </Menu>
       </menus>

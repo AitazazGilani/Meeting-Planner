@@ -109,7 +109,6 @@ public class ManageDB {
             throw new UserAlreadyExistsException("Multiple users exist, there should only be one user");
         }
     }
-
     /**
      * Authenticates login attempt with user info in db
      *
@@ -124,6 +123,7 @@ public class ManageDB {
         return userInfo[0].equals(username) && userInfo[1].equals(password);
     }
 
+    //todo: test out favorite, and if timers shows up correctly
     /**
      * returns username and password stored in the db
      * @return string array of username then password
@@ -143,7 +143,7 @@ public class ManageDB {
         return ret;
     }
 
-    //todo: test out favorite, and if timers shows up correctly
+
     /**
      * Create a new Contact in the db
      * @param p Contact to add to the db
@@ -524,6 +524,198 @@ public class ManageDB {
     }
 
     /**
+     * Sorts input task list by an input type of sort
+     *
+     * @param newSortedList list of tasks to sort and return
+     * @param type type of sorting to be done
+     * @return newSortedList sorted by type
+     */
+    public ArrayList<Task> sortTasks(ArrayList<Task> newSortedList, String type) {
+        // TODO: test sortTasks()
+        ArrayList<Task> ret = newSortedList;
+        switch (type) {
+            case "Name":
+                // sort by name then date & time
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        if (t1.getName().toLowerCase().compareTo(t2.getName().toLowerCase()) == 0) {
+                            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
+                            try {
+                                Date d1 = df.parse(t1.getDate() + t1.getTime());
+                                Date d2 = df.parse(t2.getDate() + t2.getTime());
+                                return d1.compareTo(d2);
+                            } catch (ParseException e) {
+                                System.out.println("Parse failed: " + e);
+                                return 0;
+                            }
+                        } else {
+                            return t1.getName().toLowerCase().compareTo(t2.getName().toLowerCase());
+                        }
+                    }
+                });
+                break;
+            case "Date & Time":
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
+                        try {
+                            Date d1 = df.parse(t1.getDate() + t1.getTime());
+                            Date d2 = df.parse(t2.getDate() + t2.getTime());
+                            return d1.compareTo(d2);
+                        } catch (ParseException e) {
+                            System.out.println("Parse failed: " + e);
+                            return 0;
+                        }
+                    }
+                });
+                break;
+            case "Category":
+                // sort by category name then date & time
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        if (t1.getCategory().toLowerCase().compareTo(t2.getCategory().toLowerCase()) == 0) {
+                            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
+                            try {
+                                Date d1 = df.parse(t1.getDate() + t1.getTime());
+                                Date d2 = df.parse(t2.getDate() + t2.getTime());
+                                return d1.compareTo(d2);
+                            } catch (ParseException e) {
+                                System.out.println("Parse failed: " + e);
+                                return 0;
+                            }
+                        } else {
+                            return t1.getCategory().toLowerCase().compareTo(t2.getCategory().toLowerCase());
+                        }
+                    }
+                });
+                break;
+            case "Contact":
+                // sort by contact name then date & time
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        if (t1.getContactName().toLowerCase().compareTo(t2.getContactName().toLowerCase()) == 0) {
+                            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
+                            try {
+                                Date d1 = df.parse(t1.getDate() + t1.getTime());
+                                Date d2 = df.parse(t2.getDate() + t2.getTime());
+                                return d1.compareTo(d2);
+                            } catch (ParseException e) {
+                                System.out.println("Parse failed: " + e);
+                                return 0;
+                            }
+                        } else {
+                            return t1.getContactName().toLowerCase().compareTo(t2.getContactName().toLowerCase());
+                        }
+                    }
+                });
+                break;
+            case "TimeSpent":
+                // convert TimeSpent of every task into unix time and sort by number
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        final DateFormat df = new SimpleDateFormat("HH:mm:ss");
+                        try {
+                            Date d1 = df.parse(t1.getTimeSpent());
+                            Date d2 = df.parse(t2.getTimeSpent());
+                            return d1.compareTo(d2);
+                        } catch (ParseException e) {
+                            System.out.println("Parse failed: " + e);
+                            return 0;
+                        }
+                    }
+                });
+                break;
+            case "Favorite":
+                // sort by fav on top then by date & time
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        if (t2.isFavorite().compareTo(t1.isFavorite()) == 0) {
+                            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
+                            try {
+                                Date d1 = df.parse(t1.getDate() + t1.getTime());
+                                Date d2 = df.parse(t2.getDate() + t2.getTime());
+                                return d1.compareTo(d2);
+                            } catch (ParseException e) {
+                                System.out.println("Parse failed: " + e);
+                                return 0;
+                            }
+                        } else {
+                            return t2.isFavorite().compareTo(t1.isFavorite());
+                        }
+                    }
+                });
+                break;
+        }
+
+        return ret;
+    }
+
+
+    /**
+     * Sorts input contact list by an input type of sort
+     *
+     * @param newSortedList list of contacts to sort and return
+     * @param type type of sorting to be done
+     * @return newSortedList sorted by type
+     */
+    public ArrayList<Contact> sortContacts(ArrayList<Contact> newSortedList, String type) {
+        // TODO: test sortContacts()
+        ArrayList<Contact> ret = newSortedList;
+        switch (type) {
+            case "Name":
+                // sort by name
+                ret.sort(new Comparator<Contact>() {
+                    @Override
+                    public int compare(Contact c1, Contact c2) {
+                        return c1.getName().toLowerCase().compareTo(c2.getName().toLowerCase());
+                    }
+                });
+                break;
+            case "Category":
+                // sort by category name
+                ret.sort(new Comparator<Contact>() {
+                    @Override
+                    public int compare(Contact c1, Contact c2) {
+                        if (c1.getCategory().toLowerCase().compareTo(c2.getCategory().toLowerCase()) == 0) {
+                            return c1.getName().toLowerCase().compareTo(c2.getName().toLowerCase());
+                        } else {
+                            return c1.getCategory().toLowerCase().compareTo(c2.getCategory().toLowerCase());
+                        }
+                    }
+                });
+                break;
+            case "Favorite":
+                // sort by favorites on top then by name
+                ret.sort(new Comparator<Contact>() {
+                    @Override
+                    public int compare(Contact c1, Contact c2) {
+                        if (c2.isFavorite().compareTo(c1.isFavorite()) == 0) {
+                            return c1.getName().toLowerCase().compareTo(c2.getName().toLowerCase());
+                        } else {
+                            return c2.isFavorite().compareTo(c1.isFavorite());
+                        }
+                    }
+                });
+                break;
+        }
+
+        return ret;
+    }
+
+
+    /**
      * Get all the tasks present in the database
      * @return An ArrayList of Task objects
      */
@@ -686,6 +878,7 @@ public class ManageDB {
         } catch (Exception e) {
             System.out.println(e);
         }
+        System.out.println("finished creating new db");
     }
 
     public static void main(String[] args) {

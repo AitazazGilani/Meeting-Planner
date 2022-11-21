@@ -9,5 +9,6 @@ module com.example.app {
     exports com.example.app;
     exports com.example.app.Controller;
     exports com.example.app.database;
+    exports com.example.app.UI;
     opens com.example.app.Controller to javafx.fxml;
 }

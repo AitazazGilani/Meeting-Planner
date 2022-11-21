@@ -1,12 +1,8 @@
 package com.example.app.Controller;
 
 
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
-
 import com.example.app.App;
+import com.example.app.UI.GraphicalCalendar;
 import com.example.app.database.ManageDB;
 import com.example.app.database.Task;
 import javafx.event.ActionEvent;
@@ -15,29 +11,35 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import com.example.app.UI.*;
 
-public class CalendarController {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 
+public class CalendarController{
+
+    public Menu accountMenu;
+    public MenuItem logOutMenuItem;
     //TODO Minor: Future reference, the ListView may not be of the Task Object, confirm this in the future.
+
     @FXML
-    protected ListView<Task> selectedDateTaskListView;
+    protected ListView<String> selectedDateTaskListView;
 
     @FXML
     protected AnchorPane centerAnchorPane;
 
     @FXML
-    protected Button tasksTabBtn, calendarTabBtn, contactsTabBtn, newTaskBtn;
+    protected Button tasksTabBtn, calendarTabBtn, contactsTabBtn, newTaskBtn, lockBtn;
 
     @FXML
     protected Label selectedDateLabel, numberOfTasksLabel;
 
     protected ManageDB database = new ManageDB();
+
+    protected GraphicalCalendar calendar = new GraphicalCalendar();
 
     /**
      * This initializes the CalendarView with information on startup.
@@ -45,12 +47,32 @@ public class CalendarController {
     @FXML
     private void initialize(){
         //create new calendar graphic
-        GraphicalCalendar calendar = new GraphicalCalendar();
 
         //set the scenes center pane to the calendar
         centerAnchorPane.getChildren().setAll(calendar);
 
-        //for every cell of buttons in the calendar, create an onAction event handler to handle date selectes
+        //for every cell of buttons in the calendar, create an onAction event handler to handle date selects
+        setButtonHandlers();
+    }
+
+    /**
+     * Sets an event handler for each button in the calendar grid.
+     */
+    private void setButtonHandlers() {
+        calendar.nextBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                calendar.next();
+                setButtonHandlers();
+            }
+        });
+        calendar.prevBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                calendar.previous();
+                setButtonHandlers();
+            }
+        });
         for(Button tempButton : calendar.calendarButtonList)
         {
             tempButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -61,7 +83,13 @@ public class CalendarController {
 
                     numberOfTasksLabel.setText("(# of) Task(s): " + currentTasks.size());
 
-                    selectedDateTaskListView.getItems().setAll(currentTasks);
+                    ArrayList<String> taskNames = new ArrayList<>();
+
+                    for(Task task : currentTasks){
+                        taskNames.add(task.getName());
+                    }
+
+                    selectedDateTaskListView.getItems().setAll(taskNames);
 
                     selectedDateLabel.setText(tempButton.getId());
 
@@ -69,6 +97,7 @@ public class CalendarController {
             });
         }
     }
+
 
     /**
      * Move and display the Calendar Tab
@@ -131,5 +160,46 @@ public class CalendarController {
         newTaskWindow.setScene(new Scene(fxmlLoader, 900, 700));
         //open the window
         newTaskWindow.show();
+    }
+
+    /**
+     * 'Locks' the application by hiding everything with a blank screen
+     */
+    @FXML
+    private void clickLockButton() throws IOException {
+        //Load the locked screen view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("LockedView.fxml")));
+        //create a new window for the locked screen
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("Screen Locked");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
+        //open the window
+        newTaskWindow.show();
+
+        //Gets current stage (calendar view)
+        Stage cur = (Stage) lockBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
+    }
+
+    /**
+     * Logs the current user out of the application, returning them to the returning user login page.
+     */
+    @FXML
+    public void ClickLogOut() throws IOException {
+        //Load the returning user login view into the loader
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("ReturningLoginView.fxml")));
+        //create a new window for the returning user login view
+        Stage newTaskWindow = new Stage();
+        newTaskWindow.setTitle("TODO Application");
+        newTaskWindow.setScene(new Scene(fxmlLoader, 1200, 700));
+        //open the window
+        newTaskWindow.show();
+
+
+        //Gets current stage (Calendar view)
+        Stage cur = (Stage) lockBtn.getScene().getWindow();
+        //Close the window
+        cur.close();
     }
 }
