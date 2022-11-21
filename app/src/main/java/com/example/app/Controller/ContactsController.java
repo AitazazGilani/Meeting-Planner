@@ -141,8 +141,7 @@ public class ContactsController {
         ArrayList<String> sortList = new ArrayList<>();
         sortList.add("Name");
         sortList.add("Category");
-        sortList.add("Time Elapsed");
-        sortList.add("Favorite");
+        sortList.add("Favorites On Top");
         sortByChoiceBox.setValue(sortList.get(0));
         sortByChoiceBox.getItems().setAll(sortList);
         onSortChoice();
@@ -368,14 +367,17 @@ public class ContactsController {
                 }
             }
             contactsTableView.getItems().setAll(favorites);
+        } else {
+            contactsTableView.getItems().setAll(database.getAllContacts());
         }
+        onSortChoice();
     }
 
     public void onSortChoice() {
         ArrayList<Contact> newSortedList;
         // if already filtered favorites only, then
         if (favouritesSortCheckBox.isSelected()) {
-            newSortedList = (ArrayList<Contact>) contactsTableView.getItems();
+            newSortedList = new ArrayList<>(contactsTableView.getItems());
         } else {
             newSortedList = database.getAllContacts();
         }
@@ -389,14 +391,9 @@ public class ContactsController {
                 // sort by category name
                 newSortedList = database.sortContacts(newSortedList, "Category");
                 break;
-            case "Time Elapsed":
-                newSortedList = database.sortContacts(newSortedList, "Time Elapsed");
-                // TODO: implement time elapsed sorting in managedb
-                break;
-            case "Favorite":
-                // sort by fav on top then by date & time
+            case "Favorites On Top":
+                // sort by fav on top then by name
                 newSortedList = database.sortContacts(newSortedList, "Favorite");
-                // TODO: implement fav sorting in managedb
                 break;
         }
         contactsTableView.getItems().setAll(newSortedList);

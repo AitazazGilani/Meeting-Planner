@@ -561,12 +561,10 @@ public class ManageDB {
                     @Override
                     public int compare(Task t1, Task t2) {
                         // if name is equal then next step is to sort by date & time
-//                        final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                         final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
                         try {
                             Date d1 = df.parse(t1.getDate() + t1.getTime());
                             Date d2 = df.parse(t2.getDate() + t2.getTime());
-                            System.out.println("comparing:\n"+d1+"\n"+d2+"\n"+d1.compareTo(d2));
                             return d1.compareTo(d2);
                         } catch (ParseException e) {
                             System.out.println("Parse failed: " + e);
@@ -639,7 +637,25 @@ public class ManageDB {
                 break;
             case "Favorite":
                 // sort by fav on top then by date & time
-                // TODO: Implement favorite sorting
+                ret.sort(new Comparator<Task>() {
+                    @Override
+                    public int compare(Task t1, Task t2) {
+                        // if name is equal then next step is to sort by date & time
+                        if (t2.isFavorite().compareTo(t1.isFavorite()) == 0) {
+                            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd" + "HH:mm:ss");
+                            try {
+                                Date d1 = df.parse(t1.getDate() + t1.getTime());
+                                Date d2 = df.parse(t2.getDate() + t2.getTime());
+                                return d1.compareTo(d2);
+                            } catch (ParseException e) {
+                                System.out.println("Parse failed: " + e);
+                                return 0;
+                            }
+                        } else {
+                            return t2.isFavorite().compareTo(t1.isFavorite());
+                        }
+                    }
+                });
                 break;
         }
 
@@ -680,11 +696,18 @@ public class ManageDB {
                     }
                 });
                 break;
-            case "Time Elapsed":
-                // TODO: implement time elapsed sorting
-                break;
             case "Favorite":
-                // TODO: implement favorite sorting
+                // sort by favorites on top then by name
+                ret.sort(new Comparator<Contact>() {
+                    @Override
+                    public int compare(Contact c1, Contact c2) {
+                        if (c2.isFavorite().compareTo(c1.isFavorite()) == 0) {
+                            return c1.getName().toLowerCase().compareTo(c2.getName().toLowerCase());
+                        } else {
+                            return c2.isFavorite().compareTo(c1.isFavorite());
+                        }
+                    }
+                });
                 break;
         }
 
