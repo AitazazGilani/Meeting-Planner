@@ -26,7 +26,7 @@ public class CalendarController{
     //TODO Minor: Future reference, the ListView may not be of the Task Object, confirm this in the future.
 
     @FXML
-    protected ListView<Task> selectedDateTaskListView;
+    protected ListView<String> selectedDateTaskListView;
 
     @FXML
     protected AnchorPane centerAnchorPane;
@@ -83,7 +83,13 @@ public class CalendarController{
 
                     numberOfTasksLabel.setText("(# of) Task(s): " + currentTasks.size());
 
-                    selectedDateTaskListView.getItems().setAll(currentTasks);
+                    ArrayList<String> taskNames = new ArrayList<>();
+
+                    for(Task task : currentTasks){
+                        taskNames.add(task.getName());
+                    }
+
+                    selectedDateTaskListView.getItems().setAll(taskNames);
 
                     selectedDateLabel.setText(tempButton.getId());
 
