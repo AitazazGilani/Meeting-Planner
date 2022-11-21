@@ -375,7 +375,51 @@ public class ManageDBTests {
         if (!(queryTC35Categories.size() == 3 && queryTC35Categories.get(0).equals("Personal") && queryTC35Categories.get(1).equals("School") && queryTC35Categories.get(2).equals("Work")))
             System.out.println("ERROR: Querying for all categories did not return expected categories.");
 
+        Contact person = new Contact("Guy","guy@guymail.com","","");
+        ArrayList<String> lst = new ArrayList<>();
+        lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS");
+        person.setTimers(lst);
 
+        //Test case 37
+        if(!person.timersToString().equals("YYYY-MM-DD;HH:MM:SS,YYYY-MM-DD;HH:MM:SS,YYYY-MM-DD;HH:MM:SS")){
+            System.out.println("ERROR: timersToString did not output the list correctly");
+        }
+
+        //test case 38: check if we can create a new contract with a timer
+        try{
+            db.createNewContact(person);
+        }
+        catch (Exception e){
+            System.out.println("ERROR could not create and insert a new contact with a timers array list");
+        }
+
+        //test case 39: check if the contact with timers was added correctly
+        ArrayList<Contact> allContacts = db.getAllContacts();
+        if(allContacts.get(2).timers.size() != 3){
+            System.out.println("ERROR: did not insert timers correctly into the timers column");
+        }
+
+        //Test case 40: check if we can update the contact's timers
+        try {
+            Contact a = allContacts.get(0);
+            a.setTimers(new ArrayList<>());
+            db.updateContact(a);
+            allContacts = db.getAllContacts();
+            if(allContacts.get(0).timers.size() != 1) throw new Exception("Failed to update contact");
+        } catch (Exception e) {
+            System.out.println("Error did not correctly update the timers column " + e);
+        }
+
+        //Test case 41: Check if we can update a contact and favorite it
+        try {
+            Contact a = allContacts.get(0);
+            a.setFavorite(true);
+            db.updateContact(a);
+            allContacts = db.getAllContacts();
+            if(!allContacts.get(0).isFavorite()) throw new Exception("Did not favorite the given contact");
+        } catch (Exception e) {
+            System.out.println("Error did not correctly update the timers column " + e);
+        }
 
         System.out.println("REGRESSION TESTING COMPLETE");
         System.exit(0);
