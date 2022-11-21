@@ -9,9 +9,6 @@ In development, currently in an Alpha state.
 ## Description
 This program allows the user to create to-do tasks through a GUI and enables the ability to track the amount of time spent on a task with a timer. A "TODO" application to help with scheduling and time tracking, used to assist developers/students. This application would be able to create assignments/projects that have a start and end date, that would be placed into a calendar. It also contains the ability to track the amount of time spent on a task with a timer. The recorded times would be compiled at the end of the month to show the time you spent on tasks.
 
-## Visuals
-TBD
-
 ## Installation
 1. Download the .zip of the main branch
 2. Extract to an easily accessible folder
@@ -23,9 +20,6 @@ TBD
 8. Build and run the "Launcher" class. 
 
 Note: If errors show up JavaFX may need to be added to the project through File > Project Structure > Modules 
-
-## Usage
-TBD
 
 ## Support
 Open an issue or contact one of the developers through their USask email. 
