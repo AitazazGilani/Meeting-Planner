@@ -2,10 +2,8 @@ package com.example.app.Controller;
 
 import com.example.app.App;
 import com.example.app.database.*;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,9 +15,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.time.LocalDate;
 
 public class ContactsController {
     public Menu accountMenu;
@@ -61,7 +59,7 @@ public class ContactsController {
 
     protected ManageDB database = new ManageDB();
 
-    private PausableTimer timer = new PausableTimer() {
+    private final PausableTimer timer = new PausableTimer() {
         private long timestamp;
         private long minutes;
         private long hours;
@@ -117,8 +115,6 @@ public class ContactsController {
      */
     @FXML
     private void initialize(){
-        //TODO ContactTab Timers List (NOT CURRENT SPRINT)
-
         //set all the cells in the table to what is in the database.
         contactsTableView.getItems().setAll(database.getAllContacts());
 
@@ -127,8 +123,8 @@ public class ContactsController {
         contactEmailTableColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         contactCategoryTableColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
-        currentTimersTimeElapsedTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        currentTimersContactTableColumn.setCellValueFactory(new PropertyValueFactory<>("timer"));
+        currentTimersTimeElapsedTableColumn.setCellValueFactory(new PropertyValueFactory<>("timer"));
+        currentTimersContactTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         currentTimersContactTableColumn.setText("Date");
 
         //add a "None" option to the categories.
@@ -175,9 +171,6 @@ public class ContactsController {
                     }
                     currentTimersTableView.getItems().addAll(timerWithDates);
                 }
-
-
-
 
             }
         });
@@ -286,8 +279,14 @@ public class ContactsController {
      * so ignore for now
      */
     @FXML
-    private void onTimerSummaryClick() {
-        //TODO Minor: ContactTab Timer Button
+    private void onTimerSummaryClick() throws IOException {
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("TimerSummaryView.fxml")));
+        //create a new window for the new task
+        Stage newContactWindow = new Stage();
+        newContactWindow.setTitle("Timer Summary");
+        newContactWindow.setScene(new Scene(fxmlLoader, 900, 800));
+        //open the window
+        newContactWindow.show();
     }
 
     /**
@@ -312,8 +311,7 @@ public class ContactsController {
         if(contactsTableView.getSelectionModel().getSelectedItem() != null){
             Contact contact = contactsTableView.getSelectionModel().getSelectedItem();
             contact.setFavorite(favouriteContactCheckBox.isSelected());
-            //TODO Favorite Contact does not exist in DB currently, update then uncomment
-            //database.updateContact(contact);
+            database.updateContact(contact);
         }
     }
 
@@ -341,21 +339,14 @@ public class ContactsController {
      */
     @FXML
     public void onTimerFinishClick() throws RowDoesNotExistException {
-
-        //TODO onTimerFinishClick
-        System.out.println("Finishing");
-        //TODO Save timer to contact
-
-        Contact contact = contactsTableView.getSelectionModel().getSelectedItem();
-
-        ArrayList<String> contactTimers = contact.getTimers();
-
         LocalDate date = LocalDate.now();
-
-        contact.setTimers(contactTimers);
         int dayOfMonth = date.getDayOfMonth();
         int year = date.getYear();
         int month = date.getMonthValue();
+        Contact contact = contactsTableView.getSelectionModel().getSelectedItem();
+        ArrayList<String> contactTimers = contact.getTimers();
+        contact.setTimers(contactTimers);
+
         //format date with timer.
         String dateAndTimer = year+"-"+month+"-"+dayOfMonth+";"+selectedTimerLabel.getText();
         contactTimers.add(dateAndTimer);
@@ -368,7 +359,6 @@ public class ContactsController {
      */
     @FXML
     public void onFavoriteSortClick() {
-        //TODO onFavoriteSortClick Favorite is currently not in the database come back when it is
         contactsTableView.getItems().clear();
         ArrayList<Contact> favorites = new ArrayList<>();
         if(favouritesSortCheckBox.isSelected()){

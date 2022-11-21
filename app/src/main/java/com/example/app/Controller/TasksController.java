@@ -66,7 +66,6 @@ public class TasksController {
         taskFavoriteTableColumn.setCellValueFactory(new PropertyValueFactory<>("favorite"));
 
         //get a list of tasks and add them to the table
-        //TODO Tasks doesn't Have a favorite column
         tasksTableView.getItems().setAll(database.getAllTasks());
 
         //initialize the category choice box with the categories in the database
@@ -237,7 +236,6 @@ public class TasksController {
      * toggles the favorite boolean of the selected task
      */
     public void onFavoriteTaskClick() throws RowDoesNotExistException {
-        //TODO onFavoriteTaskClick
         if(tasksTableView.getSelectionModel().getSelectedItem() != null){
             Task task = tasksTableView.getSelectionModel().getSelectedItem();
             task.setFavorite(favouriteTaskCheckBox.isSelected());
@@ -249,7 +247,6 @@ public class TasksController {
      * Sorts the contact list and displays the favorited Tasks
      */
     public void onFavoriteSortClick() {
-        //TODO onFavoriteSortClick Favorite is currently not in the database come back when it is
         tasksTableView.getItems().clear();
         ArrayList<Task> favorites = new ArrayList<>();
         if(favouritesSortCheckBox.isSelected()){

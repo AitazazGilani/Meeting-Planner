@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox prefHeight="288.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="288.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.Controller.TimerSummaryController">
    <children>
       <Label text="Time represented as HH:MM:SS" textFill="#9a9a9a">
          <font>
