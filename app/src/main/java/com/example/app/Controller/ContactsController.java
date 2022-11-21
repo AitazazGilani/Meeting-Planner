@@ -84,6 +84,13 @@ public class ContactsController {
             super.stop();
             // save leftover time not handled with the last update
             fraction = System.currentTimeMillis() - timestamp;
+            timestamp = 0;
+            minutes = 0;
+            hours = 0;
+            seconds = 0;
+            fraction = 0;
+            String timerStrTest = String.format("%02dh:%02dm:%02ds", hours, minutes, seconds);
+            selectedTimerLabel.setText(timerStrTest);
         }
 
         @Override
@@ -351,6 +358,7 @@ public class ContactsController {
         contactTimers.add(dateAndTimer);
         database.updateContact(contact);
         timer.stop();
+
     }
 
     /**
