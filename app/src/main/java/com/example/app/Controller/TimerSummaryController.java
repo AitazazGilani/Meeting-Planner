@@ -128,13 +128,12 @@ public class TimerSummaryController {
                     highestContactTimeMinutes = contactTimeMinutes;
                     highestContactTimeSeconds = contactTimeSeconds;
                 }
-
             }
-            i++;
         }
-        averageTimeHours = totalHours/i;
-        averageTimeMinutes = totalMinutes/i;
-        averageTimeSeconds = totalSeconds/i;
+
+        averageTimeHours = totalHours/cellTextList.size();
+        averageTimeMinutes = totalMinutes/cellTextList.size();
+        averageTimeSeconds = totalSeconds/cellTextList.size();
 
         //convert all the times to strings for displaying
         totalTimeLabel.setText(String.format("%02dh:%02dm:%02ds", totalHours, totalMinutes, totalSeconds));
@@ -142,6 +141,7 @@ public class TimerSummaryController {
         longestTimerLabel.setText(String.format("%02dh:%02dm:%02ds", highestTimeHours, highestTimeMinutes, highestTimeSeconds));
         contactWithGreatestTotalTimeLabel.setText(String.format(highestContact +": %02dh:%02dm:%02ds", highestContactTimeHours, highestContactTimeMinutes, highestContactTimeSeconds));
         timersListView.getItems().setAll(cellTextList);
+
     }
 
 

@@ -870,4 +870,48 @@ public class ManageDB {
         }
         System.out.println("finished creating new db");
     }
+
+    public static void main(String[] args) {
+        // removes database if it already exists
+        File f = new File("res/database.db");
+        f.delete();
+
+        // create new db
+        ManageDB db = new ManageDB();
+
+        // REGRESSION TESTS
+        System.out.println("\nRUNNING REGRESSION TESTS");
+        try {
+            if (!db.userExists()) {
+                System.out.println("user does not exist, creating user");
+                db.createNewUser("shrek", "123abc");
+            } else {
+                System.out.println("user should not exist");
+            }
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+        System.out.println("authenticating user");
+        try {
+            if (!db.correctLogin("ss", "1")) {
+                System.out.println("Correct: incorrect username/password resulted in failed authentication");
+            } else {
+                System.out.println("Incorrect: incorrect username/password resulted in PASSED authentication");
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+        System.out.println("authenticating user");
+        try {
+            if (!db.correctLogin("shrek", "123abc")) {
+                System.out.println("Incorrect: correct username/password resulted in failed authentication");
+            } else {
+                System.out.println("Correct: correct username/password resulted in PASSED authentication");
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+
+
+    }
 }
