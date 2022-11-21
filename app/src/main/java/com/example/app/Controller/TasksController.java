@@ -84,7 +84,7 @@ public class TasksController {
         sortList.add("Date & Time");
         sortList.add("Category");
         sortList.add("Contact");
-        sortList.add("TimeSpent");
+        sortList.add("Duration");
         sortList.add("Favorites On Top");
         sortList.add("Completed On Top");
         sortByChoiceBox.setValue(sortList.get(1));
@@ -289,9 +289,9 @@ public class TasksController {
                 // sort by contact name then date & time
                 newSortedList = database.sortTasks(newSortedList, "Contact");
                 break;
-            case "TimeSpent":
+            case "Duration":
                 // convert TimeSpent of every task into unix time and sort by number then date & time
-                newSortedList = database.sortTasks(newSortedList, "TimeSpent");
+                newSortedList = database.sortTasks(newSortedList, "Duration");
                 break;
             case "Favorites On Top":
                 // sort by fav on top then by date & time

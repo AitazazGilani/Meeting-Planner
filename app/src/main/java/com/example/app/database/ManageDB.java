@@ -435,8 +435,6 @@ public class ManageDB {
      * @return an arraylist of tasks which match the query
      */
     public ArrayList<Task> queryTasks(TaskQuery queryType, String query) {
-        // TODO: task name and category
-        // TODO: CLARIFY WHICH QUERIES WE ACTUALLY NEED
         ArrayList<Task> allTasks = this.getAllTasks();
         ArrayList<Task> ret = new ArrayList<>();
         switch (queryType) {
@@ -450,7 +448,6 @@ public class ManageDB {
                         ret.add(task);
                     }
                 }
-                // TODO: Sort Time query?
                 break;
             }
             case CATEGORY -> {
@@ -459,7 +456,6 @@ public class ManageDB {
                         ret.add(task);
                     }
                 }
-                // TODO: Sort Category query?
                 break;
             }
             case CONTACT -> {
@@ -468,7 +464,6 @@ public class ManageDB {
                         ret.add(task);
                     }
                 }
-                // TODO: Sort Contact query?
                 break;
             }
             default -> {
@@ -484,7 +479,6 @@ public class ManageDB {
      * @return an arraylist of tasks which match the query
      */
     public ArrayList<Contact> queryContacts(ContactQuery queryType, String query){
-        // TODO: CLARIFY WHICH QUERIES WE ACTUALLY NEED
         ArrayList<Contact> allContacts = getAllContacts();
         ArrayList<Contact> ret = new ArrayList<>();
         switch (queryType) {
@@ -531,7 +525,6 @@ public class ManageDB {
      * @return newSortedList sorted by type
      */
     public ArrayList<Task> sortTasks(ArrayList<Task> newSortedList, String type) {
-        // TODO: test sortTasks()
         ArrayList<Task> ret = newSortedList;
         switch (type) {
             case "Name":
@@ -617,16 +610,16 @@ public class ManageDB {
                     }
                 });
                 break;
-            case "TimeSpent":
-                // convert TimeSpent of every task into unix time and sort by number
+            case "Duration":
+                // convert Duration of every task into unix time and sort by number
                 ret.sort(new Comparator<Task>() {
                     @Override
                     public int compare(Task t1, Task t2) {
                         // if name is equal then next step is to sort by date & time
                         final DateFormat df = new SimpleDateFormat("HH:mm:ss");
                         try {
-                            Date d1 = df.parse(t1.getTimeSpent());
-                            Date d2 = df.parse(t2.getTimeSpent());
+                            Date d1 = df.parse(t1.getDuration());
+                            Date d2 = df.parse(t2.getDuration());
                             return d1.compareTo(d2);
                         } catch (ParseException e) {
                             System.out.println("Parse failed: " + e);
@@ -658,7 +651,6 @@ public class ManageDB {
                 });
                 break;
         }
-
         return ret;
     }
 
@@ -671,7 +663,6 @@ public class ManageDB {
      * @return newSortedList sorted by type
      */
     public ArrayList<Contact> sortContacts(ArrayList<Contact> newSortedList, String type) {
-        // TODO: test sortContacts()
         ArrayList<Contact> ret = newSortedList;
         switch (type) {
             case "Name":
@@ -710,7 +701,6 @@ public class ManageDB {
                 });
                 break;
         }
-
         return ret;
     }
 
@@ -879,64 +869,5 @@ public class ManageDB {
             System.out.println(e);
         }
         System.out.println("finished creating new db");
-    }
-
-    public static void main(String[] args) {
-        // removes database if it already exists
-        File f = new File("res/database.db");
-        f.delete();
-
-        // create new db
-        ManageDB db = new ManageDB();
-
-        // REGRESSION TESTS
-        System.out.println("\nRUNNING REGRESSION TESTS");
-        try {
-            if (!db.userExists()) {
-                System.out.println("user does not exist, creating user");
-                db.createNewUser("shrek", "123abc");
-            } else {
-                System.out.println("user should not exist");
-            }
-        } catch (Exception e) {
-            System.out.println("Error");
-        }
-        System.out.println("authenticating user");
-        try {
-            if (!db.correctLogin("ss", "1")) {
-                System.out.println("Correct: incorrect username/password resulted in failed authentication");
-            } else {
-                System.out.println("Incorrect: incorrect username/password resulted in PASSED authentication");
-            }
-        } catch (Exception e) {
-            System.out.println("Error" + e);
-        }
-        System.out.println("authenticating user");
-        try {
-            if (!db.correctLogin("shrek", "123abc")) {
-                System.out.println("Incorrect: correct username/password resulted in failed authentication");
-            } else {
-                System.out.println("Correct: correct username/password resulted in PASSED authentication");
-            }
-        } catch (Exception e) {
-            System.out.println("Error" + e);
-        }
-
-        Contact person = new Contact("Guy","guy@guymail.com","","");
-        ArrayList<String> lst = new ArrayList<>();
-        lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS"); lst.add("YYYY-MM-DD;HH:MM:SS");
-        person.setTimers(lst);
-        db.createNewContact(person);
-
-        
-        ArrayList<Contact> c = db.getAllContacts();
-        try {
-            Contact a = c.get(0);
-            a.setTimers(new ArrayList<>());
-            db.updateContact(a);
-        } catch (RowDoesNotExistException e) {
-            e.printStackTrace();
-        }
-
     }
 }
