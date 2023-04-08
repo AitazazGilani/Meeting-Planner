@@ -1,0 +1,240 @@
+\documentclass[manuscript, screen, nonacm]{acmart}
+\usepackage{blindtext}
+\usepackage{xpatch}
+\makeatletter
+\xpatchcmd{\ps@firstpagestyle}{Manuscript submitted to ACM}{}{\typeout{First patch succeeded}}{\typeout{first patch failed}}
+\xpatchcmd{\ps@standardpagestyle}{Manuscript submitted to ACM}{}{\typeout{Second patch succeeded}}{\typeout{Second patch failed}}    \@ACM@manuscriptfalse
+\let\@authorsaddresses\@empty
+\makeatother
+
+\settopmatter{printacmref=false} 
+\renewcommand\footnotetextcopyrightpermission[1]{} 
+\setcopyright{none}
+\pagestyle{plain} 
+\documentclass{article}
+\usepackage{tabularx}
+
+
+
+
+
+
+\begin{document}
+
+
+  \begin{center}
+       \vspace*{1cm}
+
+        % \textbf{\huge Milestone II: Low-Fidelity Prototype and Evaluation Without Users}
+
+        \textbf{\huge MILESTONE II: LOW-FIDELITY PROTOTYPE AND EVALUATION WITHOUT USERS}
+
+       \vspace{0.5cm}
+        CMPT 481 - Group 1
+            
+       \vspace{1.5cm}
+
+       % \textbf{Author Name}
+
+       \vfill
+\end{center}
+% \title{CMPT 481: GROUP 1}
+
+
+
+\author{Aamna Niaz}
+\affiliation{%
+\url{aan335@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Ahmad Ghachim}
+\affiliation{%
+\url{ahg370@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Aitazaz Gilani}
+\affiliation{%
+  \url{shg374@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Minh Nguyen}
+\affiliation{%
+  \url{thn649@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Sina Khademolhosseini}
+\affiliation{%
+  \url{sik433@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+\section{Problem and Motivation}
+
+    The Baking Pantry \& Recipe android application enables users to conveniently add and manage their pantry inventory in the app and view, search, and filter through recipes to bake. In the event that a recipe requires an ingredient that is not available in the pantry, the user can simply click on a link beside the missing ingredient that redirects them to Amazon to purchase it. Summary of features:
+\begin{itemize}
+    \item User Account
+    \begin{itemize}
+        \item Users can sign in or sign up
+        \item Set dietary restrictions
+        \item Save pantry items
+        \item Save favourite recipes
+    \end{itemize} 
+    \item Pantry Management System
+        \begin{itemize}
+        \item Add or remove ingredients, including through scanning item barcodes
+        \item Input the exact measurement or an “eyeballed” estimate of amount when adding ingredients
+    \end{itemize} 
+    \item Recipe Recommendations and Search
+        \begin{itemize}
+        \item Receive recommendations for recipes user can bake with the ingredients they have in their pantry
+        \item Search for recipes or receive dietary-based recommendations
+    \end{itemize} 
+\end{itemize}
+
+
+\section{Related Literature and Background}
+
+
+    The low-fidelity prototype of our mobile application focuses on three major components: pantry management, a selected recipe page, and a home page for recipe recommendations. It is the result of iteratively  sketching, critiquing, and fine-tuning the design as a group. It is meant to be a rudimentary representation of the interface look, feel, and functionality, for future higher-fidelity prototypes and development.
+
+
+
+    Initially, we planned to design a comprehensive bakery grocery \& recipe app which has a cart system allowing users to purchase any missing ingredients through Amazon or a grocery store of their choice with a push of a button. After some consideration, we realized the scope was too ambitious for our time constraints, so we decided to shift our focus toward the pantry management aspect of the app and integrate Amazon affiliate links for the missing ingredients. During the paper prototyping process, each team member designed 3 to 6 different variations of designs for each task, which we then critiqued, iterated, and finalized as a group. The entire paper prototyping process took us approximately 6 hours to complete.
+
+
+\section{Description of Our System}
+\subsection{Method}
+
+    Heuristic evaluation was chosen to evaluate our prototype. By dividing the evaluation among team members, we were able to gain different perspectives and identify potential design issues. Additionally, we used this evaluation process to assess the efficiency of each task and identify any potential faults within the prototype.
+
+\subsection{Tasks}
+The key functionality of our prototype was tested by a set of tasks that we felt were necessary:
+
+\begin{itemize}
+    \item New user sign-up and account management
+    \item Adding, editing or removing items from the pantry 
+    \item Browsing, filtering and starting a recipe 
+    \item Viewing saved recipes     
+\end{itemize}
+
+\subsection{Details}
+All group members participated in the heuristic evaluation process:
+\begin{itemize}
+    \item Briefing Session: After creating our final low-fidelity prototype, we reviewed the goal and key functionalities of our app and decided on which key tasks to evaluate during the assessment.
+    \item Evaluation Period: Each group member took turns with the paper low-fidelity prototype and performed several iterations of each task while taking notes and documenting any identified issues.
+    \item Debriefing Session: After the prototype assessment, we discussed our findings, took notes of the issues, prioritized them accordingly, and noted possible solutions
+
+     
+\end{itemize}
+
+
+
+
+\subsection{Results}
+Heuristic evaluation revealed several potential faults within the prototype, with most of the problems being related to the pantry management system. The most severe problem was related to the inconsistency and lack of standards between the 'Add an Ingredient' page and 'Pantry' page, leading to confusion among group members about what they were supposed to do and how. Since one of the primary focuses of the app is on pantry management, this issue was collectively rated as 'very severe'. Other major issues were identified in the user on-boarding process, which we believe requires a complete overhaul. Minor issues were also found, which were more related to minor user annoyances. Overall, the prototype functions as intended; however, we believe that the issues related to pantry management and user on-boarding take priority due to their impact on functionality.
+
+
+\section{Redesign Based on Results}
+Based on our usability inspection, we have identified major and minor faults within our system, particularly in the pantry and on-boarding system. During our testing, it became apparent that the design and flow of the pantry left users confused on multiple occasions, which will require a major redesign as it significantly impacts the usability of the application. While the on-boarding process is not as significant, it still has some design issues, specifically allowing users too much freedom to access the app's navigation bar before completing the on-boarding process. These two issues are our major concerns and require a complete overhaul in the next design iteration.\\
+Regarding the minor design flaws found, these were mainly due to design ambiguity, leading users to guess, such as differentiating between a missing tag and our linking button or some redundant buttons featured within the application. Overall, in our next iteration, we will focus on finding solutions to our major faults and work on redesigning the minor faults to prevent them from recurring.
+
+\newpage
+\
+
+
+
+
+
+
+
+
+
+\subsection{Heuristic Evaluation Severity Legend}
+\begin{itemize}
+    \item 0- don’t agree that this is a problem
+    \item 1- cosmetic problem
+    \item 2- minor usability problem
+    \item 3- major usability problem; important to fix
+    \item 4- usability catastrophe; imperative to fix  
+\end{itemize}
+
+\newpage
+\subsection{Detailed Heuristics Evaluation}
+
+H2-1 Visibility of System status, Severity 3
+\begin{itemize}
+    \item During the user on-boarding, adding an ingredient such as milk into the pantry leads the user directly into add ingredients page, the user does not know where or which screen did the added milk went into.  The user does not get any indication of what has been added or has it been added.
+\end{itemize}
+
+H2-6 Recognition over recall, Severity 3
+\begin{itemize}
+    \item When adding an item into the pantry, the user is led back into add ingredients page which does not show what ingredients the user has or what has been entered. If a user was to  add several ingredients, the user could possibly end up repeating adding the same item again. 
+\end{itemize}
+
+H2-3 User Control/Freedom, Severity 4
+\begin{itemize}
+    \item At the login page, there is no sign-in button, meaning if the user already has an account made and the user tries to enter the username and password. The user will not know how to sign in using the credentials.
+\end{itemize}
+
+H2-5 Error Prevention, Severity 3
+\begin{itemize}
+    \item The lack of a sign-in button on the login page means the user does not know how to login. This shows that entering username and password in their fields does nothing.
+\end{itemize}
+
+H2-4 Consistency and Standards, Severity 4
+\begin{itemize}
+    \item The pantry page and the add ingredients page, the layout of presenting items in pantry and ingredients page are different. The user might assume the pages would be similar, given they are part of the pantry. This could lead to some confusion on what each page is supposed to do because the pantry pages use the same layout aside from the way the ingredients are presented. Additionally, the search bars on both the add ingredients page and pantry page has no indication on what their difference is. A user might end up using the Pantry page search to find ingredients to add, rather than its intended function of searching items in your pantry.
+\end{itemize}
+
+H2-5 Error Prevention, Severity 2
+\begin{itemize}
+    \item When looking at a selected recipe, the user is presented with a list of ingredients colour coded to show if that ingredient exists or is running low in the pantry. The ingredients that are running low are highlighted in red or orange colour with an Amazon/grocer affiliate link right by the ingredient. Since the ingredients also look like buttons, the user might end up tapping on ingredients that are not highlighted, or the user may not notice the affiliate link beside the ingredient. 
+\end{itemize}
+
+H2-3 User Control \& Freedom, Severity 3
+\begin{itemize}
+    \item The lack of a sign-in button on the login page means the user does not know how to login. This shows that entering username and password in their fields does nothing.
+\end{itemize}
+
+H2-3 User Control/Freedom, Severity 2
+\begin{itemize}
+    \item When scanning the bar-code to add an item, after the item has been scanned, the user is taken to a page to add the measurement for that ingredient. If the user wants to exit out of the action, the back button leads back to scanning bar-code page. The user may find this annoying as it does not lead back to the pantry page and has to go through another page to get back.
+\end{itemize}
+
+H2-4 Consistency and Standards, Severity 1
+\begin{itemize}
+    \item The home page of the app also shows featured recipes in information boxes. These boxes also have a “view” button, which is redundant as the user will know that it is a button as in most apps the users assume everything that looks like a button can be interacted with. 
+\end{itemize}
+
+H2-3 User Control/Freedom, Severity 3
+\begin{itemize}
+    \item During the on-boarding process after the users selects allergies, the user is prompted to the pantry page. The user will notice there is a navigation bar which can let the user head over to the home page. The user will not know if the on-boarding process is complete, as the user can directly skip over to the home page through the navigation bar.
+\end{itemize}
+
+
+
+
+
+
+\end{document}
+

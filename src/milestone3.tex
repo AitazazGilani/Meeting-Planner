@@ -1,0 +1,184 @@
+%% The first command in your LaTeX source must be the \documentclass command.
+\documentclass[manuscript, screen, nonacm]{acmart}
+\usepackage{blindtext}
+\usepackage{xpatch}
+\makeatletter
+\xpatchcmd{\ps@firstpagestyle}{Manuscript submitted to ACM}{}{\typeout{First patch succeeded}}{\typeout{first patch failed}}
+\xpatchcmd{\ps@standardpagestyle}{Manuscript submitted to ACM}{}{\typeout{Second patch succeeded}}{\typeout{Second patch failed}}    \@ACM@manuscriptfalse% Also in titlepage
+\let\@authorsaddresses\@empty
+\makeatother
+
+\settopmatter{printacmref=false} % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference info
+\setcopyright{none}
+\pagestyle{plain} % remove running headers
+
+\documentclass{article}
+\usepackage{tabularx}
+
+
+
+
+
+
+%%
+%% end of the preamble, start of the body of the document source.
+\begin{document}
+% \begin{titlepage}
+%    \begin{center}
+%        \vspace*{1cm}
+
+%        \textbf{Milestone II: Low-Fidelity Prototype and Evaluation Without Users}
+
+%        \vspace{0.5cm}
+%         CMPT 481 - Group 1
+            
+%        \vspace{1.5cm}
+
+%        % \textbf{Author Name}
+
+%        \vfill
+            
+%        % A thesis presented for the degree of\\
+%        % Doctor of Philosophy
+            
+%        % \vspace{0.8cm}
+%        % \vfill
+%        % \includegraphics[width=0.4\textwidth]{university}
+
+            
+%        Department Name\\
+%        University Name\\
+%        Country\\
+%        Date     
+%    \end{center}
+% \end{titlepage}
+
+
+
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+
+  \begin{center}
+       \vspace*{1cm}
+
+        % \textbf{\huge Milestone II: Low-Fidelity Prototype and Evaluation Without Users}
+
+        \textbf{\huge MILESTONE III: MEDIUM-FIDELITY PROTOTYPE IMPLEMENTATION AND DEMONSTRATION}
+
+       \vspace{0.5cm}
+        CMPT 481 - Group 1
+            
+       \vspace{1.5cm}
+
+       % \textbf{Author Name}
+
+       \vfill
+\end{center}
+% \title{CMPT 481: GROUP 1}
+
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
+
+\author{Aamna Niaz}
+% \email{aan335@usask.ca}
+\affiliation{%
+\url{aan335@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Ahmad Ghachim}
+\affiliation{%
+\url{ahg370@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Aitazaz Gilani}
+\affiliation{%
+  \url{shg374@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Minh Nguyen}
+\affiliation{%
+  \url{thn649@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Sina Khademolhosseini}
+\affiliation{%
+  \url{sik433@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+% \thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+\section{Evaluation Plan}
+
+\subsection{Goals of Evaluation}
+\begin{itemize}
+    \item    \textbf{Users sign up/log in :}  A new user should be able to create an account and set dietary restrictions. A reoccurring user must be able to see items in the pantry saved from last time. The users must also be able to access the pantry, home page, favorites and search.
+    \item  \textbf{Pantry :} Users must be able see, search and filter items in their pantry. Users must also be able to add an item to the pantry with varying measurements.  If a user requires to update the item in their pantry, they should have the option to change its amount or remove it.
+    \item \textbf{Recipe recommendations :} Users must be shown recipes adhering to items present in the pantry and dietary restrictions. Users can also search, filter and save recipes if they please.
+    \item \textbf{Recipe page :} Recipe must show ingredients and steps, ingredients that are low in the pantry should be notified to the user. Additionally the user must be able to see an affiliate link to a grocer incase the user does not or is low on an ingredient needed for the recipe.
+    
+\end{itemize}
+
+
+\subsection{Rationale for type of evaluation}
+Our aim for the evaluation is to pinpoint any possible design flaws or challenges that could have been overlooked during our iterative process. To accomplish this, we intend to utilize a variety of evaluation methods, such as observational analysis, interviews, and think-aloud, whereby we will assess the merits and demerits of qualitative and quantitative analysis. 
+The fundamental objective of our evaluation is to uncover any potential design flaws as we work on the pantry system and, as a result, enhance the design's essential functionalities based on the evaluation's outcomes. We will devise a list of tasks that the participants can execute and provide input on how we can enhance our design even further. We will use the data we collect to refine our design and optimize the overall user experience
+
+\subsection{Participant pool}
+\begin{itemize}
+    \item College student (age 18-24): Students who are living on a tight budget and don't have access to a fully equipped kitchen. The app could offer simple recipes that can be made with minimal equipment and ingredients.
+    \item Busy working adults (age 20+): Individuals who have little time to prepare meals due to lifestyle factors, but still want to bake and not have to sift through websites.The app could instead offer quick and easy recipes that are already pre-filtered to the users' specifications and needs.
+    \item Less tech-savvy older individuals (age 40+): less technologically inclined, by providing simple app and easy-to-follow recipes that require minimal effort and are easy to prepare. If older individuals can follow it.
+\end{itemize}
+\subsection{Brief overview of evaluation protocol}
+\begin{itemize}
+    \item Identify an appropriate location for the face-to-face interviews and observations.
+    \item Use observational techniques to monitor the user's experience as they walk through a series of tasks that focus on the essential functionalities of our system.
+    \item Conduct a reflective interview with a predetermined set of questions after collecting observational data.
+    \item Use exploratory language to guide the conversation and elicit informative responses from the participant.
+    % \item Debrief users about the purpose and limitations of the tests and our prototype without giving away details and influence actions.
+    \item Extract valuable insights from the data collected during the observation phase.
+    \item Measure the time taken for the participants to reenact steps of the predetermined tasks.
+\end{itemize}
+
+
+
+
+
+
+
+
+\newpage
+
+\section{Medium-Fidelity Prototype Rationale}
+
+Our evaluation plan requires us to build a functionally limited prototype based on our low-fidelity prototype, with a higher fidelity look and feel. After several iterations of our low-fidelity prototype, we finalized one medium-fidelity prototype to use as the basis for our functional prototype.
+\\\\We chose to build our medium-fidelity prototype horizontally and scenario-based, and focus on trying to simulate our scripted walkthrough, focusing on high-level functionality to give the illusion of a high-fidelity prototype. We decided to make a combination of horizontal and scenario prototype as our evaluation method attempts to capture the overarching functionality of our app by covering many related sub-tasks and demonstrate the functionality for specific tasks. Appearance was also emphasized to create a nearly finished feel. 
+\\\\Furthermore, in addition to visual layout, our medium-fidelity prototype also attempts to evaluate system navigation and how the pages interact with each other, which was not captured fully in our low-fidelity prototype.
+\\\\As a group, we decided to use Figma to meet our design and specification needs. Its collaborative features make it easy for us to work on the project and divide tasks among group members. Since most of us have experience using Figma, and it has an easier learning curve, we believe it is the best tool to flesh out our prototype.
+\\\\A limitation of our medium-fidelity prototype is that while users are able to perform some key tasks, it does not capture the interaction between the tasks. For example, if the app were to exist in production, an interaction between tasks would be after completing a recipe walkthrough; once the user completes a recipe walkthrough, the amount of ingredients used for that recipe would be subtracted from the user’s pantry. This limitation, naturally, cannot be fixed in a medium-fidelity prototype as it has very limited functionality, but must be considered for our user evaluation testing. 
+\\\\Another limitation can be our excessive use of scenario based prototyping. This method of prototyping was used to demonstrate the recipe walkthrough, adding an ingredient, signing-up, logging in, etc. While this method of prototyping has been useful to show how the scenarios would realistically play out for the tasks once the app has been implemented, it fails to let the evaluator explore the whole system dynamically and with freedom. For example, we limited the scenario to add a recipe only after user sign-up process and from an empty pantry page, if the user decides to exit this scenario by clicking on any other app page, this scenario will be exited from as going back to the pantry page will demonstrate another scenario with a filled pantry with the add ingredient button disabled. This filled pantry page is meant to demonstrate scrolling and filtering through the ingredients in the pantry.
+\end{document}
+

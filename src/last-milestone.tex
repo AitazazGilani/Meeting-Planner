@@ -1,0 +1,526 @@
+\documentclass[manuscript, screen, nonacm]{acmart}
+\usepackage{blindtext}
+\usepackage{xpatch}
+\usepackage{appendix}
+\makeatletter
+\xpatchcmd{\ps@firstpagestyle}{Manuscript submitted to ACM}{}{\typeout{First patch succeeded}}{\typeout{first patch failed}}
+\xpatchcmd{\ps@standardpagestyle}{Manuscript submitted to ACM}{}{\typeout{Second patch succeeded}}{\typeout{Second patch failed}}    \@ACM@manuscriptfalse
+\let\@authorsaddresses\@empty
+\makeatother
+
+\settopmatter{printacmref=false} 
+\renewcommand\footnotetextcopyrightpermission[1]{} 
+\setcopyright{none}
+\pagestyle{plain} 
+\documentclass{article}
+\usepackage{tabularx}
+
+
+
+\begin{document}
+
+
+  \begin{center}
+       \vspace*{1cm}
+
+        % \textbf{\huge Milestone II: Low-Fidelity Prototype and Evaluation Without Users}
+
+        \textbf{\huge MILESTONE IV: Evaluation and Recommendations}
+
+       \vspace{0.5cm}
+        CMPT 481 - Group 1
+            
+       \vspace{1.5cm}
+
+       % \textbf{Author Name}
+
+       \vfill
+\end{center}
+% \title{CMPT 481: GROUP 1}
+
+
+
+\author{Aamna Niaz}
+\affiliation{%
+\url{aan335@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Ahmad Ghachim}
+\affiliation{%
+\url{ahg370@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Aitazaz Gilani}
+\affiliation{%
+  \url{shg374@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Minh Nguyen}
+\affiliation{%
+  \url{thn649@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+\author{Sina Khademolhosseini}
+\affiliation{%
+  \url{sik433@usask.ca}
+  \institution{University Of Saskatchewan}
+  \city{Saskatoon}
+  \country{Canada}
+}
+
+
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+\section{Problem \& Motivation}
+% MILESTONE IV: Evaluation and Recommendations
+The main problem that we were tackling was to make baking more accessible and enjoyable for everyone by creating a user-friendly app that reduces the barrier to entry for beginner bakers and provides just the right features for experts as well. We recognize that baking is a popular activity among a diverse group of people, including students and the elderly, who may use it as a form of mental health therapy or as a way to pass the time. 
+
+By creating an all-in-one app that is easy to use, we hoped to make the experience of baking more efficient, engaging, and fun for everyone. Our goal was to create a platform that makes it easy for beginners to get started with baking, while also providing experienced bakers with new recipes and tools to expand their skills. The main design challenges that we were attempting to solve to address this goal was the pantry management system and its interaction with the recipe recommendation system. While there are a myriad of recipe apps and many pantry management apps and grocery ordering apps, we could not find any solutions that mix these systems together to provide one interconnected ecosystem where, for example, the user is provided with an efficient way to add ingredients to their pantry and for the pantry to be updated after a user has finished baking a recipe.
+
+\section{Description of the system}
+Our prototype aims to address these problems by offering a comprehensive solution that integrates pantry management and tracking, a curated list of recipes, and an ingredient ordering system through Amazon affiliate links. By combining these features into a single app, users will have a seamless experience whether they are new to baking or experienced and looking to expand their repertoire.
+
+The pantry management system consists of a pantry page which houses the ingredients relating to baking that the user has in their house. It will tell the user if they're running low on an ingredient and allow the user to add ingredients to their pantry page. The “add ingredients to pantry” page in our prototype is meant to demonstrate our solution to an optimized and efficient way to add ingredients to the pantry. This solution involves, among others, the option to add the exact or estimate measurement of the ingredient being added. Additionally, we designed a barcode scanning system to make the app do the searching for the ingredient. This feature allows users to quickly scan the barcode of a product and add it directly to their pantry, alongside the other options of manually browsing or searching for ingredients to add.
+
+To ensure our app caters to users from diverse backgrounds and dietary restrictions, we have made user-focused design decisions such as implementing a "User onboarding workflow" that prompts users to input their dietary restrictions and allergies on user sign-up. This information would then be used to display warnings or provide filters when users browse recipes that may not align with their dietary needs.
+
+We decided to restrict the ingredient ordering system to just an Amazon redirect button. This is because for the sake of designing our prototype, an Amazon button is sufficient in demonstrating how the user will see the ingredients of a recipe they are low on or have run out of and how our system will let the user order this ingredient. In the settings page, however, we have included a non-functional setting named “Preferred Retailers” which would be functional once the app is implemented.
+
+Furthermore, another feature that cannot be perfectly demonstrated in our prototype but was considered in our design process was the interaction between completing a recipe walkthrough and the user’s pantry. In other words, once a user completes a recipe walkthrough, the ingredients they used for the recipe would be subtracted from the pantry system.
+
+Overall, our goal is to create an all-in-one app that is user-friendly and accessible to the broad demographic of bakers, regardless of their level of baking experience, dietary needs, age, and ideally technological ability.
+
+
+% \newpage
+ %\setcounter{page}
+\section{Evaluation with Users Report}
+\subsection{Goals, approach, and rationale for evaluation}
+Our goals for evaluation were synonymous with the key features of our app. To make sure our design is user-friendly and accessible, we decided it was appropriate to create an evaluation strategy that tests these key features:
+\begin{itemize}
+    \item User Sign-up/log-in: A new user should be able to create an account and set dietary restrictions. A returning user must be able to see items in their pantry and favourite recipes from last use. The users must also be able to access the pantry, home, favourites, and account management pages.
+    \item Pantry: Users must be able to see, search and filter items in their pantry. Users must also be able to add an item to the pantry with varying measurements. If a user needs to update an item in their pantry, they should have the option to change its amount or remove it.
+    \item Recipe Recommendations: Users must be shown recipes adhering to their dietary restrictions and with both ingredients present and not present in their pantry. Users can also search, filter and save recipes as favourites if they please.
+    \item Recipe Walkthrough: Recipe must show ingredients and steps, ingredients that are low in the pantry should be notified to the user. Additionally, the user must be able to see an affiliate link to a grocer in case the user does not have or is low on an ingredient needed for the recipe.
+\end{itemize}
+
+Our aim for the evaluation was to pinpoint any possible design flaws or challenges that could have been overlooked during our iterative design process. We used a combination of observational analysis, think-aloud, and interview to gather qualitative data that can be used to improve our design. We devised a list of tasks based on the goals of evaluation to test our scenario based medium-fidelity prototype. After the completion of tasks and during the interview, participants were given freedom to explore the app further to get as much insightful feedback as possible.
+\subsection{Actual participant pool and other execution details}
+\textbf{Participants:}
+\begin{enumerate}
+    \item Less Tech-Savvy Older Individual: \begin{itemize}
+        \item Age: 57
+        \item Gender: Female
+        \item Enjoys baking as an occasional hobby. Less technologically inclined.
+    \end{itemize}
+    \item College Student:
+    \begin{itemize}
+        \item Age: 20
+        \item Gender: Female
+        \item Familiar with baking. Very tech-savvy.
+    \end{itemize}    
+    \item Professional Working Adult and College Student:
+    \begin{itemize}
+        \item Age: 24
+        \item Gender: Male
+        \item New to baking, not much experience. Very tech-savvy.
+    \end{itemize} 
+\end{enumerate}
+
+
+This participant pool represents the overall demographic for our app idea. It is key for users around the older age and low technological skills to be able to use the app without frustration. This means that our design must be accommodating to users who require a simple system to avoid getting confused. Furthermore, the app must also be easy to use by working adults who have little time to prepare meals due to lifestyle factors, but still want to bake and not have to sift through websites. Our design attempts to offer quick and easy recipes that are already pre-filtered to the users’ specifications and needs. The pantry management system must be designed in a way that is simple and quick to use in order to be accessible by all these demographics, from the less tech-savvy older person, to the students and working adults who have a strict schedule.
+
+\textbf{Execution Details:} Before starting the evaluation, we spent a few minutes debriefing the user on the purpose of our app, the purpose of prototypes, and their limitations. We attempted to do this without introducing bias or confirmation bias by keeping the information about the features of the app hidden for the user to find and explore during their task walkthroughs. We then gave the user a series of tasks, each after completing the task before. After completing all the tasks, we began an unstructured interview with a few questions to begin, such as “what were your first impressions of the app” and “what made you the most frustrated throughout the tasks”. Our intention with the unstructured interview was to start an open-ended conversation and create a comfortable environment where the user leads the evaluators through their thought process, and gives insightful feedback about the tasks they completed. For the specific protocol and interview questions of the evaluation, refer to the Appendix A.
+\subsection{Divergence from Milestone III Evaluation Plan}
+
+We decided not to measure quantitative data as we had initially planned. 
+Firstly, we planned on having a structured interview with a specific set of questions. This method, while not as measurable as a questionnaire, would still provide us with a replicable method and summarizable data. We later, however, noticed that we could get much more useful data if we formatted the interview more like a conversation and allowed the user to respond as they like or talk about something else relating to the evaluation. This was further affirmed while testing when the users were already practising think-aloud, and then once done, tended to want to freely talk about their experiences, giving us valuable insights during the task walkthrough. Users found it easier to state their feedback and criticism during the walkthrough as opposed to having to remember it. This allowed the majority of the qualitative data to be captured with the user as they carried on with their tasks. The interview, then, would end on asking open-ended questions to highlight the user's opinions on something they may not have mentioned during the task walkthroughs or a general summary of their thoughts on the prototype’s features, strengths, and shortcomings. 
+
+Secondly, given the limitations of the prototype, we found it appropriate to skip measuring the time taken for participants to complete tasks. We planned on using this quantitative data in our report. However, some participants struggled to understand the prototype's limitations on what can and cannot be done. For example, the less tech-savvy older participant needed to be kept reminded that not all the buttons are intractable as they kept repeatedly attempting to use the same non-intractable buttons. This is both the limitation of scenario prototyping and failure of debriefing the participants properly. Therefore, using this timed data would give us inaccurate and skewed results, as the participant would end up attempting to complete a task that wasn't a part of the task walkthrough.
+
+\subsection{Evaluation Results}
+Below is a summary table for our evaluation results. For the full raw data and results (observations and interview transcripts) refer to Appendix B.
+% \begin{table}
+%     \centering
+%     \caption{Summary of Evaluation Results}
+%     \begin{tabular}{|p{1in}|p{1.5in}|p{1in}|p{1in}|p{0.75in}|}
+%         \hline
+%         User & Task Number & Transcript & Theme & Affected Page(s)  \\
+%         \hline
+%         Participant 1: Older Individual & Task 1: Signing up, “User signed up into the app but struggled to follow the tutorial, hesitated clicking next” & Struggled Going through tutorial, Column 3 & data & data\\
+%         \hline
+%         Row 2, Column 1 & Row 2, Column 2 & Row 2, Column 3 & data & data\\
+%         \hline
+%     \end{tabular}
+% \end{table}
+
+\begin{table}
+\centering
+\caption{Summary of Evaluation Results}
+\begin{tabular}{|p{1in}|p{1in}|p{1.5in}|p{0.75in}|p{0.75in}|}
+\hline
+    \textbf{User} & \textbf{Task Number} & \textbf{Transcript} &  \textbf{Theme} & \textbf{Affected Page(s)} \\
+\hline
+Participant 1: Older Individual & Task 1: Signing up & “User signed up into the app but struggled to follow the tutorial, hesitated clicking next” & Struggled Going through tutorial & Tutorial popups \\
+\hline
+Participant 1: Older Individual & Task 1: Signing up & “User wanted to quit tutorial midway” & Annoyed with tutorial & Tutorial popups \\
+\hline
+Participant 1: Older Individual & Task 2: Adding almond milk to the pantry & “User was confused why almond milk was not present in add ingredients page” & Add ingredients page had missing information & Add ingredients \\
+\hline
+Participant 1: Older Individual & Task 2: Adding almond milk to the pantry & “User needed guidance on why almond milk had to be searched in order to be added” & Add ingredients page had missing information & Add ingredients \\
+\hline
+Participant 1: Older Individual & Task 3: Logging out & “User struggled to find the log-out button, had to do some searching for it” & Log out button is unclear & Profile \\
+\hline
+Participant 2: College Student & Task 1: Signing up & “Struggled to select dietary restrictions as she tried to activate a button multiple times” & Prototype Limitations & Dietary selection page \\
+\hline
+Participant 2: College Student & Task 2: Adding almond milk to the pantry & “Did not know the barcode was present in the app and how to use it (only found while exploring during interview)” & User missed a feature & Pantry Page \\
+\hline
+Participant 2: College Student & Task 2: Adding almond milk to the pantry & “Confused "Add Ingredients" page with the "Pantry" page” & Navigation & Add Ingredients \\
+\hline
+Participant 2: College Student & Task 5: Baking chocolate cookies & “Explored the home page, took time to find chocolate cookies” & Item clarity & Home page \\
+\hline
+Participant 2: College Student & Task 6: Exploring & “Even though there was an ingredient the user did not have enough of, she tried clicking the start button (this button was not functional anyway and caused a small moment of confusion)” & User freedom and system feedback & Recipe page \\
+\hline
+Participant 2: College Student & Task 6: Exploring & “Participant overlooked the Amazon button in the ingredient section of the Brownies recipe page, and expressed that she was confused if the ingredient was missing on the ingredient page.” & Item clarity & Recipe page \\
+\hline
+\end{tabular}
+\end{table}
+
+% \newpage
+\begin{table}
+\centering
+\begin{tabular}{|p{1in}|p{1in}|p{1.5in}|p{0.75in}|p{0.75in}|}
+\hline
+    \textbf{User} & \textbf{Task Number} & \textbf{Transcript} &  \textbf{Theme} & \textbf{Affected Page(s)} \\
+\hline
+Participant 2: College Student & Task 6: Exploring & In the Pantry page, she was confused about the metrics of some ingredients - "I don't know what 50mL of vanilla extract means, it would be better to show this as teaspoons or tablespoons" & Measurements misunderstanding & Recipe page \\
+\hline
+Participant 2: College Student & Task 6: Exploring & “recommended adding categories such as "running low or empty ingredients" in the Pantry page” & Unclear status of items in pantry & Pantry page \\
+\hline
+Participant 2: College Student & Task 6: Exploring & “Was confused what the “Add-ins” category meant in the "Pantry" page, confusing it with newly added items” & Item clarity & Pantry page \\
+\hline
+Participant 3:
+Professional Worker & Task 1: Signing up & “User struggled to select dietary restrictions, user did not know what the page was for” & Dietary restrictions page is ambiguous & Dietary restrictions page \\
+\hline
+Participant 3:
+Professional Worker & Task 1: Signing up & “User took a lot of time to read the tutorial popups” & Tutorial is hard to follow & Tutorial popups \\
+\hline
+Participant 3:
+Professional Worker & Task 6: Exploring & “User struggled to understand what the missing ingredient indicator was” & Missing ingredients indicator is unclear & Recipe page \\
+\hline
+Participant 3:
+Professional Worker & Task 6: Exploring & “User did not like that there was no freedom to select other grocers, Amazon was the only option” & App should incorporate local grocers & Recipe page \\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+\subsection{Evaluation Conclusion}
+
+All the users gave insightful and useful feedback during the evaluation process. The older demographic in the study expressed concerns about accessibility issues related to the app’s design. Specifically, she noted that she had trouble telling when a component is scrollable or not and suggested that scroll bars help her with that. Additionally, she emphasized the frustration she experienced with the tutorial. These findings underscore the importance of designing interfaces with accessibility in mind, particularly for older individuals and less tech-savvy individuals, who may have unique needs and challenges when it comes to digital interfaces. 
+
+The younger demographic generally found the application's navigation and onboarding process to be intuitive. However, it was also noted that there were discrepancies in the layout and wording of certain pages within the application. These discrepancies could potentially lead to errors and confusion among new users. These findings suggest that while the application may be generally user-friendly for younger individuals, there is still room for improvement in terms of ensuring consistency and clarity in the design of individual pages for older demographics.
+
+Lastly, while our evaluation process gave us many insightful findings and useful data, it also had a major shortcoming. While the tasks were completed mostly efficiently by all participants, they all had at least one moment of confusion where they had either forgotten about the limitations of a Figma prototype, or it was not conveyed to them properly. This was especially the case with the less tech-savvy older participant. She would frequently expect all elements of the prototype to be intractable, which led to frequent moments of confusion then frustration, which did impede on the user’s ability to follow the scenario tasks. Reminding the participant about the prototype restrictions at points where she encountered difficulties and became frustrated was helpful in getting her unstuck. This suggests that we could have provided clearer explanations of the prototype restrictions to all participants, which we predict would result in a more effective outcome. Furthermore, it could have been helpful to have older and/or less tech-savvy participants in the participant pool, as the one older participant had provided many insights on many accessibility issues that we had not paid attention to in our design process.
+
+
+\section{Final Recommendations}
+
+\subsection{Conclusions}
+
+Overall, we are very satisfied with our design. The quality of the interface was good, and we all agree that the visual component (minimalist, material design and layout) of our design is the strongest aspect, which was also agreed upon by the participants in the evaluation process. Our design mostly provides a user-friendly and efficient platform for users to interact with the system. However, our user evaluation also revealed many aspects of our design which we need to improve on.
+
+Based on our evaluation, we believe that the system would work well for our identified users and tasks, especially after reiterating based on the feedback we got from evaluation. We believe this as we received much positive feedback from initial user testing. However, additional refinement based on the feedback will be necessary to ensure that the interface design continues to meet the needs of all demographic users.
+
+\subsection{Recommendations}
+
+There are several recommendations for improving the application's usability and user experience. Firstly, the onboarding process needs improvement, specifically in the tutorial. Users found it difficult to understand some pages within the application, leading to confusion and potential errors during the evaluation. Minor adjustments are needed, but the overall approach is validated. Changing the descriptions of these pages to be clearer could help alleviate this issue.
+
+Another recommendation is to address the confusion between the "Add Ingredients" page and the "Pantry" page. Users found that these pages looked too similar and thought they were the same. Distinguishing them better could help users navigate the application with more ease. Minor adjustments are needed, but the overall approach is validated. Additionally, a better indicator for telling if an ingredient is running low or ran out in the recipe page is needed. Users found the current exclamation mark with light red colour to be insufficient.
+
+Lastly, ensuring better consistency in grammar, spelling, and measurements is necessary. Users struggled with understanding the amount of ingredients required, leading to confusion when checking recipes. By implementing these recommendations, the application can improve its usability and provide a better user experience.
+
+In conclusion, the design interface is mostly validated for its proper use case. However, addressing ambiguous phrasing in page titles and updating certain features to be clearer for older users who may not be as familiar with common tech practices are necessary. Furthermore, We found all the feedback that we got in our evaluation as valid parts we could improve on.
+
+\subsection{Reflection on Design Process}
+
+The application of heuristic evaluation as the method for user evaluation proved to be an effective tool in detecting design inconsistencies and shortcomings. Our task-centered walk-through allowed us to identify and resolve any features that would have otherwise impeded the application's cohesiveness and ease of use. By conducting this process with multiple group members, we were able to identify and record common barriers and tasks that proved challenging to complete or follow. Through this iterative process, we were able to modify and enhance the design, thereby addressing any existing bugs in our low-fidelity prototype.
+
+During the course of the project, the most valuable activities were the open-minded group discussions that allowed for multiple iterations of low-fidelity, 10 + 10, and heuristic evaluations. Building on each other's ideas, we were able to arrive at a final agreed-upon solution. While our evaluation protocol was intended to be semi-structured, in practice, it was challenging to implement, leading us to grant users greater freedom during the walk-through. After providing a brief overview and soliciting feedback afterwards, we had the oppurtunity to refine our design and improve the overall user experience.
+
+Upon completing the course, our group interface design project proceeded smoothly with few revisions required. % One potential criticism we have is that we could have spent less time producing a formalized report.
+
+
+\newpage
+\appendix
+\noindent\textbf{APPENDICES}
+
+
+\section{Evaluation Instruments}
+List of tasks given to participants in order: 
+\begin{enumerate}
+    \item Sign-up by creating an account
+    \item Add 2L of Almond Milk to your pantry
+    \item Log-out
+    \item Pretend like you’re a returning user by signing in
+    \item Find chocolate cookies and bake it!
+    \item Explore the app!
+\end{enumerate}
+We used an unstructured-open interview method, with the following opening questions (some of the following questions were asked when appropriate during the interview, along with other questions that were appropriate in the conversation):
+\begin{enumerate}
+    \item What were your first impressions of the app?
+    \item Was there any task that made you confused?
+    \item Which part of the app did you like the most?
+    \item What made you the most frustrated throughout the tasks?
+    \item What features did you think were out of place or missing?
+\end{enumerate}
+
+
+\section{Raw Data}
+
+\subsection{Participant \#1: Less Tech-Savvy Older Individual}
+
+\begin{itemize}
+    \item Age: 57
+    \item Gender: Female
+    \item Enjoys baking as an occasional hobby. Less technologically inclined.
+\end{itemize}
+\textbf{Preamble:} Interviewer debriefed the limitations of the prototype and informed how to progress if the participant is stuck in Figma.\\
+\textbf{Task 1: Signing up}
+\begin{itemize}
+    \item Logged into the app
+    \item Hesitated to click next through tutorials
+    \item Tried to click pantry button located in the navigation bar during the pantry tutorial
+    \item Stated "It must be stated that this is a tutorial"
+    \item Became frustrated with tutorial as she couldn’t exit it midway
+    \item Frustrated that she had to go through multiple tutorial popups before she was able to use the app
+\end{itemize}
+\textbf{Task 2: Adding Almond Milk}
+\begin{itemize}
+    \item Confused when almond milk was not in the dairy section of "Add Ingredient" page, then became frustrated
+    \item "Almond milk only appeared after searching" - she stated that she needed guidance to know
+    \item Limitations of the prototype were not explained well to the participant as she tried to click every ingredient
+\end{itemize}
+\textbf{Task 3: Logging out}
+\begin{itemize}
+    \item Quick to log-out, but not on purpose as she accidentally found the log-out button (revealed later in the interview)
+\end{itemize}
+\textbf{Task 4: Signing In}
+\begin{itemize}
+    \item Quick and successful
+\end{itemize}
+\textbf{Task 5: Baking chocolate cookies}
+\begin{itemize}
+    \item Successfully navigated to and opened chocolate cookies
+    \item Thought the allergy indicators were buttons
+    \item On the recipe tried to tap on lactose allergy indicator thinking that it is an option button
+    \item Looked through ingredients to make sure she had all of them (all of them were green)
+    \item Could not tell how to scroll because she "needs a visible scroll bar"
+\end{itemize}
+\textbf{Task 6: Exploring}
+\begin{itemize}
+    \item When looking through brownies' recipe, she mentioned that she didn’t want Amazon as her only shopping option for the missing ingredient
+\end{itemize}
+During the interview, she expressed similar comments and feedback as what she was thinking aloud during the tasks. She also further elaborated that she was frustrated with the tutorial/on-boarding process after sign-up and explained that the "next" buttons (tutorial popup bubbles) kept moving around the screen. When asked if she would use a skip button if it existed, she confirmed that she would.\\
+\textbf{Overall sentiment: The app is not very straightforward, but not difficult to figure out.}
+
+
+\subsection{Participant \#2: College Student}
+\begin{itemize}
+    \item Age: 20
+    \item Gender: Female
+    \item Familiar with baking. Very tech-savvy.
+\end{itemize}
+\textbf{Preamble:} Interviewer debriefed the limitations of the prototype and informed how to progress if the participant is stuck in Figma.\\
+\textbf{Task 1: Signing up}
+\begin{itemize}
+    \item Struggled to select dietary restrictions as she tried to activate a button multiple times (limitations of prototype - button was not selectable)
+\end{itemize}
+\textbf{Task 2: Adding Almond Milk}
+\begin{itemize}
+    \item First tried to find almond milk on the "Add Ingredients" page
+    \item Took time to figure out to search the item
+    \item Did not know the barcode was present in the app and how to use it (only found while exploring during interview)
+    \item Confused "Add Ingredients" page with the "Pantry" page
+\end{itemize}
+\textbf{Task 3: Logging out}
+\begin{itemize}
+    \item Logged out successfully
+\end{itemize}
+\textbf{Task 4: Signing In}
+\begin{itemize}
+    \item Signed in successfully
+\end{itemize}
+\textbf{Task 5: Baking chocolate cookies}
+\begin{itemize}
+    \item Explored the home page, took time to find chocolate cookies
+    \item Saw the ingredients
+    \item Followed the steps
+\end{itemize}
+\textbf{Task 6: Exploring}
+\begin{itemize}
+    \item Found Brownies recipe
+    \item Even though there was an ingredient the user did not have enough of, she tried clicking the start button (this button was not functional anyway and caused a small moment of confusion)
+\end{itemize}
+During the interview, she made positive comments on visual design and usability of the app. She also raised additional issues:
+\begin{itemize}
+    \item "logo on sign-in page looks like it has mould on it"
+    \item Noticed spelling errors and inconsistencies in recipe walkthrough
+    \item Participant overlooked the Amazon button in the ingredient section of the Brownies recipe page, expressed that she was confused if the ingredient was missing on the ingredient page.
+    \item In the Pantry page, she was confused about the metrics of some ingredients - "I don't know what 50mL of vanilla extract means, it would be better to show this as teaspoons or tablespoons"
+    \item recommended adding categories such as "running low or empty ingredients" in the Pantry page
+    \item Was confused what the “Add-ins” category meant in the "Pantry" page, confusing it with newly added items 
+    \item Recommended adding pictures/screenshot demonstrations in the tutorial
+\end{itemize} 
+
+\subsection{Participant \#3: Professional Working Adult and College Student}
+\begin{itemize}
+    \item Age: 24
+    \item Gender: Male
+    \item New to baking, not much experience. Very tech-savvy.
+\end{itemize}
+\textbf{Preamble:} Interviewer debriefed the limitations of the prototype and informed how to progress if the participant is stuck in Figma.\\
+\textbf{Task 1: Signing up}
+\begin{itemize}
+    \item Participant had trouble selecting dietary restrictions, did not know what the page was (didn't read the page description at first)
+    \item Took time to completely read the tutorial bubbles
+\end{itemize}
+\textbf{Task 2: Adding Almond Milk}
+\begin{itemize}
+    \item Successfully added almond milk via barcode scanning option and without any errors or mishaps.
+\end{itemize}
+\textbf{Task 3: Logging out}
+\begin{itemize}
+    \item Logged out successfully
+\end{itemize}
+\textbf{Task 4: Signing In}
+\begin{itemize}
+    \item Signed in successfully
+\end{itemize}
+\textbf{Task 5: Baking chocolate cookies}
+\begin{itemize}
+    \item Found chocolate cookies recipe fast and successfully completed the recipe walkthrough
+\end{itemize}
+\textbf{Task 6: Exploring}
+\begin{itemize}
+    \item Selected the brownie recipe
+    \item Struggled to understand missing/low-on ingredient
+    \item Went back using the back button, selected chocolate cookies recipe
+    \item Completed the recipe walkthrough again
+    \item Was able to log out successfully 
+\end{itemize}
+During the interview, he expressed frustration with prototype limitations and wanted to test out all features, furthermore he did not like the fixed task walkthroughs as they did not allow him to explore the app on his own pace. He commented on visual aspects of the app: home page was well-done, easy to navigate, minimalistic design, liked clickable images. He also commented on the app only integrating Amazon as the grocer and suggested the freedom to switch to local stores.
+
+\newpage
+
+% \begin{tabular}{|p{1in}|p{1in}|p{1.5in}|p{0.75in}|p{0.75in}|}
+% \hline
+%     \textbf{User} & \textbf{Task Number} & \textbf{Transcript} &  \textbf{Theme} & \textbf{Affected Page(s)} \\
+% \hline
+% Participant 1: Older Individual & Task 1: Signing up & “User signed up into the app but struggled to follow the tutorial, hesitated clicking next” & Struggled Going through tutorial & Tutorial popups \\
+% \hline
+% Participant 1: Older Individual & Task 1: Signing up & “User wanted to quit tutorial midway” & Annoyed with tutorial & Tutorial popups \\
+% \hline
+% Participant 1: Older Individual & Task 2: Adding almond milk to the pantry & “User was confused why almond milk was not present in add ingredients page” & Add ingredients page had missing information & Add ingredients \\
+% \hline
+% Participant 1: Older Individual & Task 2: Adding almond milk to the pantry & “User needed guidance on why almond milk had to be searched in order to be added” & Add ingredients page had missing information & Add ingredients \\
+% \hline
+% Participant 1: Older Individual & Task 3: Logging out & “User struggled to find the log-out button, had to do some searching for it” & Log out button is unclear & Profile \\
+% \hline
+% Participant 2: College Student & Task 1: Signing up & “Struggled to select dietary restrictions as she tried to activate a button multiple times” & Prototype Limitations & Dietary selection page \\
+% \hline
+% Participant 2: College Student & Task 2: Adding almond milk to the pantry & “Did not know the barcode was present in the app and how to use it (only found while exploring during interview)” & User missed a feature & Pantry Page \\
+% \hline
+% Participant 2: College Student & Task 2: Adding almond milk to the pantry & “Confused "Add Ingredients" page with the "Pantry" page” & Navigation & Add Ingredients \\
+% \hline
+% Participant 2: College Student & Task 5: Baking chocolate cookies & “Explored the home page, took time to find chocolate cookies” & Item clarity & Home page \\
+% \hline
+% \end{tabular}
+
+% \begin{tabular}{|p{1in}|p{1in}|p{1.5in}|p{0.75in}|p{0.75in}|}
+% \hline
+%     \textbf{User} & \textbf{Task Number} & \textbf{Transcript} &  \textbf{Theme} & \textbf{Affected Page(s)} \\
+% \hline
+% Participant 2: College Student & Task 6: Exploring & “Even though there was an ingredient the user did not have enough of, she tried clicking the start button (this button was not functional anyway and caused a small moment of confusion)” & User freedom and system feedback & Recipe page \\
+% \hline
+% Participant 2: College Student & Task 6: Exploring & “Participant overlooked the Amazon button in the ingredient section of the Brownies recipe page, and expressed that she was confused if the ingredient was missing on the ingredient page.” & Item clarity & Recipe page \\
+% \hline
+% Participant 2: College Student & Task 6: Exploring & In the Pantry page, she was confused about the metrics of some ingredients - "I don't know what 50mL of vanilla extract means, it would be better to show this as teaspoons or tablespoons" & Measurements misunderstanding & Recipe page \\
+% \hline
+% Participant 2: College Student & Task 6: Exploring & “recommended adding categories such as "running low or empty ingredients" in the Pantry page” & Unclear status of items in pantry & Pantry page \\
+% \hline
+% Participant 2: College Student & Task 6: Exploring & “Was confused what the “Add-ins” category meant in the "Pantry" page, confusing it with newly added items” & Item clarity & Pantry page \\
+% \hline
+% Participant 3:
+% Professional Worker & Task 1: Signing up & “User struggled to select dietary restrictions, user did not know what the page was for” & Dietary restrictions page is ambiguous & Dietary restrictions page \\
+% \hline
+% Participant 3:
+% Professional Worker & Task 1: Signing up & “User took a lot of time to read the tutorial popups” & Tutorial is hard to follow & Tutorial popups \\
+% \hline
+% Participant 3:
+% Professional Worker & Task 6: Exploring & “User struggled to understand what the missing ingredient indicator was” & Missing ingredients indicator is unclear & Recipe page \\
+% \hline
+% Participant 3:
+% Professional Worker & Task 6: Exploring & “User did not like that there was no freedom to select other grocers, Amazon was the only option” & App should incorporate local grocers & Recipe page \\
+% \hline
+% \end{tabular}
+\begin{document}  
+  
+
+
+% \begin{table}
+% \centering
+% \caption{\bf Distances to BK Dra and DX Del in parsecs (pc)}
+% \begin{tabular}{|ccc|}
+% \hline
+% Method & BK Dra & DX Del \\
+% \hline
+% DR1 & 1428.57143 & 602.40964 \\
+% DR1 err & 0 & 0 \\
+% DR2 & 1407.26147 & 593.50703 \\
+% DR2 err & 48.56582 & 11.16368 \\
+% EDR3 & 1396.25803 & 578.10152 \\
+% EDR3 err & 30.32441 & 4.96992 \\
+% Gaia avg. & 1410.69698  & 591.33940 \\
+% Gaia avg. err & 26.29674  & 5.37787 \\
+% V & 1409.36578  & 593.34830 \\
+% V err & 63.54477 & 13.16242 \\
+% i' & 1492.34197  & 593.06421 \\
+% i' err & 45.49612 & 13.22865 \\
+% z' & 1730.35900 & 713.43464 \\
+% z' err & 29.65582 & 11.83654 \\
+% Viz & 1544.02225 & 633.28238 \\
+% Viz err & 48.26076 & 12.75866 \\
+% \hline
+% \end{tabular}
+% \label{tab:Distances}
+% \end{table}
+
+
+ 
+% \begin{center}  
+% \begin{tabular}{ | l | l | p{5cm} | l | l |} % you can change the dimension according to the spacing requirements  
+% \hline  
+%  \textbf{User} & \textbf{Task Number} & \textbf{Transcript} &  \textbf{Theme} & \textbf{Affected Page(s)} \\\hline  
+% Participant 3:
+% Professional Worker & Task 6: Exploring & “User did not like that there was no freedom to select other grocers, Amazon was the only option” & App should incorporate local grocers & Recipe page \\ \hline  
+    
+   
+% \end{tabular}  
+% \end{center}  
+
+\end{document}
