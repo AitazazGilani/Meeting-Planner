@@ -1,4 +1,4 @@
-# CMPT 370 Monke Business Project
+# CMPT 370 Term Project
 
 ## Purpose
 To-do application with timer integration. 
